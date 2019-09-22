@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7867175923329CA10030841D /* MetroConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7867175823329CA10030841D /* MetroConfig.swift */; };
+		78AD08032337DE640069D240 /* FromToButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD08022337DE640069D240 /* FromToButtons.swift */; };
 		78C897C02332615900A9DAFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C897BF2332615900A9DAFF /* AppDelegate.swift */; };
 		78C897C22332615900A9DAFF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C897C12332615900A9DAFF /* ViewController.swift */; };
 		78C897C52332615900A9DAFF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78C897C32332615900A9DAFF /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		7867175823329CA10030841D /* MetroConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroConfig.swift; sourceTree = "<group>"; };
+		78AD08022337DE640069D240 /* FromToButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromToButtons.swift; sourceTree = "<group>"; };
 		78C897BC2332615900A9DAFF /* Metro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78C897BF2332615900A9DAFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		78C897C12332615900A9DAFF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 				78C897C12332615900A9DAFF /* ViewController.swift */,
 				7867175823329CA10030841D /* MetroConfig.swift */,
 				78C897D12332642800A9DAFF /* MetroView.swift */,
+				78AD08022337DE640069D240 /* FromToButtons.swift */,
 				78C897D3233266C700A9DAFF /* MetroDonatOne.swift */,
 				78C897C32332615900A9DAFF /* Main.storyboard */,
 				78C897C62332615D00A9DAFF /* Assets.xcassets */,
@@ -148,6 +151,7 @@
 				78C897C22332615900A9DAFF /* ViewController.swift in Sources */,
 				78C897D22332642800A9DAFF /* MetroView.swift in Sources */,
 				78C897D4233266C700A9DAFF /* MetroDonatOne.swift in Sources */,
+				78AD08032337DE640069D240 /* FromToButtons.swift in Sources */,
 				78C897C02332615900A9DAFF /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

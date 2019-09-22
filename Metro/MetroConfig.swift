@@ -44,7 +44,10 @@ class MetroConfig {
         MetroStation(coords: CGPoint(x: 59, y: 12), id: 17, color: .red),
         MetroStation(coords: CGPoint(x: 59, y: 8), id: 18, color: .red),
         MetroStation(coords: CGPoint(x: 59, y: 4.4), id: 19, color: .red),
-        MetroStation(coords: CGPoint(x: 10, y: 30), id: 20, color: .red),
+        MetroStation(coords: CGPoint(x: 42, y: 64.5), id: 27, color: .blue),
+        MetroStation(coords: CGPoint(x: 42, y: 70.5), id: 26, color: .blue),
+        MetroStation(coords: CGPoint(x: 42, y: 75.5), id: 25, color: .blue),
+        
     ]
     
     let link = [
@@ -54,7 +57,7 @@ class MetroConfig {
         4:[LinkWithTime(id: 3, time: 120),LinkWithTime(id: 5, time: 240)],
         5:[LinkWithTime(id: 4, time: 240),LinkWithTime(id: 6, time: 180)],
         6:[LinkWithTime(id: 5, time: 180),LinkWithTime(id: 7, time: 180)],
-        7:[LinkWithTime(id: 6, time: 180),LinkWithTime(id: 8, time: 120)],
+        7:[LinkWithTime(id: 6, time: 180),LinkWithTime(id: 8, time: 120),LinkWithTime(id: 27, time: 120)],
         8:[LinkWithTime(id: 7, time: 120),LinkWithTime(id: 9, time: 120)],
         9:[LinkWithTime(id: 8, time: 120),LinkWithTime(id: 10, time: 120)],
         10:[LinkWithTime(id: 9, time: 120),LinkWithTime(id: 11, time: 120)],
@@ -66,7 +69,10 @@ class MetroConfig {
         16:[LinkWithTime(id: 15, time: 180),LinkWithTime(id: 17, time: 180)],
         17:[LinkWithTime(id: 16, time: 180),LinkWithTime(id: 18, time: 120)],
         18:[LinkWithTime(id: 17, time: 120),LinkWithTime(id: 19, time: 120)],
-        19:[LinkWithTime(id: 18, time: 120)]
+        19:[LinkWithTime(id: 18, time: 120)],
+        25:[LinkWithTime(id: 26, time: 180)],
+        26:[LinkWithTime(id: 25, time: 180),LinkWithTime(id: 27, time: 180)],
+        27:[LinkWithTime(id: 26, time: 180),LinkWithTime(id: 7, time: 120)]
         ]
     
     let en = [1:"VETERANOV",2:"LENINSKIY"]
@@ -89,7 +95,11 @@ class MetroConfig {
                 find = true
             }else{
                 let temp = link[target] ?? []
-                temp.map { if !queen.contains( $0.id ) && !visit.contains( $0.id ) { queen.append($0.id) } }
+                for elem in temp {
+                    if !queen.contains( elem.id ) && !visit.contains( elem.id ){
+                        queen.append(elem.id)
+                    }
+                }
             }
         }
         visit = visit.reversed()

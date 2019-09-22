@@ -8,20 +8,32 @@
 
 import UIKit
 
-protocol DonatDelegate {
-    func tap(tape:Any)
+protocol MetroDonatOneDelegate {
+    func tapOnDonat(sender:Any)
 }
 
 @IBDesignable
-class MetroDonatOne: UIView,DonatDelegate {
+class MetroDonatOne: UIView {
     
     var isSetup = false
     
+    var id: Int = 0
+    var scaled = false
     var donatColor:UIColor = .red
     let stroke:CGFloat = 10
     let donat = UIView()
     let text = UILabel()
-    
+    var delegate:MetroDonatOneDelegate?
+    var centerX: CGFloat {
+        get {
+            return self.frame.origin.x + self.frame.width / 2
+        }
+    }
+    var centerY: CGFloat {
+        get {
+            return self.frame.origin.y + self.frame.height / 2
+        }
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -39,10 +51,7 @@ class MetroDonatOne: UIView,DonatDelegate {
     }
     
     @objc func handleTap() {
-        tap(tape: self)
-    }
-    
-    func tap(tape: Any) {
+        delegate?.tapOnDonat(sender: self)
     }
     
 }
