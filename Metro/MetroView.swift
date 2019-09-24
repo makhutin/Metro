@@ -9,47 +9,70 @@
 import UIKit
 
 protocol MetroVieweDelagate {
-    func donatIsChoise(id: Int)
+    func drawStationPath(sender: MetroView)
 }
 
 @IBDesignable
 class MetroView: UIView {
     
-    var isSetup = false
-    var isStationSetup = false
-    var size: CGFloat = 20
+    private var isSetup = false
+    private var isStationSetup = false
+    private var size: CGFloat = 20
     
-    var widthCoficent: CGFloat = 0.0
-    var heightCoficent: CGFloat = 0.0
+    private var widthCoficent: CGFloat = 0.0
+    private var heightCoficent: CGFloat = 0.0
     
-    var stationsConfig: [MetroStation] = MetroConfig.share.allStations
-    var viewSations: [MetroDonatOne] = []
-    let fromTo = FromToButtons()
+    private var stationsConfig = MetroConfig.share.allStations
+    private var linesConfig = MetroConfig.share.lines
     
-    var aPoint: Int?
-    var bPoint: Int?
+    private var viewSations: [MetroDonatOne] = []
+    private var stationConnectView: [StationConnectionView] = []
+    private let fromTo = FromToButtons()
     
-    var currentId:Int?
+    private var aPoint: Int?
+    private var bPoint: Int?
+    
+    private let aPointView = MarkerView()
+    private let bPointView = MarkerView()
+    private let pointSize: CGFloat = 40
+    
+    private var currentId: Int?
+    
+    var delegate: MetroVieweDelagate?
+    
+
     
     
     override func layoutSubviews() {
         
-        
-
         widthCoficent = self.frame.width / 100
         heightCoficent = self.frame.height / 100
+        
+        aPointView.frame.size = CGSize(width: pointSize, height: pointSize)
+        bPointView.frame.size = CGSize(width: pointSize, height: pointSize)
+        
+        bPointView.word = "B"
+        bPointView.layoutIfNeeded()
+        
         super.layoutSubviews()
         if isSetup { return }
-        fromTo.frame.origin = CGPoint(x: 30, y: 30)
+        stationConnectInit()
         fromTo.frame.size = CGSize(width: fromTo.width * 2 + 5, height: fromTo.height)
-        sationsInit()
-        self.addSubview(fromTo)
+        stationsInit()
+        for elem in [aPointView,bPointView,fromTo] {
+            self.addSubview(elem)
+            elem.isHidden = true
+        }
         fromTo.delegate = self
         isSetup = true
-        
     }
     
-    private func sationsInit() {
+    /**
+     draw sation on the mapview
+     
+     draw all point station on th emap view
+     */
+    private func stationsInit() {
         for station in stationsConfig {
             let view = MetroDonatOne()
             view.id = station.id
@@ -65,26 +88,14 @@ class MetroView: UIView {
         }
         isStationSetup = true
     }
-    
-    func findCurrentDonat() -> MetroDonatOne? {
-        if currentId != aPoint && currentId != bPoint{
-            for elem in viewSations {
-                if elem.id == currentId! {
-                    return elem
-                }
-            }
-        }
-        return nil
-    }
-    
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-    
+
+
+    /**
+     start if tap on the map view
+     
+     When press on map view, current point unfocus and fromto window hide
+     
+     */
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let donat = findCurrentDonat() {
             unScaleDonat(donat: donat)
@@ -99,27 +110,153 @@ class MetroView: UIView {
     }
     
     
-    func drawStationWayOnMap(){
+    /**
+     draw station way on metro view map
+     
+     draw station way on metro view map.Scale point station on map , if it on the way.
+     Unscale and make transparent point station, if it not in the way
+     
+     */
+    private func drawStationWayOnMap(){
         if let a = aPoint,let b = bPoint {
+            
+            delegate?.drawStationPath(sender: self)
+            
             let stations = MetroConfig.share.findEnd(start: a, end: b)
+            
+            // hide or unhide stations point
             for elem in viewSations {
                 if stations.contains(elem.id) {
+                    elem.donatColor = elem.donatColor.withAlphaComponent(1)
+                    elem.layoutSubviews()
                     scaleDonat(donat: elem)
                 }else{
+                    elem.donatColor = elem.donatColor.withAlphaComponent(0.3)
+                    elem.layoutSubviews()
                     unScaleDonat(donat: elem)
-                    
                 }
             }
+            // hide or unhide lines between points
+            for connect in stationConnectView {
+                if stations.contains(connect.toId) && stations.contains(connect.fromId) {
+                    connectionHide(hide: false, stationConnectView: connect)
+                }else{
+                    connectionHide(hide: true, stationConnectView: connect)
+                }
+            }
+            
+            
         }
+    }
+    
+    func restoreMapToDefault() {
+        for elem in stationConnectView {
+            connectionHide(hide: false, stationConnectView: elem)
+        }
+        
+        for elem in viewSations {
+            unScaleDonat(donat: elem)
+            elem.donatColor = elem.donatColor.withAlphaComponent(1)
+            elem.layoutSubviews()
+        }
+        
+        unSetMarker()
+        
+        bPoint = nil
+        aPoint = nil
+        
+        
     }
 }
 
+
+//station connect
 extension MetroView {
     
-    func scaleDonat(donat:MetroDonatOne) {
+    
+    private func stationConnectInit() {
+        for elem in 0..<linesConfig.count {
+            let coords = coordsForLinesInit(LineBetweenStationsList: linesConfig[elem]!)
+            for index in 0..<coords.count {
+                let way = StationConnectionView(coords: coords[index],size: self.frame.size)
+                way.frame.size = self.frame.size
+                way.fromId = linesConfig[elem]![index].fromId
+                way.toId = linesConfig[elem]![index].toId
+                stationConnectView.append(way)
+                self.addSubview(way)
+                self.sendSubviewToBack(way)
+                
+            }
+        }
+    }
+    
+    
+    private func coordsForLinesInit(LineBetweenStationsList: [LineBetweenStations]) -> [CoordsBetweenStationsWithColor] {
+        var result:[CoordsBetweenStationsWithColor] = []
+        for connect in LineBetweenStationsList {
+            let fromCoords = CGPoint(x: stationsConfig[connect.fromId - 1].coords.x * widthCoficent + size / 2,
+                                     y: stationsConfig[connect.fromId - 1].coords.y * heightCoficent + size / 2)
+            let toCoords = CGPoint(x: stationsConfig[connect.toId - 1].coords.x * widthCoficent + size / 2,
+                                   y: stationsConfig[connect.toId - 1].coords.y * heightCoficent + size / 2)
+            result.append(CoordsBetweenStationsWithColor(fromCoords: fromCoords, toCoords: toCoords, color: stationsConfig[connect.toId - 1].color))
+        }
+        return result
+    }
+    
+    private func connectionHide(hide: Bool, stationConnectView: StationConnectionView) {
+        switch hide {
+        case true:
+            UIView.animate(withDuration: 0.6, animations: {
+                stationConnectView.layer.opacity = 0.3
+                stationConnectView.layoutIfNeeded()
+            })
+        case false:
+            UIView.animate(withDuration: 0.6, animations: {
+                stationConnectView.layer.opacity = 1
+                stationConnectView.layoutIfNeeded()
+            })
+        }
+    }
+    
+}
+
+
+//donat or point
+extension MetroView {
+    
+    
+    /**
+     find current donat in view list
+     
+     :returns: MetroDonat? return nil or current view station.
+     */
+    private func findCurrentDonat() -> MetroDonatOne? {
+        if let currentId = currentId {
+            if currentId != aPoint && currentId != bPoint{
+                for elem in viewSations {
+                    if elem.id == currentId {
+                        return elem
+                    }
+                }
+            }
+            
+        }
+        return nil
+    }
+    
+    
+    /**
+     scale point view station
+     
+     scale point view station
+     
+     :donat:  MetroDonatOne -  sclae this point.
+     
+     */
+    private func scaleDonat(donat:MetroDonatOne) {
         if !donat.scaled{
-            let scaleValue:CGFloat = 10
-            UIView.animate(withDuration: 0.4, animations: {
+            let scaleValue:CGFloat = 5
+            UIView.animate(withDuration: 0.6, animations: {
                 donat.frame.origin = CGPoint(x: donat.frame.origin.x - scaleValue / 2,
                                              y: donat.frame.origin.y - scaleValue / 2)
                 donat.frame.size = CGSize(width: donat.frame.size.width + scaleValue,
@@ -131,10 +268,19 @@ extension MetroView {
         
     }
     
-    func unScaleDonat(donat:MetroDonatOne) {
+    /**
+     unscale point view station
+     
+     unscale point view station
+     
+     :donat:  MetroDonatOne -  unsclae this point.
+     
+     */
+    private func unScaleDonat(donat:MetroDonatOne) {
         if donat.scaled {
-            let scaleValue:CGFloat = 10
-            UIView.animate(withDuration: 0.4, animations: {
+            
+            let scaleValue:CGFloat = 5
+            UIView.animate(withDuration: 0.6, animations: {
                 donat.frame.origin = CGPoint(x: donat.frame.origin.x + scaleValue / 2,
                                              y: donat.frame.origin.y + scaleValue / 2)
                 donat.frame.size = CGSize(width: donat.frame.size.width - scaleValue,
@@ -151,26 +297,29 @@ extension MetroView {
 
 
 extension MetroView: FromToButtonsDelegate{
+    
     func pressToButton(sender: UIView) {
         bPoint = currentId
-        UIView.animate(withDuration: 0.4, animations: {
+        UIView.animate(withDuration: 0.6, animations: {
             self.fromTo.layer.opacity = 0
             self.layoutIfNeeded()
         }, completion: { complite in
             self.fromTo.isHidden = true
         })
         drawStationWayOnMap()
+        setMarker(wordAorB: .b)
     }
     
     func pressFromButton(sender: UIView) {
         aPoint = currentId
-        UIView.animate(withDuration: 0.4, animations: {
+        UIView.animate(withDuration: 0.6, animations: {
             self.fromTo.layer.opacity = 0
             self.layoutIfNeeded()
         }, completion: { complite in
             self.fromTo.isHidden = true
         })
         drawStationWayOnMap()
+        setMarker(wordAorB: .a)
     }
     
     
@@ -223,13 +372,54 @@ extension MetroView: MetroDonatOneDelegate{
             }
             
             fromTo.frame.origin = CGPoint(x: x, y: y )
-            UIView.animate(withDuration: 0.4, animations: {
+            UIView.animate(withDuration: 0.6, animations: {
                 self.fromTo.layer.opacity = 1
                 self.fromTo.isHidden = false
                 self.layoutIfNeeded()
             })
-            print("\(donat.id)")
         }
         
     }
+}
+//Marker View
+extension MetroView {
+    
+
+    private func setMarker(wordAorB: MarkerViewWord ) {
+        var tempPoint: Int?
+        var pointView: MarkerView
+        switch wordAorB {
+        case .a:
+            pointView = aPointView
+            tempPoint = aPoint
+        case .b:
+            pointView = bPointView
+            tempPoint = bPoint
+        }
+        if let point = tempPoint {
+            pointView.layer.opacity = 0
+            pointView.frame.size = CGSize(width: pointView.frame.width, height: self.pointSize * 2 )
+            pointView.layoutIfNeeded()
+            pointView.isHidden = false
+            for elem in viewSations {
+                if elem.id == point {
+                    pointView.frame.origin = CGPoint(x: elem.centerX - pointSize / 2,
+                                                      y: elem.centerY - pointSize * 1.1)
+                    pointView.color = elem.donatColor
+                    UIView.animate(withDuration: 0.6, animations: {
+                        
+                        pointView.layer.opacity = 1
+                        pointView.frame.size = CGSize(width: pointView.frame.width, height: self.pointSize)
+                        self.layoutIfNeeded()
+                    })
+                }
+            }
+        }
+    }
+    
+    private func unSetMarker() {
+        aPointView.layer.opacity = 0
+        bPointView.layer.opacity = 0
+    }
+    
 }

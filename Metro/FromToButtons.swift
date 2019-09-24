@@ -22,14 +22,14 @@ protocol FromToButtonsDelegate {
 class FromToButtons: UIView {
     
     
-    let lightBlue = UIColor(displayP3Red: 0/255, green: 122/255, blue: 255/255, alpha: 1)
-    var isSetup = false
-    let from = UIButton(type: .system)
-    let to = UIButton(type: .system)
+    private let lightBlue = UIColor(displayP3Red: 0/255, green: 122/255, blue: 255/255, alpha: 1)
+    private var isSetup = false
+    private let from = UIButton(type: .system)
+    private let to = UIButton(type: .system)
     
     let height:CGFloat = 40
     let width:CGFloat = 120
-    let space:CGFloat = 5
+    private let space:CGFloat = 5
     var currentStyle:FromToButtonsStyle = .to
     
     var delegate:FromToButtonsDelegate?
@@ -75,8 +75,8 @@ class FromToButtons: UIView {
             from.backgroundColor = lightBlue
             from.setTitleColor(.white, for: .normal)
             from.layer.borderColor = lightBlue.cgColor
-        @unknown default:
-            print("Oo")
+//        @unknown default:
+//            print("Oo")
 
         }
     }

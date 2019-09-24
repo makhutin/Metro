@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		7867175923329CA10030841D /* MetroConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7867175823329CA10030841D /* MetroConfig.swift */; };
+		78AAF61623394CF0007ECD16 /* MarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AAF61523394CF0007ECD16 /* MarkerView.swift */; };
 		78AD08032337DE640069D240 /* FromToButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD08022337DE640069D240 /* FromToButtons.swift */; };
+		78AD08052338A9050069D240 /* StationConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD08042338A9050069D240 /* StationConnectionView.swift */; };
 		78C897C02332615900A9DAFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C897BF2332615900A9DAFF /* AppDelegate.swift */; };
 		78C897C22332615900A9DAFF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C897C12332615900A9DAFF /* ViewController.swift */; };
 		78C897C52332615900A9DAFF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78C897C32332615900A9DAFF /* Main.storyboard */; };
@@ -20,7 +22,9 @@
 
 /* Begin PBXFileReference section */
 		7867175823329CA10030841D /* MetroConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroConfig.swift; sourceTree = "<group>"; };
+		78AAF61523394CF0007ECD16 /* MarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerView.swift; sourceTree = "<group>"; };
 		78AD08022337DE640069D240 /* FromToButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromToButtons.swift; sourceTree = "<group>"; };
+		78AD08042338A9050069D240 /* StationConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationConnectionView.swift; sourceTree = "<group>"; };
 		78C897BC2332615900A9DAFF /* Metro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78C897BF2332615900A9DAFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		78C897C12332615900A9DAFF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -65,6 +69,8 @@
 				78C897BF2332615900A9DAFF /* AppDelegate.swift */,
 				78C897C12332615900A9DAFF /* ViewController.swift */,
 				7867175823329CA10030841D /* MetroConfig.swift */,
+				78AD08042338A9050069D240 /* StationConnectionView.swift */,
+				78AAF61523394CF0007ECD16 /* MarkerView.swift */,
 				78C897D12332642800A9DAFF /* MetroView.swift */,
 				78AD08022337DE640069D240 /* FromToButtons.swift */,
 				78C897D3233266C700A9DAFF /* MetroDonatOne.swift */,
@@ -147,8 +153,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78AAF61623394CF0007ECD16 /* MarkerView.swift in Sources */,
 				7867175923329CA10030841D /* MetroConfig.swift in Sources */,
 				78C897C22332615900A9DAFF /* ViewController.swift in Sources */,
+				78AD08052338A9050069D240 /* StationConnectionView.swift in Sources */,
 				78C897D22332642800A9DAFF /* MetroView.swift in Sources */,
 				78C897D4233266C700A9DAFF /* MetroDonatOne.swift in Sources */,
 				78AD08032337DE640069D240 /* FromToButtons.swift in Sources */,
