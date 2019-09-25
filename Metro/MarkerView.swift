@@ -28,12 +28,12 @@ class MarkerView: UIView {
     
     override func layoutSubviews() {
         let size = self.frame.width
-        let whiteCircleSize = size / 8
+//        let whiteCircleSize = size / 8
         
-        whiteCircle.backgroundColor = .white
-        whiteCircle.frame = CGRect(x: size / 2 - whiteCircleSize / 2, y: size * 1.03,
-                                   width: whiteCircleSize, height: whiteCircleSize)
-        whiteCircle.layer.cornerRadius = whiteCircleSize / 2
+//        whiteCircle.backgroundColor = .white
+//        whiteCircle.frame = CGRect(x: size / 2 - whiteCircleSize / 2, y: size * 1.03,
+//                                   width: whiteCircleSize, height: whiteCircleSize)
+//        whiteCircle.layer.cornerRadius = whiteCircleSize / 2
         
         text.frame = CGRect(x: 0,
                             y: 0,
@@ -59,7 +59,7 @@ class MarkerView: UIView {
         angle.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
         super.layoutSubviews()
         if isSetup { return }
-        self.addSubview(whiteCircle)
+//        self.addSubview(whiteCircle)
         self.addSubview(circle)
         self.addSubview(angle)
         self.addSubview(text)

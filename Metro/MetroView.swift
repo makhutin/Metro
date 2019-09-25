@@ -24,6 +24,9 @@ class MetroView: UIView {
     
     private var stationsConfig = MetroConfig.share.allStations
     private var linesConfig = MetroConfig.share.lines
+    private var textConfig = MetroConfig.share.textStation["ru_RU"]!
+    private let multiConfig = MetroConfig.share.multiStation
+    
     
     private var viewSations: [MetroDonatOne] = []
     private var stationConnectView: [StationConnectionView] = []
@@ -73,7 +76,19 @@ class MetroView: UIView {
      draw all point station on th emap view
      */
     private func stationsInit() {
-        for station in stationsConfig {
+        
+        for multi in multiConfig {
+            let view = MultiStationView()
+            let x = multi.coords.x * widthCoficent
+            let y = multi.coords.y * heightCoficent
+            view.frame.origin = CGPoint(x: x, y: y)
+            view.frame.size = CGSize(width: size * 2, height: size * 2)
+            view.stationCount = multi.count
+            self.addSubview(view)
+            
+        }
+        
+        for station in stationsConfig.values {
             let view = MetroDonatOne()
             view.id = station.id
             let x = station.coords.x * widthCoficent
@@ -85,6 +100,49 @@ class MetroView: UIView {
             viewSations.append(view)
             view.delegate = self
             self.addSubview(view)
+            
+            // text
+            let text = TextStationView()
+            text.text = textConfig[view.id] ?? ""
+            //set text frame
+            switch view.id {
+            case 4...8,28,46,63,64:
+                text.frame = CGRect(x: view.centerX - 166, y: view.centerY - 10, width: 150, height: 20)
+                text.style = .right
+            case 57,54,56,45,44:
+                text.frame = CGRect(x: view.centerX + 7, y: view.centerY - 26, width: 150, height: 20)
+                text.style = .left
+            case 10:
+                text.frame = CGRect(x: view.centerX - 160, y: view.centerY + 5, width: 150, height: 20)
+                text.style = .right
+            case 29,9:
+                text.frame = CGRect(x: view.centerX - 160, y: view.centerY - 26, width: 150, height: 20)
+                text.style = .right
+            case 43:
+                text.frame = CGRect(x: view.centerX + 30.3, y: view.centerY - 35, width: 150, height: 20)
+                text.style = .left
+            case 55:
+                text.frame = CGRect(x: view.centerX - 120, y: view.centerY + 5, width: 150, height: 20)
+                text.style = .right
+            default:
+                text.frame = CGRect(x: view.centerX + 14, y: view.centerY - 10, width: 150, height: 20)
+            }
+            switch view.id {
+            case 7,8,9,10:
+                text.color = stationsConfig[7]!.color
+            case 27,28,29:
+                text.color = stationsConfig[28]!.color
+            case 43,44,45:
+                text.color = stationsConfig[43]!.color
+            case 54,56,57:
+                text.color = stationsConfig[54]!.color
+            case 62,63:
+                text.color = stationsConfig[62]!.color
+            default:
+                text.color = .black
+            }
+            
+            self.addSubview(text)
         }
         isStationSetup = true
     }
@@ -98,7 +156,7 @@ class MetroView: UIView {
      */
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let donat = findCurrentDonat() {
-            unScaleDonat(donat: donat)
+            scaleDonat(donat: donat)
         }
         currentId = nil
         UIView.animate(withDuration: 0.4, animations: {
@@ -125,26 +183,27 @@ class MetroView: UIView {
             let stations = MetroConfig.share.findEnd(start: a, end: b)
             
             // hide or unhide stations point
-            for elem in viewSations {
-                if stations.contains(elem.id) {
-                    elem.donatColor = elem.donatColor.withAlphaComponent(1)
-                    elem.layoutSubviews()
-                    scaleDonat(donat: elem)
-                }else{
-                    elem.donatColor = elem.donatColor.withAlphaComponent(0.3)
-                    elem.layoutSubviews()
-                    unScaleDonat(donat: elem)
-                }
-            }
+
             // hide or unhide lines between points
             for connect in stationConnectView {
                 if stations.contains(connect.toId) && stations.contains(connect.fromId) {
                     connectionHide(hide: false, stationConnectView: connect)
                 }else{
                     connectionHide(hide: true, stationConnectView: connect)
+                    self.sendSubviewToBack(connect)
                 }
             }
-            
+            for elem in viewSations {
+                if stations.contains(elem.id) {
+                    elem.donatColor = elem.donatColor.withAlphaComponent(1)
+                    elem.layoutSubviews()
+                    unScaleDonat(donat: elem)
+                }else{
+                    elem.donatColor = elem.donatColor.withAlphaComponent(0.3)
+                    elem.layoutSubviews()
+                    scaleDonat(donat: elem)
+                }
+            }
             
         }
     }
@@ -154,8 +213,8 @@ class MetroView: UIView {
             connectionHide(hide: false, stationConnectView: elem)
         }
         
-        for elem in viewSations {
-            unScaleDonat(donat: elem)
+        for elem in viewSations.reversed() {
+            scaleDonat(donat: elem)
             elem.donatColor = elem.donatColor.withAlphaComponent(1)
             elem.layoutSubviews()
         }
@@ -193,12 +252,35 @@ extension MetroView {
     
     private func coordsForLinesInit(LineBetweenStationsList: [LineBetweenStations]) -> [CoordsBetweenStationsWithColor] {
         var result:[CoordsBetweenStationsWithColor] = []
+        var mulitCoords: [Int:CGPoint] = [:]
+        for elem in multiConfig {
+            for point in elem.id {
+                mulitCoords.updateValue(elem.coords, forKey: point)
+            }
+        }
         for connect in LineBetweenStationsList {
-            let fromCoords = CGPoint(x: stationsConfig[connect.fromId - 1].coords.x * widthCoficent + size / 2,
-                                     y: stationsConfig[connect.fromId - 1].coords.y * heightCoficent + size / 2)
-            let toCoords = CGPoint(x: stationsConfig[connect.toId - 1].coords.x * widthCoficent + size / 2,
-                                   y: stationsConfig[connect.toId - 1].coords.y * heightCoficent + size / 2)
-            result.append(CoordsBetweenStationsWithColor(fromCoords: fromCoords, toCoords: toCoords, color: stationsConfig[connect.toId - 1].color))
+            var fromCoords = CGPoint(x: stationsConfig[connect.fromId]!.coords.x * widthCoficent + size / 2,
+                                     y: stationsConfig[connect.fromId]!.coords.y * heightCoficent + size / 2)
+            if stationsConfig[connect.fromId]!.multi {
+                let x = mulitCoords[connect.fromId]!.x * widthCoficent + size + 4
+                var y = mulitCoords[connect.fromId]!.y * heightCoficent + size / 2
+                if [28,57,63].contains(connect.fromId) {
+                    y = mulitCoords[connect.fromId]!.y * heightCoficent + size
+                }
+                fromCoords = CGPoint(x: x, y: y)
+            }
+            var toCoords = CGPoint(x: stationsConfig[connect.toId]!.coords.x * widthCoficent + size / 2,
+                                   y: stationsConfig[connect.toId]!.coords.y * heightCoficent + size / 2)
+            if stationsConfig[connect.toId]!.multi {
+                let x = mulitCoords[connect.toId]!.x * widthCoficent + size + 4
+                var y = mulitCoords[connect.toId]!.y * heightCoficent + size / 2
+                if [28,57,63].contains(connect.toId) {
+                    y = mulitCoords[connect.toId]!.y * heightCoficent + size
+                }
+                toCoords = CGPoint(x: x, y: y)
+            }
+            
+            result.append(CoordsBetweenStationsWithColor(fromCoords: fromCoords, toCoords: toCoords, color: stationsConfig[connect.toId]!.color))
         }
         return result
     }
@@ -254,7 +336,7 @@ extension MetroView {
      
      */
     private func scaleDonat(donat:MetroDonatOne) {
-        if !donat.scaled{
+        if donat.scaled{
             let scaleValue:CGFloat = 5
             UIView.animate(withDuration: 0.6, animations: {
                 donat.frame.origin = CGPoint(x: donat.frame.origin.x - scaleValue / 2,
@@ -263,7 +345,7 @@ extension MetroView {
                                           height: donat.frame.size.height + scaleValue)
                 self.layoutIfNeeded()
             })
-            donat.scaled = true
+            donat.scaled = false
         }
         
     }
@@ -277,7 +359,7 @@ extension MetroView {
      
      */
     private func unScaleDonat(donat:MetroDonatOne) {
-        if donat.scaled {
+        if !donat.scaled {
             
             let scaleValue:CGFloat = 5
             UIView.animate(withDuration: 0.6, animations: {
@@ -287,7 +369,7 @@ extension MetroView {
                                           height: donat.frame.size.height - scaleValue)
                 self.layoutIfNeeded()
             })
-            donat.scaled = false
+            donat.scaled = true
         }
         
     }

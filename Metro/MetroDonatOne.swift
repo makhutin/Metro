@@ -50,7 +50,7 @@ class MetroDonatOne: UIView {
         self.addSubview(donat)
     }
     
-    @objc func handleTap() {
+    @objc private func handleTap() {
         delegate?.tapOnDonat(sender: self)
     }
     

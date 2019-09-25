@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     
     let scrollView = UIScrollView()
     let metroView = MetroView()
+    let nevaImage = UIImageView(image: UIImage(named: "neva"))
     let plusButton = UIButton()
     let minusButton = UIButton()
     let tempView = UIView()
@@ -33,6 +34,7 @@ class ViewController: UIViewController {
         for elem in [scrollView,minusButton,plusButton,navigatorBar,morebutton] {
             self.view.addSubview(elem)
         }
+        tempView.addSubview(nevaImage)
         tempView.addSubview(metroView)
         scrollView.addSubview(tempView)
         self.view.addSubview(statusBarView)
@@ -51,9 +53,11 @@ class ViewController: UIViewController {
     }
     
     private func screenInit() {
-        let size = max(self.view.frame.width,self.view.frame.height) * 2
+        let size = 1800
         metroView.frame = CGRect(x: size / 4, y: size / 4, width: size / 2, height: size / 2)
         metroView.delegate = self
+        nevaImage.frame = metroView.frame
+        nevaImage.layer.opacity = 0.28
         tempView.frame = CGRect(x: 0, y: 0, width: size, height: size)
         
         scrollView.frame = self.view.frame
