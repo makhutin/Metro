@@ -49,3 +49,21 @@ class StationConnectionView: UIView {
     */
 
 }
+
+extension StationConnectionView: MakeHideObject {
+    
+    func hide(_ hide: Bool) {
+        switch hide {
+        case true:
+            UIView.animate(withDuration: 0.6, animations: {
+                self.layer.opacity = 0.3
+                self.layoutIfNeeded()
+            })
+        case false:
+            UIView.animate(withDuration: 0.6, animations: {
+                self.layer.opacity = 1
+                self.layoutIfNeeded()
+            })
+        }
+    }
+}

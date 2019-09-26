@@ -26,9 +26,7 @@ class FromToButtons: UIView {
     private var isSetup = false
     private let from = UIButton(type: .system)
     private let to = UIButton(type: .system)
-    
-    let height:CGFloat = 40
-    let width:CGFloat = 120
+    var centerX: CGFloat { return self.frame.width / 2}
     private let space:CGFloat = 5
     var currentStyle:FromToButtonsStyle = .to
     
@@ -36,17 +34,22 @@ class FromToButtons: UIView {
     
     
     override func layoutSubviews() {
-        self.frame.size = CGSize(width: width * 2 + 5, height: height)
+        let width = self.frame.width
+        let height = width / 6
+        
+        self.frame.size = CGSize(width: width, height: height)
         super.layoutSubviews()
         for elem in [from,to] {
             elem.layer.cornerRadius = height / 2
             elem.layer.borderWidth = 2
         }
         chageStyle()
-        from.frame = CGRect(x: 10, y: 10, width: width, height: height)
-        to.frame = CGRect(x: from.frame.origin.x + width + 5, y: from.frame.origin.y, width: width, height: height)
+        from.frame = CGRect(x: 0, y: 0, width: width / 2.1, height: height)
+        to.frame = CGRect(x: width / 2 - width / 2.1 + centerX, y: from.frame.origin.y, width: width / 2.1, height: height)
         from.setTitle("отсюда", for: .normal)
         to.setTitle("сюда", for: .normal)
+        from.titleLabel?.font = UIFont(name: "Helvetica", size: height / 3)
+        to.titleLabel?.font = UIFont(name: "Helvetica", size: height / 3)
         
         if isSetup { return }
         self.addSubview(to)

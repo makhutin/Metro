@@ -15,14 +15,13 @@ protocol MetroDonatOneDelegate {
 @IBDesignable
 class MetroDonatOne: UIView {
     
-    var isSetup = false
+    private var isSetup = false
     
     var id: Int = 0
     var scaled = false
     var donatColor:UIColor = .red
-    let stroke:CGFloat = 10
-    let donat = UIView()
-    let text = UILabel()
+    private let stroke:CGFloat = 10
+    private let donat = UIView()
     var delegate:MetroDonatOneDelegate?
     var centerX: CGFloat {
         get {
@@ -52,6 +51,52 @@ class MetroDonatOne: UIView {
     
     @objc private func handleTap() {
         delegate?.tapOnDonat(sender: self)
+    }
+    
+    
+}
+
+extension MetroDonatOne: ScalledObjectView {
+    
+    func scale() {
+        if self.scaled{
+            let scaleValue:CGFloat = 5
+            UIView.animate(withDuration: 0.6, animations: {
+                self.frame.origin = CGPoint(x: self.frame.origin.x - scaleValue / 2,
+                                            y: self.frame.origin.y - scaleValue / 2)
+                self.frame.size = CGSize(width: self.frame.size.width + scaleValue,
+                                         height: self.frame.size.height + scaleValue)
+                self.layoutIfNeeded()
+            })
+            self.scaled = false
+        }
+    }
+    
+    func unScale() {
+        if !self.scaled {
+            let scaleValue:CGFloat = 5
+            UIView.animate(withDuration: 0.6, animations: {
+                self.frame.origin = CGPoint(x: self.frame.origin.x + scaleValue / 2,
+                                            y: self.frame.origin.y + scaleValue / 2)
+                self.frame.size = CGSize(width: self.frame.size.width - scaleValue,
+                                         height: self.frame.size.height - scaleValue)
+                self.layoutIfNeeded()
+            })
+            self.scaled = true
+        }
+        
+    }
+
+}
+
+extension MetroDonatOne: MakeHideObject {
+    
+    func hide(_ hide: Bool) {
+        if hide {
+            self.donatColor = self.donatColor.withAlphaComponent(0.3)
+        }else{
+            self.donatColor = self.donatColor.withAlphaComponent(1)
+        }
     }
     
 }

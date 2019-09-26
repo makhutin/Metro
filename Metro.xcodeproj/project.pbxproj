@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7867175923329CA10030841D /* MetroConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7867175823329CA10030841D /* MetroConfig.swift */; };
+		789E8912233CFC940081D705 /* SomeProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E8911233CFC940081D705 /* SomeProtocols.swift */; };
 		78AAF61623394CF0007ECD16 /* MarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AAF61523394CF0007ECD16 /* MarkerView.swift */; };
 		78AD08032337DE640069D240 /* FromToButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD08022337DE640069D240 /* FromToButtons.swift */; };
 		78AD08052338A9050069D240 /* StationConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD08042338A9050069D240 /* StationConnectionView.swift */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		7867175823329CA10030841D /* MetroConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroConfig.swift; sourceTree = "<group>"; };
+		789E8911233CFC940081D705 /* SomeProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomeProtocols.swift; sourceTree = "<group>"; };
 		78AAF61523394CF0007ECD16 /* MarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerView.swift; sourceTree = "<group>"; };
 		78AD08022337DE640069D240 /* FromToButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromToButtons.swift; sourceTree = "<group>"; };
 		78AD08042338A9050069D240 /* StationConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationConnectionView.swift; sourceTree = "<group>"; };
@@ -70,14 +72,15 @@
 		78C897BE2332615900A9DAFF /* Metro */ = {
 			isa = PBXGroup;
 			children = (
+				789E8911233CFC940081D705 /* SomeProtocols.swift */,
 				78C897BF2332615900A9DAFF /* AppDelegate.swift */,
 				78C897C12332615900A9DAFF /* ViewController.swift */,
 				7867175823329CA10030841D /* MetroConfig.swift */,
 				78F07DBD233B8D6C003387B4 /* MultiStationView.swift */,
-				78AD08042338A9050069D240 /* StationConnectionView.swift */,
 				78AAF61523394CF0007ECD16 /* MarkerView.swift */,
 				78C897D12332642800A9DAFF /* MetroView.swift */,
 				78AD08022337DE640069D240 /* FromToButtons.swift */,
+				78AD08042338A9050069D240 /* StationConnectionView.swift */,
 				78C897D3233266C700A9DAFF /* MetroDonatOne.swift */,
 				78F07DBB233B7EAA003387B4 /* TextStationView.swift */,
 				78C897C32332615900A9DAFF /* Main.storyboard */,
@@ -164,6 +167,7 @@
 				78C897C22332615900A9DAFF /* ViewController.swift in Sources */,
 				78AD08052338A9050069D240 /* StationConnectionView.swift in Sources */,
 				78C897D22332642800A9DAFF /* MetroView.swift in Sources */,
+				789E8912233CFC940081D705 /* SomeProtocols.swift in Sources */,
 				78F07DBC233B7EAA003387B4 /* TextStationView.swift in Sources */,
 				78C897D4233266C700A9DAFF /* MetroDonatOne.swift in Sources */,
 				78F07DBE233B8D6C003387B4 /* MultiStationView.swift in Sources */,

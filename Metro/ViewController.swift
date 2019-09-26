@@ -25,6 +25,8 @@ class ViewController: UIViewController {
     
     
     override func viewDidLoad() {
+        metroView.contentScaleFactor = scrollView.zoomScale
+        metroView.updateFromToScale()
         self.navigationController?.isNavigationBarHidden = true
         self.view.backgroundColor = .white
         super.viewDidLoad()
@@ -127,6 +129,10 @@ extension ViewController: UIScrollViewDelegate {
         showZoomButtons(show: true)
     }
     
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+        metroView.contentScaleFactor = scrollView.zoomScale
+    }
+    
     
 }
 
@@ -136,12 +142,16 @@ extension ViewController {
         if scrollView.zoomScale < scrollView.maximumZoomScale {
             scrollView.zoomScale += 0.2
         }
+        metroView.contentScaleFactor = scrollView.zoomScale
+        metroView.updateFromToScale()
     }
     
     @objc func pressMinus() {
         if scrollView.zoomScale > scrollView.minimumZoomScale {
             scrollView.zoomScale -= 0.2
         }
+        metroView.contentScaleFactor = scrollView.zoomScale
+        metroView.updateFromToScale()
     }
     
     @objc func pressBack() {
@@ -185,6 +195,8 @@ extension ViewController {
             }
             
         })
+        metroView.contentScaleFactor = scrollView.zoomScale
+        metroView.updateFromToScale()
     }
     
     func showNavigationBar(show: Bool) {

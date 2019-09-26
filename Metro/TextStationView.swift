@@ -21,6 +21,7 @@ class TextStationView: UIView {
     var delegate:TextStationViewDelegate?
     var style:UIControl.ContentHorizontalAlignment = .left
     var color:UIColor = .black
+    var id:Int = 0
     
     private let button = UIButton()
     private let fontSize:CGFloat = 7
@@ -36,18 +37,21 @@ class TextStationView: UIView {
         button.titleLabel?.font = font
         button.contentHorizontalAlignment = style
         button.frame = self.bounds
+        button.sizeToFit()
+        button.frame.origin = CGPoint(x: 0, y: 0)
+        self.frame.size = button.frame.size
         
         
         if isSetup { return }
         self.addSubview(button)
         isSetup = true
-        button.titleLabel?.font = font
         button.addTarget(self, action: #selector(pressText), for: .touchUpInside)
     }
     
     @objc private func pressText() {
         delegate?.pressTextStation(sender: self)
     }
+    
 
     /*
     // Only override draw() if you perform custom drawing.
@@ -57,4 +61,14 @@ class TextStationView: UIView {
     }
     */
 
+}
+
+extension TextStationView: MakeHideObject {
+    func hide(_ hide: Bool) {
+        if hide {
+            button.setTitleColor(color.withAlphaComponent(0.3), for: .normal)
+        }else{
+            button.setTitleColor(color.withAlphaComponent(1), for: .normal)
+        }
+    }
 }
