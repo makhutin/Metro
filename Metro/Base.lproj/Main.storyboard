@@ -22,17 +22,17 @@
                     </view>
                     <navigationItem key="navigationItem" id="tXI-rl-lLn"/>
                     <connections>
-                        <segue destination="gVo-33-bbU" kind="show" identifier="More" id="eky-cO-8IC"/>
+                        <segue destination="gVo-33-bbU" kind="show" identifier="MoreTableView" id="eky-cO-8IC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1613.0859375" y="136.60322108345534"/>
         </scene>
-        <!--Table View Controller-->
+        <!--More Table View-->
         <scene sceneID="eCt-YB-Ayh">
             <objects>
-                <tableViewController id="gVo-33-bbU" sceneMemberID="viewController">
+                <tableViewController id="gVo-33-bbU" customClass="MoreTableView" customModule="Metro" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="lzs-KQ-e6h">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

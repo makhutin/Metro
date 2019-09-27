@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     let navigatorBar = UINavigationBar()
     let statusBarView = UIView()
     let morebutton = UIButton()
+    var data:[Int] = []
     
     var pathIsDraw = false
     
@@ -77,6 +78,15 @@ class ViewController: UIViewController {
         scrollView.zoomScale = minScale + 0.5
     }
     
+    private func inScrollViewOffsetX(x: CGFloat) -> Bool {
+        return (scrollView.contentOffset.x < x && x < scrollView.contentOffset.x + scrollView.frame.width)
+    }
+    
+    private func inScrollViewOffsetY(y: CGFloat) -> Bool {
+        return (scrollView.contentOffset.y < y && y < scrollView.contentOffset.y + scrollView.frame.height)
+    }
+    
+    
     private func buttonsInit() {
         //more button sets
         morebutton.frame = CGRect(x: 20,
@@ -108,6 +118,12 @@ class ViewController: UIViewController {
         plusButton.setImage(UIImage(named: "plus"), for: .normal)
         plusButton.addTarget(self, action: #selector(pressPlus), for: .touchUpInside)
         minusButton.addTarget(self, action: #selector(pressMinus), for: .touchUpInside)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? MoreTableView, segue.identifier == "MoreTableView"{
+            vc.data = self.data
+        }
     }
     
 
@@ -165,19 +181,48 @@ extension ViewController {
     
     @objc func pressMoreButton() {
         self.navigationController?.isNavigationBarHidden = false
-        performSegue(withIdentifier: "More", sender: (Any).self)
+        performSegue(withIdentifier: "MoreTableView", sender: (Any).self)
         
     }
 }
 
 extension ViewController: MetroVieweDelagate {
+    func fromToButtonPress(sender: FromToButtons) {
+        let x = (sender.frame.origin.x + 450) * scrollView.zoomScale
+        let x2 = x + sender.frame.width * scrollView.zoomScale
+        let y = (sender.frame.origin.y + 450) * scrollView.zoomScale
+        let y2 = y + sender.frame.height * scrollView.zoomScale
+        if !inScrollViewOffsetX(x: x) {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.scrollView.contentOffset.x = x - 10
+            })
+            
+        }else if !inScrollViewOffsetX(x: x2) {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.scrollView.contentOffset.x = x2 - self.scrollView.frame.width + 10
+            })
+            
+        }
+        if !inScrollViewOffsetY(y: y) {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.scrollView.contentOffset.y = y - 10
+            })
+        }
+        else if !inScrollViewOffsetY(y: y2) {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.scrollView.contentOffset.y = y2 - self.scrollView.frame.height + 10
+            })
+        }
+    }
     
-    func drawStationPath(sender: MetroView) {
+    
+    func drawStationPath(sender: MetroView,data: [Int]) {
         pathIsDraw = true
         centerZoomMetroView()
         showNavigationBar(show: true)
         showZoomButtons(show: false)
         showMoreButton(show: true)
+        self.data = data
     }
     
     
@@ -189,9 +234,9 @@ extension ViewController {
         UIView.animate(withDuration: 0.6, animations: {
             self.scrollView.zoomScale = self.view.frame.width / self.metroView.frame.width
             if self.view.bounds.height < self.tempView.frame.height {
-                self.scrollView.contentOffset = CGPoint(x: (self.tempView.bounds.width - self.metroView.bounds.width) / 2 * self.scrollView.zoomScale , y: (self.tempView.bounds.height - self.metroView.bounds.height) / 2 * self.scrollView.zoomScale - 100) 
+                self.scrollView.contentOffset = CGPoint(x: (self.tempView.bounds.width - self.metroView.bounds.width) / 2 * self.scrollView.zoomScale , y: (self.tempView.bounds.height - self.metroView.bounds.height) / 2 * self.scrollView.zoomScale - 100)
             }else{
-                self.scrollView.contentOffset = CGPoint(x: (self.tempView.bounds.width - self.metroView.bounds.width) / 2 * self.scrollView.zoomScale , y: 0)
+                self.scrollView.contentOffset = CGPoint(x: (self.tempView.bounds.width - self.metroView.bounds.width) / 2 * self.scrollView.zoomScale, y: 0)
             }
             
         })

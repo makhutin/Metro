@@ -54,6 +54,10 @@ class MetroDonatOne: UIView {
     }
     
     
+    private func updateColor() {
+        donat.backgroundColor = donatColor
+        donat.layoutIfNeeded()
+    }
 }
 
 extension MetroDonatOne: ScalledObjectView {
@@ -93,9 +97,15 @@ extension MetroDonatOne: MakeHideObject {
     
     func hide(_ hide: Bool) {
         if hide {
-            self.donatColor = self.donatColor.withAlphaComponent(0.3)
+            UIView.animate(withDuration: 0.6, animations: {
+                self.donatColor = self.donatColor.withAlphaComponent(0.3)
+                self.updateColor()
+            })
         }else{
-            self.donatColor = self.donatColor.withAlphaComponent(1)
+            UIView.animate(withDuration: 0.6, animations: {
+                self.donatColor = self.donatColor.withAlphaComponent(1)
+                self.updateColor()
+            })
         }
     }
     

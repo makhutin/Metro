@@ -9,7 +9,8 @@
 import UIKit
 
 protocol MetroVieweDelagate {
-    func drawStationPath(sender: MetroView)
+    func drawStationPath(sender: MetroView, data: [Int])
+    func fromToButtonPress(sender: FromToButtons)
 }
 
 @IBDesignable
@@ -119,7 +120,7 @@ class MetroView: UIView {
             
             //set text frame
             switch view.id {
-            case 4...8,28,46,63,64:
+            case 4...8,28,46,63,64,50...53:
                 text.frame = CGRect(x: view.centerX - text.frame.width - 16, y: view.centerY - 10, width: 150, height: 20)
                 text.style = .right
             case 57,54,56,45,44:
@@ -193,9 +194,10 @@ class MetroView: UIView {
     private func drawStationWayOnMap(){
         if let a = aPoint,let b = bPoint {
             
-            delegate?.drawStationPath(sender: self)
+            
             
             let stations = MetroConfig.share.findEnd(start: a, end: b)
+            delegate?.drawStationPath(sender: self,data: stations)
             
             // hide or unhide stations point
 
@@ -266,8 +268,13 @@ class MetroView: UIView {
                 self.fromTo.isHidden = false
                 self.layoutSubviews()
             })
+            
+            
+            
+            
         }
     }
+    
     
 }
 
@@ -422,6 +429,7 @@ extension MetroView: MetroDonatOneDelegate{
             }
             fromTo.chageStyle()
             updateFromToScale()
+            delegate?.fromToButtonPress(sender: fromTo)
         
         }
     }
@@ -454,7 +462,7 @@ extension MetroView {
         }
         if let point = tempPoint {
             pointView.layer.opacity = 0
-            pointView.frame.size = CGSize(width: pointView.frame.width, height: self.pointSize * 2 )
+            pointView.frame.size = CGSize(width: pointView.frame.width, height: self.pointSize * 2 / contentScaleFactor )
             pointView.layoutIfNeeded()
             pointView.isHidden = false
             for elem in viewSations {

@@ -66,9 +66,16 @@ class TextStationView: UIView {
 extension TextStationView: MakeHideObject {
     func hide(_ hide: Bool) {
         if hide {
-            button.setTitleColor(color.withAlphaComponent(0.3), for: .normal)
+            UIView.animate(withDuration: 0.6, animations: {
+                self.button.setTitleColor(self.color.withAlphaComponent(0.3), for: .normal)
+                self.button.layoutIfNeeded()
+            })
+            
         }else{
-            button.setTitleColor(color.withAlphaComponent(1), for: .normal)
+            UIView.animate(withDuration: 0.6, animations: {
+                self.button.setTitleColor(self.color.withAlphaComponent(1), for: .normal)
+                self.button.layoutIfNeeded()
+            })
         }
     }
 }
