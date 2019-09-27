@@ -32,32 +32,33 @@ class MoreTableView: UITableViewController {
         super.viewDidLoad()
         workWithData()
         finalWorkWithData()
+        print(finalData.count)
         self.tableView.dataSource = self
         self.tableView.reloadData()
-        var index = 0
-        for elem in finalData {
-            index += 1
-            for station in elem {
-                print(station.name)
-                print(index)
-            }
-        }
-        for elem in compliteData {
-            let calendar = Calendar.current
-            print("\(calendar.component(.hour, from: elem.time)) : \(calendar.component(.minute, from: elem.time))")
-            switch elem.type {
-            case .start:
-                print("start")
-            case .normal:
-                print("normal")
-            case .transfer:
-                print("transfer")
-            case .end:
-                print("end")
-            }
-
-            print("\(elem.name)")
-        }
+//        var index = 0
+//        for elem in finalData {
+//            index += 1
+//            for station in elem {
+//                print(station.name)
+//                print(index)
+//            }
+//        }
+//        for elem in compliteData {
+//            let calendar = Calendar.current
+//            print("\(calendar.component(.hour, from: elem.time)) : \(calendar.component(.minute, from: elem.time))")
+//            switch elem.type {
+//            case .start:
+//                print("start")
+//            case .normal:
+//                print("normal")
+//            case .transfer:
+//                print("transfer")
+//            case .end:
+//                print("end")
+//            }
+//
+//            print("\(elem.name)")
+//        }
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -72,12 +73,13 @@ class MoreTableView: UITableViewController {
         self.tableView.reloadData()
     }
     private func finalWorkWithData() {
+        finalData = []
         var saveIndex = 1
         finalData.append([])
         for i in 0..<compliteData.count {
             if i > 0 && i != compliteData.count - 1 {
                 if compliteData[i].type == .transfer {
-                    if finalData.count != saveIndex / 2 {
+                    if finalData.count - 1 != Int(saveIndex / 2) {
                         finalData.append([])
                     }
                     finalData[saveIndex / 2].append(compliteData[i])
@@ -85,7 +87,7 @@ class MoreTableView: UITableViewController {
                     continue
                 }
             }
-            if finalData.count != saveIndex / 2 {
+            if finalData.count - 1 != Int(saveIndex / 2) {
                 finalData.append([])
             }
             finalData[saveIndex / 2].append(compliteData[i])
@@ -94,6 +96,7 @@ class MoreTableView: UITableViewController {
     
     
     private func workWithData() {
+        compliteData = []
         for i in 0..<data.count {
             
             var type: StationInfoConfig = .normal
@@ -104,7 +107,7 @@ class MoreTableView: UITableViewController {
                 type = .end
             }
             
-            if stationConfig[data[i]]?.multi ?? false && i != data.count - 1 {
+            if stationConfig[data[i]]?.multi ?? false && i != data.count - 1 && i != 0 {
                 if stationConfig[data[i + 1]]?.multi ?? false || stationConfig[data[i - 1]]?.multi ?? false {
                     if stationConfig[data[i]]?.color != stationConfig[data[i+1]]?.color || stationConfig[data[i]]?.color != stationConfig[data[i-1]]?.color {
                         type = .transfer
@@ -165,7 +168,26 @@ class MoreTableView: UITableViewController {
 
         return cell
     }
- 
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section > 0 {
+            let cell = TransferCell()
+            cell.setName(name: "Сделайте пересадку")
+            
+            let data = finalData[section]
+            let data2 = finalData[section - 1]
+            let timeEnd = data.first!.time.timeIntervalSince1970
+            let timeStart = data2.last!.time.timeIntervalSince1970
+            let finalTime = Int((timeEnd - timeStart) / 60)
+            
+            cell.setTime(time: "\(finalTime) мин")
+            
+                return cell
+                
+        }else{
+            return UIView()
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.

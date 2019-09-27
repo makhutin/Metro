@@ -34,7 +34,7 @@ class MetroView: UIView {
     private var textView: [TextStationView] = []
     private let fromTo = FromToButtons()
     
-    private var fromToWidth:CGFloat = 180
+    private var fromToWidth:CGFloat = 240
     
     private var aPoint: Int?
     private var bPoint: Int?

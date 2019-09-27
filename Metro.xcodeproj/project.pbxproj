@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		785B5C7C233E870400BEC6AB /* TransferCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785B5C7B233E870400BEC6AB /* TransferCell.swift */; };
 		7867175923329CA10030841D /* MetroConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7867175823329CA10030841D /* MetroConfig.swift */; };
 		789E8912233CFC940081D705 /* SomeProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E8911233CFC940081D705 /* SomeProtocols.swift */; };
 		789E8914233D29F70081D705 /* MoreTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E8913233D29F70081D705 /* MoreTableView.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		785B5C7B233E870400BEC6AB /* TransferCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferCell.swift; sourceTree = "<group>"; };
 		7867175823329CA10030841D /* MetroConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroConfig.swift; sourceTree = "<group>"; };
 		789E8911233CFC940081D705 /* SomeProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomeProtocols.swift; sourceTree = "<group>"; };
 		789E8913233D29F70081D705 /* MoreTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreTableView.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				789E8913233D29F70081D705 /* MoreTableView.swift */,
+				785B5C7B233E870400BEC6AB /* TransferCell.swift */,
 				789E8915233D44050081D705 /* StationInfoCell.swift */,
 				789E8911233CFC940081D705 /* SomeProtocols.swift */,
 				78C897BF2332615900A9DAFF /* AppDelegate.swift */,
@@ -174,6 +177,7 @@
 				78AD08052338A9050069D240 /* StationConnectionView.swift in Sources */,
 				78C897D22332642800A9DAFF /* MetroView.swift in Sources */,
 				789E8912233CFC940081D705 /* SomeProtocols.swift in Sources */,
+				785B5C7C233E870400BEC6AB /* TransferCell.swift in Sources */,
 				78F07DBC233B7EAA003387B4 /* TextStationView.swift in Sources */,
 				78C897D4233266C700A9DAFF /* MetroDonatOne.swift in Sources */,
 				789E8914233D29F70081D705 /* MoreTableView.swift in Sources */,
