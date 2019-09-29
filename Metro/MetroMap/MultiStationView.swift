@@ -20,12 +20,6 @@ class MultiStationView: UIView {
     private var isSetup = false
     var stationCount: StationCountForMulti = .three
     var size:CGFloat = 20
-    var centerY: CGFloat {
-        return self.frame.height / 2
-    }
-    var centerX: CGFloat {
-            return self.frame.width / 2
-    }
     
     override func layoutSubviews() {
         
@@ -42,8 +36,7 @@ class MultiStationView: UIView {
             self.layer.cornerRadius = self.frame.height / 2
             self.layer.borderColor = UIColor.gray.cgColor
             self.layer.borderWidth = 2
-            self.backgroundColor = .white
-            self.backgroundColor = .white
+            self.backgroundColor = (traitCollection.userInterfaceStyle == .dark) ? .black : .white
         case .three:
             self.backgroundColor = .white
             let view1Size = size + 4
@@ -51,7 +44,7 @@ class MultiStationView: UIView {
             self.layer.cornerRadius = self.frame.height / 2
             self.layer.borderColor = UIColor.gray.cgColor
             self.layer.borderWidth = 2
-            self.backgroundColor = .white
+            self.backgroundColor = (traitCollection.userInterfaceStyle == .dark) ? .black : .white
         }
         
     }

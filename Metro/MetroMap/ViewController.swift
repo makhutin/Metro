@@ -13,7 +13,6 @@ class ViewController: UIViewController {
     
     let scrollView = UIScrollView()
     let metroView = MetroView()
-    let nevaImage = UIImageView(image: UIImage(named: "neva"))
     let plusButton = UIButton()
     let minusButton = UIButton()
     let tempView = UIView()
@@ -21,6 +20,8 @@ class ViewController: UIViewController {
     let statusBarView = UIView()
     let morebutton = UIButton()
     var data:[Int] = []
+    let riverImage = UIImageView(image: UIImage(named: "neva"))
+    let size = 1800
     
     var pathIsDraw = false
     
@@ -30,17 +31,38 @@ class ViewController: UIViewController {
         metroView.updateFromToScale()
         self.navigationController?.isNavigationBarHidden = true
         self.view.backgroundColor = .white
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .light: //light mode
+                tempView.backgroundColor = .white
+            case .dark: //dark mode
+                tempView.backgroundColor = .black
+                self.view.backgroundColor = .black
+            case .unspecified: //the user interface style is not specified
+                tempView.backgroundColor = .white
+            }
+//
+        } else {
+            tempView.backgroundColor = .white
+        }
         super.viewDidLoad()
         buttonsInit()
         screenInit()
         
+        riverImage.frame = CGRect(x: size / 4,
+                                  y: size / 4,
+                                  width: size / 2,
+                                  height: size / 2)
+        riverImage.layer.opacity = 0.3
+        
         for elem in [scrollView,minusButton,plusButton,navigatorBar,morebutton] {
             self.view.addSubview(elem)
         }
-        tempView.addSubview(nevaImage)
+        tempView.addSubview(riverImage)
         tempView.addSubview(metroView)
         scrollView.addSubview(tempView)
         self.view.addSubview(statusBarView)
+        
 
         centerZoomMetroView()
     
@@ -56,17 +78,15 @@ class ViewController: UIViewController {
     }
     
     private func screenInit() {
-        let size = 1800
-        metroView.frame = CGRect(x: size / 4, y: size / 4, width: size / 2, height: size / 2)
-        metroView.delegate = self
-        nevaImage.frame = metroView.frame
-        nevaImage.layer.opacity = 0.28
+        metroView.frame = CGRect(x: 0, y: 0, width: size, height: size)
         tempView.frame = CGRect(x: 0, y: 0, width: size, height: size)
+        
+        metroView.delegate = self
+        scrollView.delegate = self
         
         scrollView.frame = self.view.frame
         scrollView.contentSize = tempView.frame.size
         scrollView.isUserInteractionEnabled = true
-        scrollView.delegate = self
         scrollView.clipsToBounds = false
         let scrollViewFrame = scrollView.frame
         let scaleWidth = scrollViewFrame.size.width / scrollView.contentSize.width
@@ -74,7 +94,7 @@ class ViewController: UIViewController {
         let minScale = min(scaleWidth, scaleHeight)
         
         scrollView.minimumZoomScale = minScale
-        scrollView.maximumZoomScale = 2.0
+        scrollView.maximumZoomScale = 3.0
         scrollView.zoomScale = minScale + 0.5
     }
     
@@ -102,7 +122,7 @@ class ViewController: UIViewController {
         
         //navigaotBar and button sets
         statusBarView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: UIApplication.shared.statusBarFrame.height)
-        statusBarView.backgroundColor = .white
+        statusBarView.backgroundColor = (traitCollection.userInterfaceStyle == .dark) ? .black : .white
         
         let backButton = UIButton(type: .custom)
         backButton.setImage(UIImage(named: "back"), for: .normal)
@@ -147,6 +167,7 @@ extension ViewController: UIScrollViewDelegate {
     
     func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
         metroView.contentScaleFactor = scrollView.zoomScale
+        metroView.updateFromToScale()
     }
     
     
@@ -188,10 +209,11 @@ extension ViewController {
 
 extension ViewController: MetroVieweDelagate {
     func fromToButtonPress(sender: FromToButtons) {
-        let x = (sender.frame.origin.x + 450) * scrollView.zoomScale
-        let x2 = x + sender.frame.width * scrollView.zoomScale
-        let y = (sender.frame.origin.y + 450) * scrollView.zoomScale
-        let y2 = y + sender.frame.height * scrollView.zoomScale
+        
+        let x = sender.frame.origin.x  * scrollView.zoomScale
+        let x2 = sender.frame.maxX * scrollView.zoomScale
+        let y = sender.frame.origin.y * scrollView.zoomScale
+        let y2 = sender.frame.maxY * scrollView.zoomScale
         if !inScrollViewOffsetX(x: x) {
             UIView.animate(withDuration: 0.3, animations: {
                 self.scrollView.contentOffset.x = x - 10
@@ -232,11 +254,13 @@ extension ViewController {
     
     func centerZoomMetroView() {
         UIView.animate(withDuration: 0.6, animations: {
-            self.scrollView.zoomScale = self.view.frame.width / self.metroView.frame.width
+            self.scrollView.zoomScale = self.view.frame.width / (self.tempView.bounds.width  / 2)
             if self.view.bounds.height < self.tempView.frame.height {
-                self.scrollView.contentOffset = CGPoint(x: (self.tempView.bounds.width - self.metroView.bounds.width) / 2 * self.scrollView.zoomScale , y: (self.tempView.bounds.height - self.metroView.bounds.height) / 2 * self.scrollView.zoomScale - 100)
+                self.scrollView.contentOffset = CGPoint(x: self.tempView.bounds.width  / 4 * self.scrollView.zoomScale,
+                                                        y: self.tempView.bounds.height / 4 * self.scrollView.zoomScale - 100)
             }else{
-                self.scrollView.contentOffset = CGPoint(x: (self.tempView.bounds.width - self.metroView.bounds.width) / 2 * self.scrollView.zoomScale, y: 0)
+                self.scrollView.contentOffset = CGPoint(x: self.tempView.bounds.width / 4 * self.scrollView.zoomScale,
+                                                        y: 0)
             }
             
         })

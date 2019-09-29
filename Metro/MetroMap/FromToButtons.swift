@@ -26,7 +26,6 @@ class FromToButtons: UIView {
     private var isSetup = false
     private let from = UIButton(type: .system)
     private let to = UIButton(type: .system)
-    var centerX: CGFloat { return self.frame.width / 2}
     private let space:CGFloat = 5
     var currentStyle:FromToButtonsStyle = .to
     
@@ -34,22 +33,10 @@ class FromToButtons: UIView {
     
     
     override func layoutSubviews() {
-        let width = self.frame.width
-        let height = width / 6
         
-        self.frame.size = CGSize(width: width, height: height)
         super.layoutSubviews()
-        for elem in [from,to] {
-            elem.layer.cornerRadius = height / 2
-            elem.layer.borderWidth = 2
-        }
         chageStyle()
-        from.frame = CGRect(x: 0, y: 0, width: width / 2.1, height: height)
-        to.frame = CGRect(x: width / 2 - width / 2.1 + centerX, y: from.frame.origin.y, width: width / 2.1, height: height)
-        from.setTitle("отсюда", for: .normal)
-        to.setTitle("сюда", for: .normal)
-        from.titleLabel?.font = UIFont(name: "Helvetica", size: height / 3)
-        to.titleLabel?.font = UIFont(name: "Helvetica", size: height / 3)
+        buttonsInit()
         
         if isSetup { return }
         self.addSubview(to)
@@ -58,6 +45,26 @@ class FromToButtons: UIView {
         to.addTarget(self, action: #selector(startToAnimate), for: [.touchDown,.touchDragInside])
         to.addTarget(self, action: #selector(endToAnimate), for: .touchDragOutside)
         from.addTarget(self, action: #selector(pressFromButton), for: .touchUpInside)
+    }
+    
+    private func buttonsInit() {
+        let width = self.frame.width
+        let height = width / 6
+        
+        self.frame.size = CGSize(width: width, height: height)
+
+        
+        for elem in [from,to] {
+            elem.layer.cornerRadius = height / 2
+            elem.layer.borderWidth = 2
+        }
+        
+        from.frame = CGRect(x: 0, y: 0, width: width / 2.1, height: height)
+        to.frame = CGRect(x: width / 2 - width / 2.1 + self.frame.midX, y: from.frame.origin.y, width: width / 2.1, height: height)
+        from.setTitle("отсюда", for: .normal)
+        to.setTitle("сюда", for: .normal)
+        from.titleLabel?.font = UIFont(name: "Helvetica", size: height / 3)
+        to.titleLabel?.font = UIFont(name: "Helvetica", size: height / 3)
     }
     
     func chageStyle() {

@@ -9,7 +9,7 @@
 import UIKit
 
 enum StationInfoConfig {
-    case start, end, normal, transfer
+    case start, end, normal, transfer, donat
 }
 
 struct StationInfo {
@@ -32,33 +32,19 @@ class MoreTableView: UITableViewController {
         super.viewDidLoad()
         workWithData()
         finalWorkWithData()
-        print(finalData.count)
+        for elem in finalData {
+            print("cool")
+            for pr in elem {
+                print(pr.name)
+                print(pr.type)
+            }
+        }
+        self.tableView.rowHeight = 40
         self.tableView.dataSource = self
         self.tableView.reloadData()
-//        var index = 0
-//        for elem in finalData {
-//            index += 1
-//            for station in elem {
-//                print(station.name)
-//                print(index)
-//            }
-//        }
-//        for elem in compliteData {
-//            let calendar = Calendar.current
-//            print("\(calendar.component(.hour, from: elem.time)) : \(calendar.component(.minute, from: elem.time))")
-//            switch elem.type {
-//            case .start:
-//                print("start")
-//            case .normal:
-//                print("normal")
-//            case .transfer:
-//                print("transfer")
-//            case .end:
-//                print("end")
-//            }
-//
-//            print("\(elem.name)")
-//        }
+        self.tableView.separatorStyle = .none
+        self.tableView.allowsSelection = false
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -77,7 +63,6 @@ class MoreTableView: UITableViewController {
         var saveIndex = 1
         finalData.append([])
         for i in 0..<compliteData.count {
-            if i > 0 && i != compliteData.count - 1 {
                 if compliteData[i].type == .transfer {
                     if finalData.count - 1 != Int(saveIndex / 2) {
                         finalData.append([])
@@ -85,7 +70,6 @@ class MoreTableView: UITableViewController {
                     finalData[saveIndex / 2].append(compliteData[i])
                     saveIndex += 1
                     continue
-                }
             }
             if finalData.count - 1 != Int(saveIndex / 2) {
                 finalData.append([])
@@ -107,10 +91,20 @@ class MoreTableView: UITableViewController {
                 type = .end
             }
             
-            if stationConfig[data[i]]?.multi ?? false && i != data.count - 1 && i != 0 {
-                if stationConfig[data[i + 1]]?.multi ?? false || stationConfig[data[i - 1]]?.multi ?? false {
-                    if stationConfig[data[i]]?.color != stationConfig[data[i+1]]?.color || stationConfig[data[i]]?.color != stationConfig[data[i-1]]?.color {
+            if stationConfig[data[i]]?.multi ?? false {
+                if i == 0 {
+                     if stationConfig[data[i]]?.color != stationConfig[data[i+1]]?.color {
                         type = .transfer
+                    }
+                }else if i == data.count - 1 {
+                    if stationConfig[data[i]]?.color != stationConfig[data[i-1]]?.color {
+                        type = .transfer
+                    }
+                }else {
+                    if stationConfig[data[i + 1]]?.multi ?? false || stationConfig[data[i - 1]]?.multi ?? false {
+                        if stationConfig[data[i]]?.color != stationConfig[data[i+1]]?.color || stationConfig[data[i]]?.color != stationConfig[data[i-1]]?.color {
+                            type = .transfer
+                        }
                     }
                 }
             }
@@ -151,18 +145,43 @@ class MoreTableView: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return finalData[section].count
     }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return section == 0 ? 1.0 : 80
+    }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = StationInfoCell()
         let data = finalData[indexPath.section]
+        var type = data[indexPath.row].type
+        if type == .transfer {
+            if indexPath.row == 0 {
+                type = .start
+            }
+            else {
+                type = .end
+            }
+        }
 //        cell.name.text = data[indexPath.row].name
         
         let calendar = Calendar.current
         let hour = calendar.component(.hour, from: data[indexPath.row].time)
         let minute = calendar.component(.minute, from: data[indexPath.row].time)
+        
         cell.setName(name: data[indexPath.row].name)
         cell.setTime(time: "\(hour < 10 ? "0" + String(hour) : String(hour)):\(minute < 10 ? "0" + String(minute) : String(minute))")
+        
+        cell.type = type
+        
+        if indexPath.section == 0 && indexPath.row == 0 && data.count == 1 {
+            type = .donat
+        }else if indexPath.section == finalData.count - 1 && indexPath.row == data.count - 1 && data.count == 1 {
+            type = .donat
+        }
+        
+        cell.line.setLine(color: data[indexPath.row].color, type: type)
+        
 
         // Configure the cell...
 

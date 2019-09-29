@@ -9,7 +9,7 @@
 import UIKit
 
 protocol MetroDonatOneDelegate {
-    func tapOnDonat(sender:Any)
+    func tapOnDonat(sender: MetroDonatOne)
 }
 
 @IBDesignable
@@ -23,20 +23,11 @@ class MetroDonatOne: UIView {
     private let stroke:CGFloat = 10
     private let donat = UIView()
     var delegate:MetroDonatOneDelegate?
-    var centerX: CGFloat {
-        get {
-            return self.frame.origin.x + self.frame.width / 2
-        }
-    }
-    var centerY: CGFloat {
-        get {
-            return self.frame.origin.y + self.frame.height / 2
-        }
-    }
+
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.backgroundColor = .white
+        self.backgroundColor = (traitCollection.userInterfaceStyle == .dark) ? .black : .white
         self.layer.cornerRadius = self.frame.width / 2
         
         donat.frame = CGRect(x: stroke / 2, y: stroke / 2, width: self.frame.width - stroke , height: self.frame.height - stroke)
@@ -65,11 +56,12 @@ extension MetroDonatOne: ScalledObjectView {
     func scale() {
         if self.scaled{
             let scaleValue:CGFloat = 5
+            let cX = self.frame.midX
+            let cY = self.frame.midY
             UIView.animate(withDuration: 0.6, animations: {
-                self.frame.origin = CGPoint(x: self.frame.origin.x - scaleValue / 2,
-                                            y: self.frame.origin.y - scaleValue / 2)
                 self.frame.size = CGSize(width: self.frame.size.width + scaleValue,
                                          height: self.frame.size.height + scaleValue)
+                self.center = CGPoint(x: cX, y: cY)
                 self.layoutIfNeeded()
             })
             self.scaled = false
@@ -78,12 +70,13 @@ extension MetroDonatOne: ScalledObjectView {
     
     func unScale() {
         if !self.scaled {
+            let cX = self.frame.midX
+            let cY = self.frame.midY
             let scaleValue:CGFloat = 5
             UIView.animate(withDuration: 0.6, animations: {
-                self.frame.origin = CGPoint(x: self.frame.origin.x + scaleValue / 2,
-                                            y: self.frame.origin.y + scaleValue / 2)
                 self.frame.size = CGSize(width: self.frame.size.width - scaleValue,
                                          height: self.frame.size.height - scaleValue)
+                self.center = CGPoint(x: cX, y: cY)
                 self.layoutIfNeeded()
             })
             self.scaled = true

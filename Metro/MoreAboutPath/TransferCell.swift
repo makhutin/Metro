@@ -42,7 +42,7 @@ class TransferCell: UITableViewCell {
                                y: self.frame.height / 4 - time.frame.height / 2 + self.frame.height / 2,
                                width: name.frame.height,
                                height: name.frame.height)
-        
+        if isSetup { return }
         self.addSubview(time)
         self.addSubview(name)
         self.addSubview(imgView)

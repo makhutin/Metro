@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		785B5C7C233E870400BEC6AB /* TransferCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785B5C7B233E870400BEC6AB /* TransferCell.swift */; };
+		785B5C802340AE6A00BEC6AB /* ForAboutPathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785B5C7F2340AE6A00BEC6AB /* ForAboutPathView.swift */; };
 		7867175923329CA10030841D /* MetroConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7867175823329CA10030841D /* MetroConfig.swift */; };
 		789E8912233CFC940081D705 /* SomeProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E8911233CFC940081D705 /* SomeProtocols.swift */; };
 		789E8914233D29F70081D705 /* MoreTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E8913233D29F70081D705 /* MoreTableView.swift */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		785B5C7B233E870400BEC6AB /* TransferCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferCell.swift; sourceTree = "<group>"; };
+		785B5C7F2340AE6A00BEC6AB /* ForAboutPathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForAboutPathView.swift; sourceTree = "<group>"; };
 		7867175823329CA10030841D /* MetroConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroConfig.swift; sourceTree = "<group>"; };
 		789E8911233CFC940081D705 /* SomeProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomeProtocols.swift; sourceTree = "<group>"; };
 		789E8913233D29F70081D705 /* MoreTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreTableView.swift; sourceTree = "<group>"; };
@@ -59,6 +61,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		785B5C7D2340ADD300BEC6AB /* MetroMap */ = {
+			isa = PBXGroup;
+			children = (
+				78C897C12332615900A9DAFF /* ViewController.swift */,
+				78C897D12332642800A9DAFF /* MetroView.swift */,
+				78C897D3233266C700A9DAFF /* MetroDonatOne.swift */,
+				78F07DBB233B7EAA003387B4 /* TextStationView.swift */,
+				78F07DBD233B8D6C003387B4 /* MultiStationView.swift */,
+				78AD08022337DE640069D240 /* FromToButtons.swift */,
+				78AAF61523394CF0007ECD16 /* MarkerView.swift */,
+				78AD08042338A9050069D240 /* StationConnectionView.swift */,
+			);
+			path = MetroMap;
+			sourceTree = "<group>";
+		};
+		785B5C7E2340AE0F00BEC6AB /* MoreAboutPath */ = {
+			isa = PBXGroup;
+			children = (
+				789E8915233D44050081D705 /* StationInfoCell.swift */,
+				785B5C7B233E870400BEC6AB /* TransferCell.swift */,
+				789E8913233D29F70081D705 /* MoreTableView.swift */,
+				785B5C7F2340AE6A00BEC6AB /* ForAboutPathView.swift */,
+			);
+			path = MoreAboutPath;
+			sourceTree = "<group>";
+		};
 		78C897B32332615800A9DAFF = {
 			isa = PBXGroup;
 			children = (
@@ -78,20 +106,11 @@
 		78C897BE2332615900A9DAFF /* Metro */ = {
 			isa = PBXGroup;
 			children = (
-				789E8913233D29F70081D705 /* MoreTableView.swift */,
-				785B5C7B233E870400BEC6AB /* TransferCell.swift */,
-				789E8915233D44050081D705 /* StationInfoCell.swift */,
 				789E8911233CFC940081D705 /* SomeProtocols.swift */,
 				78C897BF2332615900A9DAFF /* AppDelegate.swift */,
-				78C897C12332615900A9DAFF /* ViewController.swift */,
+				785B5C7E2340AE0F00BEC6AB /* MoreAboutPath */,
+				785B5C7D2340ADD300BEC6AB /* MetroMap */,
 				7867175823329CA10030841D /* MetroConfig.swift */,
-				78F07DBD233B8D6C003387B4 /* MultiStationView.swift */,
-				78AAF61523394CF0007ECD16 /* MarkerView.swift */,
-				78C897D12332642800A9DAFF /* MetroView.swift */,
-				78AD08022337DE640069D240 /* FromToButtons.swift */,
-				78AD08042338A9050069D240 /* StationConnectionView.swift */,
-				78C897D3233266C700A9DAFF /* MetroDonatOne.swift */,
-				78F07DBB233B7EAA003387B4 /* TextStationView.swift */,
 				78C897C32332615900A9DAFF /* Main.storyboard */,
 				78C897C62332615D00A9DAFF /* Assets.xcassets */,
 				78C897C82332615D00A9DAFF /* LaunchScreen.storyboard */,
@@ -176,6 +195,7 @@
 				78C897C22332615900A9DAFF /* ViewController.swift in Sources */,
 				78AD08052338A9050069D240 /* StationConnectionView.swift in Sources */,
 				78C897D22332642800A9DAFF /* MetroView.swift in Sources */,
+				785B5C802340AE6A00BEC6AB /* ForAboutPathView.swift in Sources */,
 				789E8912233CFC940081D705 /* SomeProtocols.swift in Sources */,
 				785B5C7C233E870400BEC6AB /* TransferCell.swift in Sources */,
 				78F07DBC233B7EAA003387B4 /* TextStationView.swift in Sources */,
@@ -333,6 +353,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MZTVVF39C7;
 				INFOPLIST_FILE = Metro/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -351,6 +372,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MZTVVF39C7;
 				INFOPLIST_FILE = Metro/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

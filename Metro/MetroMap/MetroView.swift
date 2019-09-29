@@ -22,6 +22,8 @@ class MetroView: UIView {
     
     private var widthCoficent: CGFloat = 0.0
     private var heightCoficent: CGFloat = 0.0
+    private let metroPositionX: CGFloat = 450
+    private let metroPositionY: CGFloat = 450
     
     private var stationsConfig = MetroConfig.share.allStations
     private var linesConfig = MetroConfig.share.lines
@@ -34,7 +36,8 @@ class MetroView: UIView {
     private var textView: [TextStationView] = []
     private let fromTo = FromToButtons()
     
-    private var fromToWidth:CGFloat = 240
+    
+    private var fromToWidth:CGFloat = 260
     
     private var aPoint: Int?
     private var bPoint: Int?
@@ -44,17 +47,35 @@ class MetroView: UIView {
     private let pointSize: CGFloat = 40
     
     private var currentId: Int?
+
     
     var delegate: MetroVieweDelagate?
     
 
     
-    
     override func layoutSubviews() {
         
-        widthCoficent = self.frame.width / 100
-        heightCoficent = self.frame.height / 100
+        widthCoficent = self.frame.width / 200
+        heightCoficent = self.frame.height / 200
         
+        
+        
+        
+        super.layoutSubviews()
+        
+        if isSetup { return }
+        pointSetup()
+        stationConnectInit()
+        stationsInit()
+        for elem in [aPointView,bPointView,fromTo] {
+            self.addSubview(elem)
+            elem.isHidden = true
+        }
+        fromTo.delegate = self
+        isSetup = true
+    }
+    
+    private func pointSetup() {
         aPointView.frame.size = CGSize(width: pointSize, height: pointSize)
         bPointView.frame.size = CGSize(width: pointSize, height: pointSize)
         
@@ -65,18 +86,9 @@ class MetroView: UIView {
         bPointView.word = "B"
         bPointView.layoutIfNeeded()
         
-        super.layoutSubviews()
-        if isSetup { return }
-        stationConnectInit()
         fromTo.frame.size = CGSize(width: fromToWidth / contentScaleFactor, height: 40)
-        stationsInit()
-        for elem in [aPointView,bPointView,fromTo] {
-            self.addSubview(elem)
-            elem.isHidden = true
-        }
-        fromTo.delegate = self
-        isSetup = true
     }
+    
     
     /**
      draw sation on the mapview
@@ -87,8 +99,8 @@ class MetroView: UIView {
         
         for multi in multiConfig {
             let view = MultiStationView()
-            let x = multi.coords.x * widthCoficent
-            let y = multi.coords.y * heightCoficent
+            let x = multi.coords.x * widthCoficent + metroPositionX
+            let y = multi.coords.y * heightCoficent + metroPositionY
             view.frame.origin = CGPoint(x: x, y: y)
             view.frame.size = CGSize(width: size * 2, height: size * 2)
             view.stationCount = multi.count
@@ -100,8 +112,8 @@ class MetroView: UIView {
             // create dots "donats"
             let view = MetroDonatOne()
             view.id = station.id
-            let x = station.coords.x * widthCoficent
-            let y = station.coords.y * heightCoficent
+            let x = station.coords.x * widthCoficent + metroPositionX
+            let y = station.coords.y * heightCoficent + metroPositionY
             view.frame.origin = CGPoint(x: x, y: y)
             view.donatColor = station.color
             view.frame.size = CGSize(width: size, height: size)
@@ -121,25 +133,25 @@ class MetroView: UIView {
             //set text frame
             switch view.id {
             case 4...8,28,46,63,64,50...53:
-                text.frame = CGRect(x: view.centerX - text.frame.width - 16, y: view.centerY - 10, width: 150, height: 20)
+                text.frame = CGRect(x: view.frame.midX - text.frame.width - 16, y: view.frame.midY - 10, width: 150, height: 20)
                 text.style = .right
             case 57,54,56,45,44:
-                text.frame = CGRect(x: view.centerX + 6, y: view.centerY - 26, width: 150, height: 20)
+                text.frame = CGRect(x: view.frame.midX + 6, y: view.frame.midY - 26, width: 150, height: 20)
                 text.style = .left
             case 10:
-                text.frame = CGRect(x: view.centerX - text.frame.width - 14, y: view.centerY + 5, width: 150, height: 20)
+                text.frame = CGRect(x: view.frame.midX - text.frame.width - 14, y: view.frame.midY + 5, width: 150, height: 20)
                 text.style = .right
             case 29,9:
-                text.frame = CGRect(x: view.centerX - text.frame.width - 8, y: view.centerY - 26, width: 150, height: 20)
+                text.frame = CGRect(x: view.frame.midX - text.frame.width - 8, y: view.frame.midY - 26, width: 150, height: 20)
                 text.style = .right
             case 43:
-                text.frame = CGRect(x: view.centerX + 30.3, y: view.centerY - 35, width: 150, height: 20)
+                text.frame = CGRect(x: view.frame.midX + 30.3, y: view.frame.midY - 35, width: 150, height: 20)
                 text.style = .left
             case 55:
-                text.frame = CGRect(x: view.centerX - text.frame.width / 2, y: view.centerY + 5, width: 150, height: 20)
+                text.frame = CGRect(x: view.frame.midX - text.frame.width / 2, y: view.frame.midY + 5, width: 150, height: 20)
                 text.style = .right
             default:
-                text.frame = CGRect(x: view.centerX + 15, y: view.centerY - 10, width: 150, height: 20)
+                text.frame = CGRect(x: view.frame.midX + 15, y: view.frame.midY - 10, width: 150, height: 20)
             }
             // set color for multi station
             switch view.id {
@@ -259,7 +271,7 @@ class MetroView: UIView {
         if let donat = findCurrentDonat(){
             fromTo.chageStyle()
             fromTo.frame.size.width = fromToWidth / contentScaleFactor
-            let x = donat.centerX - fromTo.frame.width / 2
+            let x = donat.frame.midX - fromTo.frame.width / 2
             let y = donat.frame.origin.y + 5
             fromTo.frame.origin = CGPoint(x: x, y: y )
             
@@ -309,25 +321,25 @@ extension MetroView {
             }
         }
         for connect in LineBetweenStationsList {
-            var fromCoords = CGPoint(x: stationsConfig[connect.fromId]!.coords.x * widthCoficent + size / 2,
-                                     y: stationsConfig[connect.fromId]!.coords.y * heightCoficent + size / 2)
+            var fromCoords = CGPoint(x: stationsConfig[connect.fromId]!.coords.x * widthCoficent + size / 2 + metroPositionX,
+                                     y: stationsConfig[connect.fromId]!.coords.y * heightCoficent + size / 2 + metroPositionY)
             if stationsConfig[connect.fromId]!.multi {
                 let x = mulitCoords[connect.fromId]!.x * widthCoficent + size + 4
                 var y = mulitCoords[connect.fromId]!.y * heightCoficent + size / 2
                 if [28,57,63].contains(connect.fromId) {
                     y = mulitCoords[connect.fromId]!.y * heightCoficent + size
                 }
-                fromCoords = CGPoint(x: x, y: y)
+                fromCoords = CGPoint(x: x + metroPositionX, y: y + metroPositionY)
             }
-            var toCoords = CGPoint(x: stationsConfig[connect.toId]!.coords.x * widthCoficent + size / 2,
-                                   y: stationsConfig[connect.toId]!.coords.y * heightCoficent + size / 2)
+            var toCoords = CGPoint(x: stationsConfig[connect.toId]!.coords.x * widthCoficent + size / 2 + metroPositionX,
+                                   y: stationsConfig[connect.toId]!.coords.y * heightCoficent + size / 2 + metroPositionY)
             if stationsConfig[connect.toId]!.multi {
                 let x = mulitCoords[connect.toId]!.x * widthCoficent + size + 4
                 var y = mulitCoords[connect.toId]!.y * heightCoficent + size / 2
                 if [28,57,63].contains(connect.toId) {
                     y = mulitCoords[connect.toId]!.y * heightCoficent + size
                 }
-                toCoords = CGPoint(x: x, y: y)
+                toCoords = CGPoint(x: x + metroPositionX, y: y + metroPositionY)
             }
             
             result.append(CoordsBetweenStationsWithColor(fromCoords: fromCoords, toCoords: toCoords, color: stationsConfig[connect.toId]!.color))
@@ -348,7 +360,7 @@ extension MetroView {
      
      :returns: MetroDonat? return nil or current view station.
      */
-    private func findCurrentDonat() -> MetroDonatOne? {
+    func findCurrentDonat() -> MetroDonatOne? {
         if let currentId = currentId {
             if currentId != aPoint && currentId != bPoint{
                 for elem in viewSations {
@@ -399,24 +411,23 @@ extension MetroView: FromToButtonsDelegate{
 
 
 extension MetroView: MetroDonatOneDelegate{
-    func tapOnDonat(sender: Any) {
+    func tapOnDonat(sender: MetroDonatOne) {
         UIView.animate(withDuration: 0.4, animations: {
             self.fromTo.layer.opacity = 0
             self.layoutIfNeeded()
         })
-        if let donat = sender as? MetroDonatOne{
-            if currentId == nil {
-                currentId = donat.id
-                donat.layer.contentsScale = 2
-                donat.unScale()
-            }else{
-                if let oldDonat = findCurrentDonat() {
-                    oldDonat.scale()
-                }
-                currentId = donat.id
-                donat.layer.contentsScale = 2
-                donat.unScale()
+
+        if currentId == nil {
+            currentId = sender.id
+            sender.layer.contentsScale = 2
+            sender.unScale()
+        }else{
+            if let oldDonat = findCurrentDonat() {
+                oldDonat.scale()
             }
+            currentId = sender.id
+            sender.layer.contentsScale = 2
+            sender.unScale()
             
             //set from to point
             switch(aPoint,bPoint){
@@ -467,8 +478,8 @@ extension MetroView {
             pointView.isHidden = false
             for elem in viewSations {
                 if elem.id == point {
-                    pointView.frame.origin = CGPoint(x: elem.centerX - pointSize / 2,
-                                                      y: elem.centerY - pointSize * 1.1)
+                    pointView.frame.origin = CGPoint(x: elem.frame.midX - pointSize / 2,
+                                                     y: elem.frame.midY - pointSize * 1.1)
                     pointView.color = elem.donatColor
                     UIView.animate(withDuration: 0.6, animations: {
                         

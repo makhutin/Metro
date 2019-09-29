@@ -33,6 +33,9 @@ class TextStationView: UIView {
         
         
         button.setTitle(text, for: .normal)
+        if traitCollection.userInterfaceStyle == .dark && color == .black {
+            color = .white
+        }
         button.setTitleColor(color, for: .normal)
         button.titleLabel?.font = font
         button.contentHorizontalAlignment = style

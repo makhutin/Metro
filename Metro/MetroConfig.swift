@@ -336,7 +336,7 @@ class MetroConfig {
                              68:"старая деревня",
                              69:"коменданский проспект"]]
     
-    func finder(start:Int, end:Int, way:Int) -> [Int] {
+    private func finder(start:Int, end:Int, way:Int) -> [Int] {
         if !link.keys.contains(start){ return [] }
         if !link.keys.contains(end){ return [] }
         var target = start
@@ -367,14 +367,8 @@ class MetroConfig {
                             queen.append(elem.id)
                         }
                     }
-                case 2:
-                    for elem in temp.reversed().shuffled() {
-                        if !queen.contains( elem.id ) && !visit.contains( elem.id ){
-                            queen.append(elem.id)
-                        }
-                    }
                     
-                case 3:
+                case 2:
                     for elem in temp {
                         if !queen.contains( elem.id ) && !visit.contains( elem.id ){
                             queen.append(elem.id)
@@ -415,11 +409,9 @@ class MetroConfig {
         let way1 = finder(start: start, end: end, way: 0)
         let way2 = finder(start: start, end: end, way: 1)
         let way3 = finder(start: start, end: end, way: 2)
-        let way4 = finder(start: start, end: end, way: 3)
         var time1 = 0
         var time2 = 0
         var time3 = 0
-        var time4 = 0
         
         for index in 0..<way1.count - 1 {
             for elem in link[way1[index]]! {
@@ -442,30 +434,19 @@ class MetroConfig {
                 }
             }
         }
-        for index in 0..<way4.count - 1 {
-            for elem in link[way4[index]]! {
-                if elem.id == way4[index + 1] {
-                    time4 += elem.time
-                }
-            }
-        }
-        print(time1)
-        print(way1)
-        print(time2)
-        print(way2)
-        print(time3)
-        print(way3)
-        print(time4)
-        print(way4)
-        switch min(time1,time2,time3,time4) {
+//        print(time1)
+//        print(way1)
+//        print(time2)
+//        print(way2)
+//        print(time3)
+//        print(way3)
+        switch min(time1,time2,time3) {
         case time1:
             return way1
         case time2:
             return way2
         case time3:
             return way3
-        case time4:
-            return way4
         default:
             return way1
         }
