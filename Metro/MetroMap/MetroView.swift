@@ -428,7 +428,7 @@ extension MetroView: MetroDonatOneDelegate{
             currentId = sender.id
             sender.layer.contentsScale = 2
             sender.unScale()
-            
+        }
             //set from to point
             switch(aPoint,bPoint){
             case (nil,nil):
@@ -442,7 +442,6 @@ extension MetroView: MetroDonatOneDelegate{
             updateFromToScale()
             delegate?.fromToButtonPress(sender: fromTo)
         
-        }
     }
     
 }
