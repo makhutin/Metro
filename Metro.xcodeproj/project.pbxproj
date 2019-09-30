@@ -106,10 +106,10 @@
 		78C897BE2332615900A9DAFF /* Metro */ = {
 			isa = PBXGroup;
 			children = (
-				789E8911233CFC940081D705 /* SomeProtocols.swift */,
-				78C897BF2332615900A9DAFF /* AppDelegate.swift */,
 				785B5C7E2340AE0F00BEC6AB /* MoreAboutPath */,
 				785B5C7D2340ADD300BEC6AB /* MetroMap */,
+				789E8911233CFC940081D705 /* SomeProtocols.swift */,
+				78C897BF2332615900A9DAFF /* AppDelegate.swift */,
 				7867175823329CA10030841D /* MetroConfig.swift */,
 				78C897C32332615900A9DAFF /* Main.storyboard */,
 				78C897C62332615D00A9DAFF /* Assets.xcassets */,

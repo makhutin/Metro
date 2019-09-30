@@ -60,7 +60,7 @@ class FromToButtons: UIView {
         }
         
         from.frame = CGRect(x: 0, y: 0, width: width / 2.1, height: height)
-        to.frame = CGRect(x: width / 2 - width / 2.1 + self.frame.midX, y: from.frame.origin.y, width: width / 2.1, height: height)
+        to.frame = CGRect(x: width / 2 - width / 2.1 + self.frame.width / 2, y: from.frame.origin.y, width: width / 2.1, height: height)
         from.setTitle("отсюда", for: .normal)
         to.setTitle("сюда", for: .normal)
         from.titleLabel?.font = UIFont(name: "Helvetica", size: height / 3)
