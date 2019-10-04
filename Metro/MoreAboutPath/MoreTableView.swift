@@ -149,7 +149,7 @@ class MoreTableView: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return section == 0 ? 1.0 : 80
     }
-
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = StationInfoCell()
@@ -181,7 +181,6 @@ class MoreTableView: UITableViewController {
         }
         
         cell.line.setLine(color: data[indexPath.row].color, type: type)
-        
 
         // Configure the cell...
 
@@ -203,6 +202,21 @@ class MoreTableView: UITableViewController {
             
                 return cell
                 
+        }else{
+            return UIView()
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if section == finalData.count - 1 && !finalData.isEmpty{
+            let cell = TransferCell()
+            cell.setName(name: "Общие время в пути составит")
+            let timeEnd = finalData.last!.last!.time.timeIntervalSince1970
+            let timeStart = finalData.first!.first!.time.timeIntervalSince1970
+            let finalTime = Int((timeEnd - timeStart) / 60)
+            cell.imgView.isHidden = true
+            cell.setTime(time: "\(finalTime) мин")
+                return cell
         }else{
             return UIView()
         }

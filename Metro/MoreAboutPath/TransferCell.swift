@@ -13,6 +13,7 @@ class TransferCell: UITableViewCell {
     let name = UILabel()
     let time = UILabel()
     let imgView = UIImageView()
+    let mainView = UIView()
     var isSetup = false
 
     override func awakeFromNib() {
@@ -27,15 +28,19 @@ class TransferCell: UITableViewCell {
     }
     
     override func didMoveToSuperview() {
-        time.font = UIFont(name: "Helvetica", size: 10)
+
+        time.font = UIFont(name: "Helvetica", size: 12)
         time.sizeToFit()
         time.frame.origin = CGPoint(x:self.frame.width / 2 - name.frame.width / 2 + name.frame.height + 3,
                                     y: self.frame.height / 4 - time.frame.height / 2 + self.frame.height / 2)
         
-        name.font = UIFont(name: "Helvetica", size: 10)
+        name.font = UIFont(name: "Helvetica", size: 12)
         name.sizeToFit()
         name.frame.origin = CGPoint(x: self.frame.width / 2 - name.frame.width / 2,
                             y: self.frame.height / 4 - name.frame.height / 2)
+        
+        time.backgroundColor = (traitCollection.userInterfaceStyle == .dark) ? .black : .white
+        name.backgroundColor = (traitCollection.userInterfaceStyle == .dark) ? .black : .white
         
         imgView.image = UIImage(named: "run")
         imgView.frame = CGRect(x: self.frame.width / 2 - name.frame.width / 2,
@@ -43,6 +48,7 @@ class TransferCell: UITableViewCell {
                                width: name.frame.height,
                                height: name.frame.height)
         if isSetup { return }
+        self.addSubview(mainView)
         self.addSubview(time)
         self.addSubview(name)
         self.addSubview(imgView)
