@@ -83,7 +83,7 @@ class MetroView: UIView {
         aPointView.layer.shadowOffset = CGSize(width: 2, height: 2)
 
         
-        bPointView.word = "B"
+        bPointView.word = .b
         bPointView.layoutIfNeeded()
         
         fromTo.frame.size = CGSize(width: fromToWidth / contentScaleFactor, height: 40)
@@ -208,7 +208,7 @@ class MetroView: UIView {
             
             
             
-            let stations = MetroConfig.share.findEnd(start: a, end: b)
+            let stations = RouteBuilder.share.buildPath(start: a, end: b)
             delegate?.drawStationPath(sender: self,data: stations)
             
             // hide or unhide stations point
@@ -472,19 +472,20 @@ extension MetroView {
         }
         if let point = tempPoint {
             pointView.layer.opacity = 0
-            pointView.frame.size = CGSize(width: pointView.frame.width, height: self.pointSize * 2 / contentScaleFactor )
-            pointView.layoutIfNeeded()
             pointView.isHidden = false
-            for elem in viewSations {
-                if elem.id == point {
+            viewSations.forEach {
+                if $0.id == point {
+                    let elem = $0
+                    pointView.frame.size = CGSize(width: pointView.frame.width, height: pointView.frame.height / 2)
                     pointView.frame.origin = CGPoint(x: elem.frame.midX - pointSize / 2,
-                                                     y: elem.frame.midY - pointSize * 1.1)
+                                                     y: elem.frame.midY - pointSize * 2)
                     pointView.color = elem.donatColor
+                    
                     UIView.animate(withDuration: 0.6, animations: {
-                        
                         pointView.layer.opacity = 1
-                        pointView.frame.size = CGSize(width: pointView.frame.width, height: self.pointSize)
-                        self.layoutIfNeeded()
+                        pointView.frame.origin = CGPoint(x: elem.frame.midX - self.pointSize / 2,
+                                                         y: elem.frame.midY - self.pointSize)
+                        pointView.frame.size = CGSize(width: pointView.frame.width, height: pointView.frame.width)
                     })
                 }
             }

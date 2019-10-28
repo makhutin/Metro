@@ -85,21 +85,9 @@ class FromToButtons: UIView {
             from.backgroundColor = lightBlue
             from.setTitleColor(.white, for: .normal)
             from.layer.borderColor = lightBlue.cgColor
-//        @unknown default:
-//            print("Oo")
-
         }
     }
     
-    
-    
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
 
 }
 
