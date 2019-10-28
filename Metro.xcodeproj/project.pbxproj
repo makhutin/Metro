@@ -23,6 +23,13 @@
 		78C897CA2332615D00A9DAFF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78C897C82332615D00A9DAFF /* LaunchScreen.storyboard */; };
 		78C897D22332642800A9DAFF /* MetroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C897D12332642800A9DAFF /* MetroView.swift */; };
 		78C897D4233266C700A9DAFF /* MetroDonatOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C897D3233266C700A9DAFF /* MetroDonatOne.swift */; };
+		78D486FC236749B30078E00C /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D486FB236749B30078E00C /* TriangleView.swift */; };
+		78E6BAE023618D83004338D2 /* MetroStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6BADF23618D83004338D2 /* MetroStation.swift */; };
+		78E6BAE223618DA0004338D2 /* MetroMultiStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6BAE123618DA0004338D2 /* MetroMultiStation.swift */; };
+		78E6BAE423618DBB004338D2 /* LinkWithTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6BAE323618DBB004338D2 /* LinkWithTime.swift */; };
+		78E6BAE623618DCB004338D2 /* LineBetweenStations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6BAE523618DCB004338D2 /* LineBetweenStations.swift */; };
+		78E6BAEA23618DF1004338D2 /* CoordsBetweenStationsWithColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6BAE923618DF1004338D2 /* CoordsBetweenStationsWithColor.swift */; };
+		78E6BAEC23618E8B004338D2 /* RouteBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6BAEB23618E8B004338D2 /* RouteBuilder.swift */; };
 		78F07DBC233B7EAA003387B4 /* TextStationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F07DBB233B7EAA003387B4 /* TextStationView.swift */; };
 		78F07DBE233B8D6C003387B4 /* MultiStationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F07DBD233B8D6C003387B4 /* MultiStationView.swift */; };
 /* End PBXBuildFile section */
@@ -46,6 +53,13 @@
 		78C897CB2332615D00A9DAFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78C897D12332642800A9DAFF /* MetroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroView.swift; sourceTree = "<group>"; };
 		78C897D3233266C700A9DAFF /* MetroDonatOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroDonatOne.swift; sourceTree = "<group>"; };
+		78D486FB236749B30078E00C /* TriangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
+		78E6BADF23618D83004338D2 /* MetroStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroStation.swift; sourceTree = "<group>"; };
+		78E6BAE123618DA0004338D2 /* MetroMultiStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroMultiStation.swift; sourceTree = "<group>"; };
+		78E6BAE323618DBB004338D2 /* LinkWithTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkWithTime.swift; sourceTree = "<group>"; };
+		78E6BAE523618DCB004338D2 /* LineBetweenStations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineBetweenStations.swift; sourceTree = "<group>"; };
+		78E6BAE923618DF1004338D2 /* CoordsBetweenStationsWithColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordsBetweenStationsWithColor.swift; sourceTree = "<group>"; };
+		78E6BAEB23618E8B004338D2 /* RouteBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteBuilder.swift; sourceTree = "<group>"; };
 		78F07DBB233B7EAA003387B4 /* TextStationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStationView.swift; sourceTree = "<group>"; };
 		78F07DBD233B8D6C003387B4 /* MultiStationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiStationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,7 +84,6 @@
 				78F07DBB233B7EAA003387B4 /* TextStationView.swift */,
 				78F07DBD233B8D6C003387B4 /* MultiStationView.swift */,
 				78AD08022337DE640069D240 /* FromToButtons.swift */,
-				78AAF61523394CF0007ECD16 /* MarkerView.swift */,
 				78AD08042338A9050069D240 /* StationConnectionView.swift */,
 			);
 			path = MetroMap;
@@ -110,13 +123,53 @@
 				785B5C7D2340ADD300BEC6AB /* MetroMap */,
 				789E8911233CFC940081D705 /* SomeProtocols.swift */,
 				78C897BF2332615900A9DAFF /* AppDelegate.swift */,
-				7867175823329CA10030841D /* MetroConfig.swift */,
-				78C897C32332615900A9DAFF /* Main.storyboard */,
+				78D486FD23675ADF0078E00C /* View */,
+				78E6BADE23618D69004338D2 /* Entity */,
+				78D486FF23675B1E0078E00C /* Storyboards */,
+				78D486FE23675B0E0078E00C /* Service */,
 				78C897C62332615D00A9DAFF /* Assets.xcassets */,
-				78C897C82332615D00A9DAFF /* LaunchScreen.storyboard */,
 				78C897CB2332615D00A9DAFF /* Info.plist */,
 			);
 			path = Metro;
+			sourceTree = "<group>";
+		};
+		78D486FD23675ADF0078E00C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				78AAF61523394CF0007ECD16 /* MarkerView.swift */,
+				78D486FB236749B30078E00C /* TriangleView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		78D486FE23675B0E0078E00C /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				78E6BAEB23618E8B004338D2 /* RouteBuilder.swift */,
+				7867175823329CA10030841D /* MetroConfig.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		78D486FF23675B1E0078E00C /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				78C897C32332615900A9DAFF /* Main.storyboard */,
+				78C897C82332615D00A9DAFF /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		78E6BADE23618D69004338D2 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				78E6BADF23618D83004338D2 /* MetroStation.swift */,
+				78E6BAE123618DA0004338D2 /* MetroMultiStation.swift */,
+				78E6BAE323618DBB004338D2 /* LinkWithTime.swift */,
+				78E6BAE523618DCB004338D2 /* LineBetweenStations.swift */,
+				78E6BAE923618DF1004338D2 /* CoordsBetweenStationsWithColor.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,15 +249,22 @@
 				78AD08052338A9050069D240 /* StationConnectionView.swift in Sources */,
 				78C897D22332642800A9DAFF /* MetroView.swift in Sources */,
 				785B5C802340AE6A00BEC6AB /* ForAboutPathView.swift in Sources */,
+				78E6BAE023618D83004338D2 /* MetroStation.swift in Sources */,
 				789E8912233CFC940081D705 /* SomeProtocols.swift in Sources */,
+				78E6BAE623618DCB004338D2 /* LineBetweenStations.swift in Sources */,
 				785B5C7C233E870400BEC6AB /* TransferCell.swift in Sources */,
 				78F07DBC233B7EAA003387B4 /* TextStationView.swift in Sources */,
 				78C897D4233266C700A9DAFF /* MetroDonatOne.swift in Sources */,
+				78E6BAE223618DA0004338D2 /* MetroMultiStation.swift in Sources */,
+				78E6BAE423618DBB004338D2 /* LinkWithTime.swift in Sources */,
 				789E8914233D29F70081D705 /* MoreTableView.swift in Sources */,
 				78F07DBE233B8D6C003387B4 /* MultiStationView.swift in Sources */,
 				789E8916233D44050081D705 /* StationInfoCell.swift in Sources */,
 				78AD08032337DE640069D240 /* FromToButtons.swift in Sources */,
+				78D486FC236749B30078E00C /* TriangleView.swift in Sources */,
 				78C897C02332615900A9DAFF /* AppDelegate.swift in Sources */,
+				78E6BAEC23618E8B004338D2 /* RouteBuilder.swift in Sources */,
+				78E6BAEA23618DF1004338D2 /* CoordsBetweenStationsWithColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

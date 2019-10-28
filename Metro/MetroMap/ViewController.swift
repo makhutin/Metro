@@ -40,6 +40,8 @@ class ViewController: UIViewController {
                 self.view.backgroundColor = .black
             case .unspecified: //the user interface style is not specified
                 tempView.backgroundColor = .white
+            @unknown default:
+                fatalError("pizdec")
             }
 //
         } else {
