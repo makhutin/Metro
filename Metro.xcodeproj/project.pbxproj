@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		783A63BA23681D6000051AF9 /* CanFading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783A63B923681D6000051AF9 /* CanFading.swift */; };
 		785B5C7C233E870400BEC6AB /* TransferCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785B5C7B233E870400BEC6AB /* TransferCell.swift */; };
 		785B5C802340AE6A00BEC6AB /* ForAboutPathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785B5C7F2340AE6A00BEC6AB /* ForAboutPathView.swift */; };
 		7867175923329CA10030841D /* MetroConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7867175823329CA10030841D /* MetroConfig.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		783A63B923681D6000051AF9 /* CanFading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanFading.swift; sourceTree = "<group>"; };
 		785B5C7B233E870400BEC6AB /* TransferCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferCell.swift; sourceTree = "<group>"; };
 		785B5C7F2340AE6A00BEC6AB /* ForAboutPathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForAboutPathView.swift; sourceTree = "<group>"; };
 		7867175823329CA10030841D /* MetroConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroConfig.swift; sourceTree = "<group>"; };
@@ -75,16 +77,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		783A63B823681D5000051AF9 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				783A63B923681D6000051AF9 /* CanFading.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		785B5C7D2340ADD300BEC6AB /* MetroMap */ = {
 			isa = PBXGroup;
 			children = (
 				78C897C12332615900A9DAFF /* ViewController.swift */,
 				78C897D12332642800A9DAFF /* MetroView.swift */,
-				78C897D3233266C700A9DAFF /* MetroDonatOne.swift */,
-				78F07DBB233B7EAA003387B4 /* TextStationView.swift */,
-				78F07DBD233B8D6C003387B4 /* MultiStationView.swift */,
-				78AD08022337DE640069D240 /* FromToButtons.swift */,
-				78AD08042338A9050069D240 /* StationConnectionView.swift */,
 			);
 			path = MetroMap;
 			sourceTree = "<group>";
@@ -126,6 +131,7 @@
 				78D486FD23675ADF0078E00C /* View */,
 				78E6BADE23618D69004338D2 /* Entity */,
 				78D486FF23675B1E0078E00C /* Storyboards */,
+				783A63B823681D5000051AF9 /* Protocols */,
 				78D486FE23675B0E0078E00C /* Service */,
 				78C897C62332615D00A9DAFF /* Assets.xcassets */,
 				78C897CB2332615D00A9DAFF /* Info.plist */,
@@ -136,8 +142,13 @@
 		78D486FD23675ADF0078E00C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				78C897D3233266C700A9DAFF /* MetroDonatOne.swift */,
+				78F07DBB233B7EAA003387B4 /* TextStationView.swift */,
+				78AD08022337DE640069D240 /* FromToButtons.swift */,
 				78AAF61523394CF0007ECD16 /* MarkerView.swift */,
 				78D486FB236749B30078E00C /* TriangleView.swift */,
+				78AD08042338A9050069D240 /* StationConnectionView.swift */,
+				78F07DBD233B8D6C003387B4 /* MultiStationView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -254,6 +265,7 @@
 				78E6BAE623618DCB004338D2 /* LineBetweenStations.swift in Sources */,
 				785B5C7C233E870400BEC6AB /* TransferCell.swift in Sources */,
 				78F07DBC233B7EAA003387B4 /* TextStationView.swift in Sources */,
+				783A63BA23681D6000051AF9 /* CanFading.swift in Sources */,
 				78C897D4233266C700A9DAFF /* MetroDonatOne.swift in Sources */,
 				78E6BAE223618DA0004338D2 /* MetroMultiStation.swift in Sources */,
 				78E6BAE423618DBB004338D2 /* LinkWithTime.swift in Sources */,

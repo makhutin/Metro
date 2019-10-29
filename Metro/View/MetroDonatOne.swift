@@ -86,10 +86,10 @@ extension MetroDonatOne: ScalledObjectView {
 
 }
 
-extension MetroDonatOne: MakeHideObject {
+extension MetroDonatOne: CanFading {
     
-    func hide(_ hide: Bool) {
-        if hide {
+    func fading(_ fide: Bool) {
+        if fide {
             UIView.animate(withDuration: 0.6, animations: {
                 self.donatColor = self.donatColor.withAlphaComponent(0.3)
                 self.updateColor()

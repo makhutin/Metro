@@ -216,20 +216,20 @@ class MetroView: UIView {
             // hide or unhide lines between points
             for connect in stationConnectView {
                 if stations.contains(connect.toId) && stations.contains(connect.fromId) {
-                    connect.hide(false)
+                    connect.fading(false)
                 }else{
-                    connect.hide(true)
+                    connect.fading(true)
                     self.sendSubviewToBack(connect)
                 }
             }
             
             for elem in viewSations {
                 if stations.contains(elem.id) {
-                    elem.hide(false)
+                    elem.fading(false)
                     elem.layoutSubviews()
                     elem.unScale()
                 }else{
-                    elem.hide(true)
+                    elem.fading(true)
                     elem.layoutSubviews()
                     elem.scale()
                 }
@@ -237,9 +237,9 @@ class MetroView: UIView {
             
             for elem in textView {
                 if stations.contains(elem.id) {
-                    elem.hide(false)
+                    elem.fading(false)
                 }else{
-                    elem.hide(true)
+                    elem.fading(true)
                 }
             }
             
@@ -249,7 +249,7 @@ class MetroView: UIView {
     
     func restoreMapToDefault() {
         for elem in stationConnectView {
-            elem.hide(false)
+            elem.fading(false)
         }
         
         for elem in viewSations.reversed() {
@@ -259,7 +259,7 @@ class MetroView: UIView {
         }
 
         for elem in textView {
-            elem.hide(false)
+            elem.fading(false)
         }
         unSetMarker()
         

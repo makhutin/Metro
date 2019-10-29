@@ -56,7 +56,7 @@ class FromToButtons: UIView {
         
         for elem in [from,to] {
             elem.layer.cornerRadius = height / 2
-            elem.layer.borderWidth = 2
+            elem.layer.borderWidth = height / 24
         }
         
         from.frame = CGRect(x: 0, y: 0, width: width / 2.1, height: height)

@@ -43,10 +43,10 @@ class StationConnectionView: UIView {
 
 }
 
-extension StationConnectionView: MakeHideObject {
+extension StationConnectionView: CanFading {
     
-    func hide(_ hide: Bool) {
-        switch hide {
+    func fading(_ fide: Bool) {
+        switch fide {
         case true:
             UIView.animate(withDuration: 0.6, animations: {
                 self.layer.opacity = 0.3
