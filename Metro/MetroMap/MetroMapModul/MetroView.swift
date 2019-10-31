@@ -16,6 +16,8 @@ protocol MetroVieweDelagate {
 @IBDesignable
 class MetroView: UIView {
     
+    var presenter: MetroViewPresenterProtocol?
+    
     private var isSetup = false
     private var isStationSetup = false
     private var size: CGFloat = 20
@@ -59,11 +61,10 @@ class MetroView: UIView {
         heightCoficent = self.frame.height / 200
         
         
-        
-        
         super.layoutSubviews()
         
         if isSetup { return }
+        presenter = MetroViewPresenter(bind: self)
         pointSetup()
         stationConnectInit()
         stationsInit()
@@ -76,103 +77,35 @@ class MetroView: UIView {
     }
     
     private func pointSetup() {
-        aPointView.frame.size = CGSize(width: pointSize, height: pointSize)
-        bPointView.frame.size = CGSize(width: pointSize, height: pointSize)
-        
+        aPointView.frame.size = presenter!.sizeForMarker
+        bPointView.frame.size = presenter!.sizeForMarker
         aPointView.layer.shadowColor = UIColor.black.cgColor
         aPointView.layer.shadowOffset = CGSize(width: 2, height: 2)
-
-        
         bPointView.word = .b
         bPointView.layoutIfNeeded()
-        
         fromTo.frame.size = CGSize(width: fromToWidth / contentScaleFactor, height: 40)
     }
     
     
-    /**
-     draw sation on the mapview
-     
-     draw all point station on th emap view
-     */
+    //Draw on map all stations, points and names
     private func stationsInit() {
-        
-        for multi in multiConfig {
-            let view = MultiStationView()
-            let x = multi.coords.x * widthCoficent + metroPositionX
-            let y = multi.coords.y * heightCoficent + metroPositionY
-            view.frame.origin = CGPoint(x: x, y: y)
-            view.frame.size = CGSize(width: size * 2, height: size * 2)
-            view.stationCount = multi.count
-            self.addSubview(view)
-            
+        //Multi stations add to subviews
+        presenter?.getMultiStationsViews().forEach({
+            self.addSubview($0)
+        })
+        //add text name stations or point
+        presenter?.getTextAndDonatViews().forEach {
+            switch $0 {
+            case is MetroDonatOne:
+                viewSations.append($0 as! MetroDonatOne)
+            case is TextStationView:
+                textView.append($0 as! TextStationView)
+            default:
+                break
+            }
+            self.addSubview($0)
         }
         
-        for station in stationsConfig.values {
-            // create dots "donats"
-            let view = MetroDonatOne()
-            view.id = station.id
-            let x = station.coords.x * widthCoficent + metroPositionX
-            let y = station.coords.y * heightCoficent + metroPositionY
-            view.frame.origin = CGPoint(x: x, y: y)
-            view.donatColor = station.color
-            view.frame.size = CGSize(width: size, height: size)
-            if isStationSetup { continue }
-            
-            viewSations.append(view)
-            view.delegate = self
-            self.addSubview(view)
-            
-            // text
-            let text = TextStationView()
-            text.text = textConfig[view.id] ?? ""
-            text.id = view.id
-            text.delegate = self
-            text.layoutSubviews()
-            
-            //set text frame
-            switch view.id {
-            case 4...8,28,46,63,64,50...53:
-                text.frame = CGRect(x: view.frame.midX - text.frame.width - 16, y: view.frame.midY - 10, width: 150, height: 20)
-                text.style = .right
-            case 57,54,56,45,44:
-                text.frame = CGRect(x: view.frame.midX + 6, y: view.frame.midY - 26, width: 150, height: 20)
-                text.style = .left
-            case 10:
-                text.frame = CGRect(x: view.frame.midX - text.frame.width - 14, y: view.frame.midY + 5, width: 150, height: 20)
-                text.style = .right
-            case 29,9:
-                text.frame = CGRect(x: view.frame.midX - text.frame.width - 8, y: view.frame.midY - 26, width: 150, height: 20)
-                text.style = .right
-            case 43:
-                text.frame = CGRect(x: view.frame.midX + 30.3, y: view.frame.midY - 35, width: 150, height: 20)
-                text.style = .left
-            case 55:
-                text.frame = CGRect(x: view.frame.midX - text.frame.width / 2, y: view.frame.midY + 5, width: 150, height: 20)
-                text.style = .right
-            default:
-                text.frame = CGRect(x: view.frame.midX + 15, y: view.frame.midY - 10, width: 150, height: 20)
-            }
-            // set color for multi station
-            switch view.id {
-            case 7,8,9,10:
-                text.color = stationsConfig[7]!.color
-            case 27,28,29:
-                text.color = stationsConfig[28]!.color
-            case 43,44,45:
-                text.color = stationsConfig[43]!.color
-            case 54,56,57:
-                text.color = stationsConfig[54]!.color
-            case 62,63:
-                text.color = stationsConfig[62]!.color
-            default:
-                text.color = .black
-            }
-            
-            textView.append(text)
-            self.addSubview(text)
-        }
-        isStationSetup = true
     }
 
 
@@ -183,10 +116,7 @@ class MetroView: UIView {
      
      */
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let donat = findCurrentDonat() {
-            donat.scale()
-        }
-        currentId = nil
+        presenter?.touchesEnded()
         UIView.animate(withDuration: 0.4, animations: {
             self.fromTo.layer.opacity = 0
             self.layoutIfNeeded()
@@ -252,19 +182,19 @@ class MetroView: UIView {
             elem.fading(false)
         }
         
-        for elem in viewSations.reversed() {
-            elem.scale()
-            elem.donatColor = elem.donatColor.withAlphaComponent(1)
-            elem.layoutSubviews()
+        presenter?.stationPoints.forEach {
+            $0.scale()
+            $0.fading(false)
+            $0.layoutSubviews()
+        }
+        
+        presenter?.stationTexts.forEach{
+            $0.fading(false)
         }
 
-        for elem in textView {
-            elem.fading(false)
-        }
         unSetMarker()
         
-        bPoint = nil
-        aPoint = nil
+        presenter?.restoreMapToDefault()
     }
     
     func updateFromToScale() {
@@ -280,10 +210,6 @@ class MetroView: UIView {
                 self.fromTo.isHidden = false
                 self.layoutSubviews()
             })
-            
-            
-            
-            
         }
     }
     
@@ -354,7 +280,7 @@ extension MetroView {
 //donat or point
 extension MetroView {
     
-    
+    //MARK: complite in present
     /**
      find current donat in view list
      
