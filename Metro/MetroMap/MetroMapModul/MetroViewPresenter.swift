@@ -10,9 +10,7 @@ import UIKit
 
 protocol MetroViewPresenterProtocol {
     
-    
-    func getMultiStationsViews() -> [UIView]
-    func getTextAndDonatViews() -> [UIView]
+
     func findCurrentPoint() -> MetroDonatOne?
     func touchesEnded()
     func restoreMapToDefault()
@@ -20,17 +18,15 @@ protocol MetroViewPresenterProtocol {
     func pressFromToButton(button: FromToButtonsStyle)
     func getAorBPoint(point: MarkerViewWord) -> Int?
     
-    var stationPoints: [MetroDonatOne] { get }
-    var stationTexts: [TextStationView] { get }
+    
     var getStyleForFromToView: FromToButtonsStyle { get }
     var getStationRoute: [Int] { get }
-    
-    
     var stations: [Int : MetroStation] { get }
+    var multiStations: [MetroMultiStation] { get }
     var text: [Int : String] { get }
     var multiStationsId: [Int] { get }
     var lines: [Int : [LineBetweenStations]] { get }
-    var sizeForMarker: CGSize { get }
+    var multiCoords: [Int: CGPoint] { get }
     
     
     
@@ -38,21 +34,15 @@ protocol MetroViewPresenterProtocol {
 
 class MetroViewPresenter: MetroViewPresenterProtocol {
     
+
     let interactor = MetroViewInteractor()
     weak var view: UIView!
     
     let language = "ru_RU"
-    let pointSize: CGFloat = 20
-    let offsetMapXY: CGFloat = 450
-    var widthCoficent: CGFloat { return view.frame.width / 200 }
-    var heightCoficent: CGFloat { return view.frame.height / 200 }
     
     var aPoint: Int?
     var bPoint: Int?
     var currentId: Int?
-    
-    var stationPoints: [MetroDonatOne] = []
-    var stationTexts: [TextStationView] = []
     
     //MARK: Interactor
     var lines: [Int : [LineBetweenStations]] {
@@ -68,6 +58,16 @@ class MetroViewPresenter: MetroViewPresenterProtocol {
         return multiStations.flatMap { $0.id }
     }
     
+    var multiCoords: [Int: CGPoint] {
+        var mulitCoords: [Int:CGPoint] = [:]
+        for elem in multiStations {
+            for point in elem.id {
+                mulitCoords.updateValue(elem.coords, forKey: point)
+            }
+        }
+        return mulitCoords
+    }
+    
     var stations: [Int : MetroStation] {
         return interactor.getStations
     }
@@ -77,104 +77,21 @@ class MetroViewPresenter: MetroViewPresenterProtocol {
         return interactor.getText(language: language)
     }
     
-    var sizeForMarker: CGSize {
-        return CGSize(width: pointSize * 2, height: pointSize * 2)
-    }
-    
-    //MARK: Support function
-    // Transform x or y to map system coords
-    func transformXwithCoficent(x: CGFloat) -> CGFloat {
-        return x * widthCoficent + offsetMapXY
-    }
-    
-    func transformYwithCoficent(y: CGFloat) -> CGFloat {
-        return y * heightCoficent + offsetMapXY
-    }
-    
+    //MARK: Others
+
     func findCurrentPoint() -> MetroDonatOne? {
         guard let id = currentId, currentId != aPoint && currentId != bPoint else { return nil }
         //if id staitons == id current point
-        let result = stationPoints.filter { $0.id == id }
-        return result.first
+        let result = view.subviews.filter {
+            guard let elem = $0 as? MetroDonatOne, elem.id == id else { return false }
+            return true
+        }
+        return result.first as? MetroDonatOne
     }
     
 
     init(bind: UIView) {
         self.view = bind
-    }
-    
-    //MARK: Create Views function
-    //create multistations with coords and coficent
-    func getMultiStationsViews() -> [UIView] {
-        var result: [UIView] = []
-       
-        multiStations.forEach{
-            let view = MultiStationView()
-            let x = transformXwithCoficent(x: $0.coords.x)
-            let y = transformYwithCoficent(y: $0.coords.y)
-            view.frame.origin = CGPoint(x: x, y: y)
-            view.frame.size = CGSize(width: pointSize * 2, height: pointSize * 2)
-            view.stationCount = $0.count
-            result.append(view)
-        }
-        return result
-    }
-    
-    //create dot points and text name stations
-    func getTextAndDonatViews() -> [UIView] {
-
-        var result: [UIView] = []
-        stations.forEach { (arg) in
-            let (_, elem) = arg
-            let view = MetroDonatOne()
-            view.id = elem.id
-            let x = transformXwithCoficent(x: elem.coords.x)
-            let y = transformYwithCoficent(y: elem.coords.y)
-            view.frame.origin = CGPoint(x: x, y: y)
-            view.donatColor = elem.color
-            view.frame.size = CGSize(width: pointSize, height: pointSize)
-            view.delegate = self.view as? MetroDonatOneDelegate
-            stationPoints.append(view)
-            
-            var text = TextStationView()
-            text.text = self.text[elem.id] ?? ""
-            text.id = elem.id
-            text.delegate = self.view as? TextStationViewDelegate
-
-            text = fineTuningText(id: text.id, text: text, view: view)
-            text.color = multiStationsId.contains(text.id) ? stations[text.id]!.color : .black
-            result.append(text)
-            result.append(view)
-        }
-        return result
-    }
-    
-    //final tune for text point
-    func fineTuningText(id: Int, text: TextStationView, view: MetroDonatOne) -> TextStationView {
-        text.layoutSubviews()
-        switch id {
-        case 4...8,28,46,63,64,50...53:
-            text.frame = CGRect(x: view.frame.midX - text.frame.width - 16, y: view.frame.midY - 10, width: 150, height: 20)
-            text.style = .right
-        case 57,54,56,45,44:
-            text.frame = CGRect(x: view.frame.midX + 6, y: view.frame.midY - 26, width: 150, height: 20)
-            text.style = .left
-        case 10:
-            text.frame = CGRect(x: view.frame.midX - text.frame.width - 14, y: view.frame.midY + 5, width: 150, height: 20)
-            text.style = .right
-        case 29,9:
-            text.frame = CGRect(x: view.frame.midX - text.frame.width - 8, y: view.frame.midY - 26, width: 150, height: 20)
-            text.style = .right
-        case 43:
-            text.frame = CGRect(x: view.frame.midX + 30.3, y: view.frame.midY - 35, width: 150, height: 20)
-            text.style = .left
-        case 55:
-            text.frame = CGRect(x: view.frame.midX - text.frame.width / 2, y: view.frame.midY + 5, width: 150, height: 20)
-            text.style = .right
-        default:
-            text.frame = CGRect(x: view.frame.midX + 15, y: view.frame.midY - 10, width: 150, height: 20)
-        }
-        return text
     }
     
         
@@ -199,24 +116,13 @@ class MetroViewPresenter: MetroViewPresenterProtocol {
     }
 
     
-    var getStyleForFromToView: FromToButtonsStyle {
-        var result: FromToButtonsStyle = .to
-        switch(aPoint,bPoint){
-        case (nil,nil):
-            result = .from
-        default:
-            result = .to
-        }
-        return result
-    }
-    
-    
     func restoreMapToDefault() {
         bPoint = nil
         aPoint = nil
         currentId = nil
     }
     
+    //MARK: Get
     var getStationRoute: [Int] {
         guard let a = aPoint, let b = bPoint else {
             return []
@@ -231,5 +137,18 @@ class MetroViewPresenter: MetroViewPresenterProtocol {
             return bPoint
         }
     }
+    
+    var getStyleForFromToView: FromToButtonsStyle {
+        var result: FromToButtonsStyle = .to
+        switch(aPoint,bPoint){
+        case (nil,nil):
+            result = .from
+        default:
+            result = .to
+        }
+        return result
+    }
+    
+    
     
 }

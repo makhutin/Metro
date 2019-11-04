@@ -84,7 +84,6 @@ class RouteBuilder {
     }
     
     func buildPath(start:Int, end:Int) -> [Int] {
-        let old = Date()
         let queue = DispatchQueue(label: "wayDispatch",qos: .userInteractive, attributes: .concurrent)
         var way1: [Int] = []
         var way2: [Int] = []
@@ -95,7 +94,6 @@ class RouteBuilder {
         queue.async{ [unowned self] in
             way1 = self.finder(start: start, end: end, way: 0)
             for index in 0..<way1.count - 1 {
-                print("1")
                 for elem in self.link[way1[index]]! {
                     if elem.id == way1[index + 1] {
                         time1 += elem.time
@@ -107,7 +105,6 @@ class RouteBuilder {
         queue.async{ [unowned self] in
             way2 = self.finder(start: start, end: end, way: 1)
             for index in 0..<way2.count - 1 {
-                print("2")
                 for elem in self.link[way2[index]]! {
                     if elem.id == way2[index + 1] {
                         time2 += elem.time
@@ -119,7 +116,6 @@ class RouteBuilder {
         queue.async{ [unowned self] in
             way3 = self.finder(start: start, end: end, way: 2)
             for index in 0..<way3.count - 1 {
-                print("3")
                 for elem in self.link[way3[index]]! {
                     if elem.id == way3[index + 1] {
                         time3 += elem.time
@@ -150,8 +146,6 @@ class RouteBuilder {
             }
             
         })
-        let now = Date()
-        print("time \( now.timeIntervalSince1970 - old.timeIntervalSince1970)")
         return result
         
     }
