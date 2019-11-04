@@ -60,3 +60,17 @@ extension StationConnectionView: CanFading {
         }
     }
 }
+
+extension StationConnectionView: MetroViewStyleAnim {
+    func setStyle(style: MetroViewStyleAnimType) {
+        switch style {
+        case .route:
+            self.fading(false)
+        case .unroute:
+            self.fading(true)
+        default:
+            self.fading(false)
+            
+        }
+    }
+}

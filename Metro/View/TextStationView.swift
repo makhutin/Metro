@@ -14,7 +14,7 @@ protocol TextStationViewDelegate {
 
 
 @IBDesignable
-class TextStationView: UIView {
+class TextStationView: UIView,WitchId {
     
     var isSetup = false
     var text:String = "достоевсая"
@@ -72,4 +72,20 @@ extension TextStationView: CanFading {
             })
         }
     }
+}
+
+extension TextStationView: MetroViewStyleAnim {
+    func setStyle(style: MetroViewStyleAnimType) {
+        switch style {
+        case .route:
+            self.fading(false)
+        case .unroute:
+            self.fading(true)
+        default:
+            self.fading(false)
+            
+        }
+    }
+    
+    
 }

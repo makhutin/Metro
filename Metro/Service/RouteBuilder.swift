@@ -57,8 +57,6 @@ class RouteBuilder {
                 default:
                     return [0,1]
                 }
-
-                
             }
         }
         visit = visit.reversed()
@@ -86,44 +84,75 @@ class RouteBuilder {
     }
     
     func buildPath(start:Int, end:Int) -> [Int] {
-        let way1 = finder(start: start, end: end, way: 0)
-        let way2 = finder(start: start, end: end, way: 1)
-        let way3 = finder(start: start, end: end, way: 2)
+        let old = Date()
+        let queue = DispatchQueue(label: "wayDispatch",qos: .userInteractive, attributes: .concurrent)
+        var way1: [Int] = []
+        var way2: [Int] = []
+        var way3: [Int] = []
         var time1 = 0
         var time2 = 0
         var time3 = 0
+        queue.async{ [unowned self] in
+            way1 = self.finder(start: start, end: end, way: 0)
+            for index in 0..<way1.count - 1 {
+                print("1")
+                for elem in self.link[way1[index]]! {
+                    if elem.id == way1[index + 1] {
+                        time1 += elem.time
+                    }
+                }
+            }
+        }
         
-        for index in 0..<way1.count - 1 {
-            for elem in link[way1[index]]! {
-                if elem.id == way1[index + 1] {
-                    time1 += elem.time
+        queue.async{ [unowned self] in
+            way2 = self.finder(start: start, end: end, way: 1)
+            for index in 0..<way2.count - 1 {
+                print("2")
+                for elem in self.link[way2[index]]! {
+                    if elem.id == way2[index + 1] {
+                        time2 += elem.time
+                    }
                 }
             }
         }
-        for index in 0..<way2.count - 1 {
-            for elem in link[way2[index]]! {
-                if elem.id == way2[index + 1] {
-                    time2 += elem.time
+        
+        queue.async{ [unowned self] in
+            way3 = self.finder(start: start, end: end, way: 2)
+            for index in 0..<way3.count - 1 {
+                print("3")
+                for elem in self.link[way3[index]]! {
+                    if elem.id == way3[index + 1] {
+                        time3 += elem.time
+                    }
                 }
             }
         }
-        for index in 0..<way3.count - 1 {
-            for elem in link[way3[index]]! {
-                if elem.id == way3[index + 1] {
-                    time3 += elem.time
-                }
+        
+        var result: [Int] = []
+        
+        
+        
+        queue.sync(flags: .barrier, execute: {
+            NSLog("time for path -- way1 - \(time1),way2 - \(time2),way3 - \(time3)")
+            switch min(time1,time2,time3) {
+            case time1:
+                result = way1
+                NSLog("select -- way1")
+            case time2:
+                result = way2
+                NSLog("select -- way2")
+            case time3:
+                result = way3
+                NSLog("select -- way3")
+            default:
+                result = way1
+                NSLog("select -- way1")
             }
-        }
-
-        switch min(time1,time2,time3) {
-        case time1:
-            return way1
-        case time2:
-            return way2
-        case time3:
-            return way3
-        default:
-            return way1
-        }
+            
+        })
+        let now = Date()
+        print("time \( now.timeIntervalSince1970 - old.timeIntervalSince1970)")
+        return result
+        
     }
 }

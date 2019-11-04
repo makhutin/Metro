@@ -134,72 +134,51 @@ class MetroView: UIView {
      
      */
     private func drawStationWayOnMap(){
-        if let a = aPoint,let b = bPoint {
             
-            
-            
-            let stations = RouteBuilder.share.buildPath(start: a, end: b)
-            delegate?.drawStationPath(sender: self,data: stations)
-            
-            // hide or unhide stations point
-
-            // hide or unhide lines between points
-            for connect in stationConnectView {
-                if stations.contains(connect.toId) && stations.contains(connect.fromId) {
-                    connect.fading(false)
-                }else{
-                    connect.fading(true)
-                    self.sendSubviewToBack(connect)
+        let stationsId = presenter!.getStationRoute
+        if !stationsId.isEmpty {
+            print(stationsId)
+            delegate?.drawStationPath(sender: self,data: stationsId)
+            subviews.forEach {
+                switch $0 {
+                case let elem as MetroDonatOne:
+                    elem.setStyle(style: stationsId.contains(elem.id) ? .route : .unroute)
+                case let elem as TextStationView:
+                    elem.setStyle(style: stationsId.contains(elem.id) ? .route : .unroute)
+                case let elem as StationConnectionView:
+                    if stationsId.contains(elem.toId) && stationsId.contains(elem.fromId){
+                        elem.setStyle(style: .route)
+                    }else{
+                        elem.setStyle(style: .unroute)
+                    }
+                default:
+                    break
                 }
             }
-            
-            for elem in viewSations {
-                if stations.contains(elem.id) {
-                    elem.fading(false)
-                    elem.layoutSubviews()
-                    elem.unScale()
-                }else{
-                    elem.fading(true)
-                    elem.layoutSubviews()
-                    elem.scale()
-                }
-            }
-            
-            for elem in textView {
-                if stations.contains(elem.id) {
-                    elem.fading(false)
-                }else{
-                    elem.fading(true)
-                }
-            }
-            
         }
     }
     
     
     func restoreMapToDefault() {
-        for elem in stationConnectView {
-            elem.fading(false)
+        subviews.forEach{
+            switch $0 {
+            case let elem as MetroDonatOne:
+                elem.setStyle(style: .normal)
+            case let elem as TextStationView:
+                elem.setStyle(style: .normal)
+            case let elem as StationConnectionView:
+                elem.setStyle(style: .normal)
+            default:
+                break
+            }
         }
-        
-        presenter?.stationPoints.forEach {
-            $0.scale()
-            $0.fading(false)
-            $0.layoutSubviews()
-        }
-        
-        presenter?.stationTexts.forEach{
-            $0.fading(false)
-        }
-
         unSetMarker()
-        
         presenter?.restoreMapToDefault()
     }
     
     func updateFromToScale() {
-        if let donat = findCurrentDonat(){
-            fromTo.chageStyle()
+        if let donat = presenter?.findCurrentPoint(){
+            fromTo.chageStyle(style: .old)
             fromTo.frame.size.width = fromToWidth / contentScaleFactor
             let x = donat.frame.midX - fromTo.frame.width / 2
             let y = donat.frame.origin.y + 5
@@ -278,55 +257,35 @@ extension MetroView {
 
 
 //donat or point
-extension MetroView {
-    
-    //MARK: complite in present
-    /**
-     find current donat in view list
-     
-     :returns: MetroDonat? return nil or current view station.
-     */
-    func findCurrentDonat() -> MetroDonatOne? {
-        if let currentId = currentId {
-            if currentId != aPoint && currentId != bPoint{
-                for elem in viewSations {
-                    if elem.id == currentId {
-                        return elem
-                    }
-                }
-            }
-            
-        }
-        return nil
-    }
-
-
-}
 
 
 
 extension MetroView: FromToButtonsDelegate{
     
     func pressToButton(sender: UIView) {
-        bPoint = currentId
+        presenter?.pressFromToButton(button: .to)
+        
         UIView.animate(withDuration: 0.6, animations: {
             self.fromTo.layer.opacity = 0
             self.layoutIfNeeded()
         }, completion: { complite in
             self.fromTo.isHidden = true
         })
+        
         drawStationWayOnMap()
         setMarker(wordAorB: .b)
     }
     
     func pressFromButton(sender: UIView) {
-        aPoint = currentId
+        presenter?.pressFromToButton(button: .from)
+        
         UIView.animate(withDuration: 0.6, animations: {
             self.fromTo.layer.opacity = 0
             self.layoutIfNeeded()
         }, completion: { complite in
             self.fromTo.isHidden = true
         })
+        
         drawStationWayOnMap()
         setMarker(wordAorB: .a)
     }
@@ -337,36 +296,24 @@ extension MetroView: FromToButtonsDelegate{
 
 
 extension MetroView: MetroDonatOneDelegate{
+    
     func tapOnDonat(sender: MetroDonatOne) {
         UIView.animate(withDuration: 0.4, animations: {
             self.fromTo.layer.opacity = 0
             self.layoutIfNeeded()
         })
-
-        if currentId == nil {
-            currentId = sender.id
-            sender.layer.contentsScale = 2
-            sender.unScale()
-        }else{
-            if let oldDonat = findCurrentDonat() {
-                oldDonat.scale()
-            }
-            currentId = sender.id
-            sender.layer.contentsScale = 2
-            sender.unScale()
+        if let donat = presenter?.findCurrentPoint() {
+            donat.setStyle(style: .untap)
         }
-            //set from to point
-            switch(aPoint,bPoint){
-            case (nil,nil):
-                fromTo.currentStyle = .from
-            case (_,nil):
-                fromTo.currentStyle = .to
-            case (_,_):
-                fromTo.currentStyle = .to
-            }
-            fromTo.chageStyle()
-            updateFromToScale()
-            delegate?.fromToButtonPress(sender: fromTo)
+        presenter?.tapOnDonat(sender: sender)
+//        sender.layer.contentsScale = 2
+//        sender.unScale()
+        sender.setStyle(style: .tap)
+
+        let style = presenter?.getStyleForFromToView
+        fromTo.chageStyle(style: style!)
+        updateFromToScale()
+        delegate?.fromToButtonPress(sender: fromTo)
         
     }
     
@@ -374,10 +321,12 @@ extension MetroView: MetroDonatOneDelegate{
 
 extension MetroView: TextStationViewDelegate {
     func pressTextStation(sender: TextStationView) {
-        for view in viewSations {
-            if view.id == sender.id {
-                tapOnDonat(sender: view)
-            }
+        let result = subviews.filter {
+            guard let elem = $0 as? MetroDonatOne, elem.id == sender.id else { return false}
+            return true
+        }
+        if let donat = result.first as? MetroDonatOne {
+            tapOnDonat(sender: donat)
         }
     }
 }
@@ -386,22 +335,23 @@ extension MetroView {
     
 
     private func setMarker(wordAorB: MarkerViewWord ) {
-        var tempPoint: Int?
         var pointView: MarkerView
         switch wordAorB {
         case .a:
             pointView = aPointView
-            tempPoint = aPoint
         case .b:
             pointView = bPointView
-            tempPoint = bPoint
         }
-        if let point = tempPoint {
+        if let point = presenter?.getAorBPoint(point: wordAorB) {
             pointView.layer.opacity = 0
             pointView.isHidden = false
-            viewSations.forEach {
-                if $0.id == point {
-                    let elem = $0
+            subviews
+                .filter{
+                    guard let elem = $0 as? MetroDonatOne, elem.id == point else { return false }
+                    return true
+            }
+                .forEach {
+                    let elem = $0 as! MetroDonatOne
                     pointView.frame.size = CGSize(width: pointView.frame.width, height: pointView.frame.height / 2)
                     pointView.frame.origin = CGPoint(x: elem.frame.midX - pointSize / 2,
                                                      y: elem.frame.midY - pointSize * 2)
@@ -413,7 +363,6 @@ extension MetroView {
                                                          y: elem.frame.midY - self.pointSize)
                         pointView.frame.size = CGSize(width: pointView.frame.width, height: pointView.frame.width)
                     })
-                }
             }
         }
     }

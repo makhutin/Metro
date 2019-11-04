@@ -13,7 +13,7 @@ protocol MetroDonatOneDelegate {
 }
 
 @IBDesignable
-class MetroDonatOne: UIView {
+class MetroDonatOne: UIView,WitchId {
     
     private var isSetup = false
     
@@ -101,5 +101,28 @@ extension MetroDonatOne: CanFading {
             })
         }
     }
+    
+}
+
+extension MetroDonatOne: MetroViewStyleAnim {
+    
+    func setStyle(style: MetroViewStyleAnimType) {
+        switch style {
+        case .tap:
+            self.unScale()
+        case .untap:
+            self.scale()
+        case .route:
+            self.fading(false)
+            self.scale()
+        case .unroute:
+            self.fading(true)
+            self.unScale()
+        case .normal:
+            self.fading(false)
+            self.scale()
+        }
+    }
+    
     
 }

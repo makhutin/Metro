@@ -24,6 +24,8 @@ class MetroViewInteractor: MetroViewInteractorProtocol {
     private var textConfig = MetroConfig.share.textStation
     private let multiConfig = MetroConfig.share.multiStation
     
+    private let route = RouteBuilder.share
+    
     var getStations: [Int : MetroStation] {
         return stationsConfig
     }
@@ -41,5 +43,9 @@ class MetroViewInteractor: MetroViewInteractorProtocol {
             return text
         }
         return textConfig["ru_RU"]!
+    }
+    
+    func findRoute(from: Int, to: Int) -> [Int] {
+        return route.buildPath(start: from, end: to)
     }
 }

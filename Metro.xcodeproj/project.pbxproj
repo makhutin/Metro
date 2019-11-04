@@ -27,6 +27,8 @@
 		78C897D22332642800A9DAFF /* MetroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C897D12332642800A9DAFF /* MetroView.swift */; };
 		78C897D4233266C700A9DAFF /* MetroDonatOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C897D3233266C700A9DAFF /* MetroDonatOne.swift */; };
 		78D486FC236749B30078E00C /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D486FB236749B30078E00C /* TriangleView.swift */; };
+		78DD0A442370715400F2B017 /* WitchId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DD0A432370715400F2B017 /* WitchId.swift */; };
+		78DD0A4623707CE700F2B017 /* MetroViewStyleAnim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DD0A4523707CE700F2B017 /* MetroViewStyleAnim.swift */; };
 		78E6BAE023618D83004338D2 /* MetroStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6BADF23618D83004338D2 /* MetroStation.swift */; };
 		78E6BAE223618DA0004338D2 /* MetroMultiStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6BAE123618DA0004338D2 /* MetroMultiStation.swift */; };
 		78E6BAE423618DBB004338D2 /* LinkWithTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6BAE323618DBB004338D2 /* LinkWithTime.swift */; };
@@ -60,6 +62,8 @@
 		78C897D12332642800A9DAFF /* MetroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroView.swift; sourceTree = "<group>"; };
 		78C897D3233266C700A9DAFF /* MetroDonatOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroDonatOne.swift; sourceTree = "<group>"; };
 		78D486FB236749B30078E00C /* TriangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
+		78DD0A432370715400F2B017 /* WitchId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WitchId.swift; sourceTree = "<group>"; };
+		78DD0A4523707CE700F2B017 /* MetroViewStyleAnim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroViewStyleAnim.swift; sourceTree = "<group>"; };
 		78E6BADF23618D83004338D2 /* MetroStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroStation.swift; sourceTree = "<group>"; };
 		78E6BAE123618DA0004338D2 /* MetroMultiStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroMultiStation.swift; sourceTree = "<group>"; };
 		78E6BAE323618DBB004338D2 /* LinkWithTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkWithTime.swift; sourceTree = "<group>"; };
@@ -95,6 +99,8 @@
 			isa = PBXGroup;
 			children = (
 				783A63B923681D6000051AF9 /* CanFading.swift */,
+				78DD0A432370715400F2B017 /* WitchId.swift */,
+				78DD0A4523707CE700F2B017 /* MetroViewStyleAnim.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -270,6 +276,7 @@
 			files = (
 				78AAF61623394CF0007ECD16 /* MarkerView.swift in Sources */,
 				7867175923329CA10030841D /* MetroConfig.swift in Sources */,
+				78DD0A442370715400F2B017 /* WitchId.swift in Sources */,
 				78C897C22332615900A9DAFF /* ViewController.swift in Sources */,
 				78AD08052338A9050069D240 /* StationConnectionView.swift in Sources */,
 				78C897D22332642800A9DAFF /* MetroView.swift in Sources */,
@@ -285,6 +292,7 @@
 				7863DABC236B3401009FF31B /* MetroViewInteractor.swift in Sources */,
 				78E6BAE223618DA0004338D2 /* MetroMultiStation.swift in Sources */,
 				78E6BAE423618DBB004338D2 /* LinkWithTime.swift in Sources */,
+				78DD0A4623707CE700F2B017 /* MetroViewStyleAnim.swift in Sources */,
 				789E8914233D29F70081D705 /* MoreTableView.swift in Sources */,
 				78F07DBE233B8D6C003387B4 /* MultiStationView.swift in Sources */,
 				789E8916233D44050081D705 /* StationInfoCell.swift in Sources */,
