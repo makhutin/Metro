@@ -13,7 +13,3 @@ protocol ScalledObjectView {
     func unScale()
 }
 
-protocol MakeHideObject {
-    func hide(_ hide:Bool)
-}
-

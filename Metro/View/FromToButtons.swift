@@ -9,7 +9,7 @@
 import UIKit
 
 enum FromToButtonsStyle {
-    case from, to
+    case from, to, old
 }
 
 protocol FromToButtonsDelegate {
@@ -35,7 +35,7 @@ class FromToButtons: UIView {
     override func layoutSubviews() {
         
         super.layoutSubviews()
-        chageStyle()
+        chageStyle(style: .to)
         buttonsInit()
         
         if isSetup { return }
@@ -56,7 +56,7 @@ class FromToButtons: UIView {
         
         for elem in [from,to] {
             elem.layer.cornerRadius = height / 2
-            elem.layer.borderWidth = 2
+            elem.layer.borderWidth = height / 24
         }
         
         from.frame = CGRect(x: 0, y: 0, width: width / 2.1, height: height)
@@ -67,7 +67,10 @@ class FromToButtons: UIView {
         to.titleLabel?.font = UIFont(name: "Helvetica", size: height / 3)
     }
     
-    func chageStyle() {
+    func chageStyle(style: FromToButtonsStyle) {
+        if style != .old {
+            currentStyle = style
+        }
         switch currentStyle {
         case .to:
             to.backgroundColor = lightBlue
@@ -85,6 +88,8 @@ class FromToButtons: UIView {
             from.backgroundColor = lightBlue
             from.setTitleColor(.white, for: .normal)
             from.layer.borderColor = lightBlue.cgColor
+        case .old:
+            fatalError()
         }
     }
     
@@ -119,6 +124,8 @@ extension FromToButtons {
                 self.to.backgroundColor = self.lightBlue
                 self.to.setTitleColor(.white, for: .normal)
             })
+        case .old:
+            fatalError()
         }
     }
     
@@ -152,6 +159,8 @@ extension FromToButtons {
                 self.from.backgroundColor = self.lightBlue
                 self.from.setTitleColor(.white, for: .normal)
             })
+        case .old:
+            fatalError()
         }
     }
     

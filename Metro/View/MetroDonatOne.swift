@@ -13,7 +13,7 @@ protocol MetroDonatOneDelegate {
 }
 
 @IBDesignable
-class MetroDonatOne: UIView {
+class MetroDonatOne: UIView,WitchId {
     
     private var isSetup = false
     
@@ -86,10 +86,10 @@ extension MetroDonatOne: ScalledObjectView {
 
 }
 
-extension MetroDonatOne: MakeHideObject {
+extension MetroDonatOne: CanFading {
     
-    func hide(_ hide: Bool) {
-        if hide {
+    func fading(_ fide: Bool) {
+        if fide {
             UIView.animate(withDuration: 0.6, animations: {
                 self.donatColor = self.donatColor.withAlphaComponent(0.3)
                 self.updateColor()
@@ -101,5 +101,28 @@ extension MetroDonatOne: MakeHideObject {
             })
         }
     }
+    
+}
+
+extension MetroDonatOne: MetroViewStyleAnim {
+    
+    func setStyle(style: MetroViewStyleAnimType) {
+        switch style {
+        case .tap:
+            self.unScale()
+        case .untap:
+            self.scale()
+        case .route:
+            self.fading(false)
+            self.scale()
+        case .unroute:
+            self.fading(true)
+            self.unScale()
+        case .normal:
+            self.fading(false)
+            self.scale()
+        }
+    }
+    
     
 }

@@ -14,7 +14,7 @@ protocol TextStationViewDelegate {
 
 
 @IBDesignable
-class TextStationView: UIView {
+class TextStationView: UIView,WitchId {
     
     var isSetup = false
     var text:String = "достоевсая"
@@ -54,21 +54,12 @@ class TextStationView: UIView {
     @objc private func pressText() {
         delegate?.pressTextStation(sender: self)
     }
-    
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
 
 }
 
-extension TextStationView: MakeHideObject {
-    func hide(_ hide: Bool) {
-        if hide {
+extension TextStationView: CanFading {
+    func fading(_ fide: Bool) {
+        if fide {
             UIView.animate(withDuration: 0.6, animations: {
                 self.button.setTitleColor(self.color.withAlphaComponent(0.3), for: .normal)
                 self.button.layoutIfNeeded()
@@ -81,4 +72,20 @@ extension TextStationView: MakeHideObject {
             })
         }
     }
+}
+
+extension TextStationView: MetroViewStyleAnim {
+    func setStyle(style: MetroViewStyleAnimType) {
+        switch style {
+        case .route:
+            self.fading(false)
+        case .unroute:
+            self.fading(true)
+        default:
+            self.fading(false)
+            
+        }
+    }
+    
+    
 }

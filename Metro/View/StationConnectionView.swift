@@ -43,10 +43,10 @@ class StationConnectionView: UIView {
 
 }
 
-extension StationConnectionView: MakeHideObject {
+extension StationConnectionView: CanFading {
     
-    func hide(_ hide: Bool) {
-        switch hide {
+    func fading(_ fide: Bool) {
+        switch fide {
         case true:
             UIView.animate(withDuration: 0.6, animations: {
                 self.layer.opacity = 0.3
@@ -57,6 +57,20 @@ extension StationConnectionView: MakeHideObject {
                 self.layer.opacity = 1
                 self.layoutIfNeeded()
             })
+        }
+    }
+}
+
+extension StationConnectionView: MetroViewStyleAnim {
+    func setStyle(style: MetroViewStyleAnimType) {
+        switch style {
+        case .route:
+            self.fading(false)
+        case .unroute:
+            self.fading(true)
+        default:
+            self.fading(false)
+            
         }
     }
 }
