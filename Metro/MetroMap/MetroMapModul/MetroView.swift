@@ -10,7 +10,7 @@ import UIKit
 
 protocol MetroVieweDelagate {
     func drawStationPath(sender: MetroView, data: [Int])
-    func fromToButtonPress(sender: FromToButtons)
+    func willShowFromToButton(sender: FromToButtons)
 }
 
 @IBDesignable
@@ -24,7 +24,7 @@ class MetroView: UIView {
     private var widthCoficent: CGFloat = 0.0
     private var heightCoficent: CGFloat = 0.0
     private let offsetMapXY: CGFloat = 450
-    private var fromToWidth:CGFloat = 260
+    private let fromToWidth:CGFloat = 260
     private let pointSize: CGFloat = 20
     
     private let fromTo = FromToButtons()
@@ -82,7 +82,7 @@ class MetroView: UIView {
     
     //Draw on map all stations, points and names
     private func stationsInit() {
-        //Multi stations add to subviews
+        //stations dot and text add to subviews
         presenter?.stations.forEach { (arg) in
             let (_, elem) = arg
             let view = MetroDonatOne()
@@ -100,6 +100,7 @@ class MetroView: UIView {
             text.delegate = self
 
             text = fineTuningText(id: text.id, text: text, view: view)
+            //set color if text is text of multi station
             if let presenter = presenter {
                 text.color = presenter.multiStationsId.contains(text.id) ? presenter.stations[text.id]!.color : .black
             }
@@ -143,7 +144,7 @@ class MetroView: UIView {
             let line = $0.value
             for (index,elem) in coords.enumerated() {
                 
-                let way = StationConnectionView(coords: elem,size: self.frame.size)
+                let way = StationConnectionView(coords: elem)
                 way.frame.size = self.frame.size
                 way.fromId = line[index].fromId
                 way.toId = line[index].toId
@@ -365,7 +366,7 @@ extension MetroView: MetroDonatOneDelegate{
         let style = presenter?.getStyleForFromToView
         fromTo.chageStyle(style: style!)
         updateFromToScale()
-        delegate?.fromToButtonPress(sender: fromTo)
+        delegate?.willShowFromToButton(sender: fromTo)
         
     }
     

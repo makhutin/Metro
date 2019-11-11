@@ -11,15 +11,20 @@ import UIKit
 @IBDesignable
 class ViewController: UIViewController {
     
-    let scrollView = UIScrollView()
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBAction func cancelButtonAction(_ sender: Any) {}
+    
+    var presenter: ViewControllerPressenterProtocol!
+    var configurator: ViewControllerConfiguratorProtocol = ViewControllerConfigurator()
+    
+    let scrollView2 = UIScrollView()
     let metroView = MetroView()
     let plusButton = UIButton()
     let minusButton = UIButton()
     let tempView = UIView()
-    let navigatorBar = UINavigationBar()
     let statusBarView = UIView()
     let morebutton = UIButton()
-    var data:[Int] = []
     let riverImage = UIImageView(image: UIImage(named: "neva"))
     let size = 1800
     
@@ -27,9 +32,12 @@ class ViewController: UIViewController {
     
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        configurator.configure(with: self)
         metroView.contentScaleFactor = scrollView.zoomScale
         metroView.updateFromToScale()
         self.navigationController?.isNavigationBarHidden = true
+        
         self.view.backgroundColor = .white
         if #available(iOS 13.0, *) {
             switch traitCollection.userInterfaceStyle {
@@ -47,28 +55,22 @@ class ViewController: UIViewController {
         } else {
             tempView.backgroundColor = .white
         }
-        super.viewDidLoad()
         buttonsInit()
         screenInit()
-        
         riverImage.frame = CGRect(x: size / 4,
                                   y: size / 4,
                                   width: size / 2,
                                   height: size / 2)
         riverImage.layer.opacity = 0.3
         
-        for elem in [scrollView,minusButton,plusButton,navigatorBar,morebutton] {
+        for elem in [minusButton,plusButton,morebutton] {
             self.view.addSubview(elem)
         }
         tempView.addSubview(riverImage)
         tempView.addSubview(metroView)
         scrollView.addSubview(tempView)
         self.view.addSubview(statusBarView)
-        
 
-        centerZoomMetroView()
-    
-        // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -77,6 +79,7 @@ class ViewController: UIViewController {
             return
         }
         self.navigationController?.isNavigationBarHidden = true
+        centerZoomMetroView()
     }
     
     private func screenInit() {
@@ -86,13 +89,12 @@ class ViewController: UIViewController {
         metroView.delegate = self
         scrollView.delegate = self
         
-        scrollView.frame = self.view.frame
         scrollView.contentSize = tempView.frame.size
         scrollView.isUserInteractionEnabled = true
         scrollView.clipsToBounds = false
         let scrollViewFrame = scrollView.frame
-        let scaleWidth = scrollViewFrame.size.width / scrollView.contentSize.width
-        let scaleHeight = scrollViewFrame.size.height / scrollView.contentSize.height
+        let scaleWidth = scrollViewFrame.size.width / scrollView.contentSize.width / 1.5
+        let scaleHeight = scrollViewFrame.size.height / scrollView.contentSize.height / 1.5
         let minScale = min(scaleWidth, scaleHeight)
         
         scrollView.minimumZoomScale = minScale
@@ -126,12 +128,7 @@ class ViewController: UIViewController {
         statusBarView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: UIApplication.shared.statusBarFrame.height)
         statusBarView.backgroundColor = (traitCollection.userInterfaceStyle == .dark) ? .black : .white
         
-        let backButton = UIButton(type: .custom)
-        backButton.setImage(UIImage(named: "back"), for: .normal)
-        backButton.addTarget(self, action: #selector(pressBack), for: .touchUpInside)
-        backButton.sizeToFit()
-        self.navigationController?.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-        
+        cancelButton.action = #selector(pressBack)
         
         //plus minus button sets
         plusButton.frame = CGRect(x:  self.view.frame.width - 60, y: 94, width: 40, height: 40)
@@ -143,9 +140,8 @@ class ViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let vc = segue.destination as? MoreTableView, segue.identifier == "MoreTableView"{
-            vc.data = self.data
-        }
+        presenter.router.prepare(for: segue, sender: sender)
+        
     }
     
 
@@ -210,7 +206,7 @@ extension ViewController {
 }
 
 extension ViewController: MetroVieweDelagate {
-    func fromToButtonPress(sender: FromToButtons) {
+    func willShowFromToButton(sender: FromToButtons) {
         
         let x = sender.frame.origin.x  * scrollView.zoomScale
         let x2 = sender.frame.maxX * scrollView.zoomScale
@@ -246,7 +242,7 @@ extension ViewController: MetroVieweDelagate {
         showNavigationBar(show: true)
         showZoomButtons(show: false)
         showMoreButton(show: true)
-        self.data = data
+        presenter.data = data
     }
     
     

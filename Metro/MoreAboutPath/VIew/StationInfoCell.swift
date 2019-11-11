@@ -14,14 +14,7 @@ class StationInfoCell: UITableViewCell {
     let time = UILabel()
     let line = ForAboutPathView()
     var isSetup = false
-    var type: StationInfoConfig = .normal
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        // Initialization code
-        
-    }
+    var type: StationInfo.StationInfoConfig = .normal
     
     override func didMoveToSuperview() {
         
@@ -49,13 +42,42 @@ class StationInfoCell: UITableViewCell {
         }
         isSetup = true
     }
+    
+    func setup(data:[[StationInfo]], indexPath: IndexPath) {
+        let newdata = data[indexPath.section]
+        var type = newdata[indexPath.row].type
+        if type == .transfer {
+            if indexPath.row == 0 {
+                type = .start
+            }
+            else {
+                type = .end
+            }
+        }
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: newdata[indexPath.row].time)
+        let minute = calendar.component(.minute, from: newdata[indexPath.row].time)
+        
+        setName(name: newdata[indexPath.row].name)
+        setTime(time: "\(hour < 10 ? "0" + String(hour) : String(hour)):\(minute < 10 ? "0" + String(minute) : String(minute))")
+        
+        self.type = type
+        
+        if indexPath.section == 0 && indexPath.row == 0 && newdata.count == 1 {
+            type = .donat
+        }else if indexPath.section == data.count - 1 && indexPath.row == newdata.count - 1 && newdata.count == 1 {
+            type = .donat
+        }
+        line.setLine(color: newdata[indexPath.row].color, type: type)
+    }
+
 
     override func setSelected(_ selected: Bool, animated: Bool) {
 
         // Configure the view for the selected state
     }
     
-    func setName(name: String) {
+    private func setName(name: String) {
         self.name.font = UIFont(name: "Helvetica", size: 10)
         self.name.text = name
         self.name.sizeToFit()
@@ -64,7 +86,7 @@ class StationInfoCell: UITableViewCell {
         layoutIfNeeded()
     }
     
-    func setTime(time: String) {
+    private func setTime(time: String) {
         self.time.font = UIFont(name: "Helvetica", size: 10)
         self.time.text = time
         self.time.sizeToFit()
@@ -72,5 +94,6 @@ class StationInfoCell: UITableViewCell {
                                          y: self.frame.height / 2 - self.time.frame.height / 2)
         layoutIfNeeded()
     }
+    
 
 }

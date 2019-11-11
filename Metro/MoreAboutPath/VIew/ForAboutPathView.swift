@@ -14,7 +14,7 @@ class ForAboutPathView: UIView {
     private var color: UIColor = .black
     private let line = UIView()
     private let donat = UIView()
-    private var type: StationInfoConfig = .end
+    private var type: StationInfo.StationInfoConfig = .end
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -61,7 +61,7 @@ class ForAboutPathView: UIView {
         donat.layer.cornerRadius = donat.frame.width / 2
     }
     
-    func setLine(color: UIColor,type: StationInfoConfig) {
+    func setLine(color: UIColor,type: StationInfo.StationInfoConfig) {
         self.color = color
         self.type = type
     }
