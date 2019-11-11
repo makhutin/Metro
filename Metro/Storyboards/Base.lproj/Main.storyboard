@@ -15,11 +15,30 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wot-Nr-86Z">
+                                <rect key="frame" x="0.0" y="50" width="1024" height="1296"/>
+                            </scrollView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Wot-Nr-86Z" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="X9V-Qg-hs8"/>
+                            <constraint firstItem="Wot-Nr-86Z" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Z3z-GO-PVN"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Wot-Nr-86Z" secondAttribute="trailing" id="ZRi-jr-bpU"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Wot-Nr-86Z" secondAttribute="bottom" id="mhv-g0-4E6"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="tXI-rl-lLn"/>
+                    <navigationItem key="navigationItem" id="tXI-rl-lLn">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="MJN-OC-dr9">
+                            <connections>
+                                <action selector="cancelButtonAction:" destination="BYZ-38-t0r" id="0Lp-c7-vtD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="cancelButton" destination="MJN-OC-dr9" id="x5c-z5-Pql"/>
+                        <outlet property="scrollView" destination="Wot-Nr-86Z" id="d91-8n-KQ5"/>
                         <segue destination="gVo-33-bbU" kind="show" identifier="MoreTableView" id="eky-cO-8IC"/>
                     </connections>
                 </viewController>

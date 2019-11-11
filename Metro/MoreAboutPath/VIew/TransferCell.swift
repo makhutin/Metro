@@ -27,6 +27,27 @@ class TransferCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func setupTransfer(data: [[StationInfo]], section: Int) {
+        setName(name: "Сделайте пересадку")
+        let newData = data[section]
+        let newData2 = data[section - 1]
+        let timeEnd = newData.first!.time.timeIntervalSince1970
+        let timeStart = newData2.last!.time.timeIntervalSince1970
+        let finalTime = Int((timeEnd - timeStart) / 60)
+        setTime(time: "\(finalTime) мин")
+    }
+    
+    func setupFullPath(data: [[StationInfo]]) {
+        setName(name: "Общие время в пути составит")
+        let timeEnd = data.last!.last!.time.timeIntervalSince1970
+        let timeStart = data.first!.first!.time.timeIntervalSince1970
+        let finalTime = Int((timeEnd - timeStart) / 60)
+        imgView.isHidden = true
+        setTime(time: "\(finalTime) мин")
+    }
+    
+    
+    
     override func didMoveToSuperview() {
 
         time.font = UIFont(name: "Helvetica", size: 12)
@@ -57,7 +78,7 @@ class TransferCell: UITableViewCell {
     }
 
     
-    func setName(name: String) {
+    private func setName(name: String) {
         self.name.font = UIFont(name: "Helvetica", size: 10)
         self.name.text = name
         self.name.sizeToFit()
@@ -66,7 +87,7 @@ class TransferCell: UITableViewCell {
         layoutIfNeeded()
     }
     
-    func setTime(time: String) {
+    private func setTime(time: String) {
         self.time.font = UIFont(name: "Helvetica", size: 10)
         self.time.text = time
         self.time.sizeToFit()

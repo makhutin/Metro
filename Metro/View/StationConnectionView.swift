@@ -15,10 +15,9 @@ class StationConnectionView: UIView {
     var fromId:Int = 0
     var toId:Int = 0
     
-    init(coords:CoordsBetweenStationsWithColor,size:CGSize) {
+    init(coords:CoordsBetweenStationsWithColor) {
         self.coords = coords
-        super.init(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
-
+        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     }
     
     required init?(coder: NSCoder) {
@@ -35,8 +34,8 @@ class StationConnectionView: UIView {
         path.stroke()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func didMoveToSuperview() {
+        self.frame.size = superview!.frame.size
         self.backgroundColor = UIColor.white.withAlphaComponent(0)
     }
     
