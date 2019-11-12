@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		781508AE236B2C4B00015258 /* MetroViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781508AD236B2C4B00015258 /* MetroViewPresenter.swift */; };
+		781DBEDE237AF09C0086A095 /* MoreTableViewConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781DBEDC237AF09B0086A095 /* MoreTableViewConfigurator.swift */; };
+		781DBEDF237AF09C0086A095 /* MoreTableViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781DBEDD237AF09C0086A095 /* MoreTableViewPresenter.swift */; };
+		782D225F237ADF45002B2197 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 782D225E237ADF45002B2197 /* data.json */; };
 		783A63BA23681D6000051AF9 /* CanFading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783A63B923681D6000051AF9 /* CanFading.swift */; };
 		785B5C7C233E870400BEC6AB /* TransferCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785B5C7B233E870400BEC6AB /* TransferCell.swift */; };
 		785B5C802340AE6A00BEC6AB /* ForAboutPathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785B5C7F2340AE6A00BEC6AB /* ForAboutPathView.swift */; };
@@ -19,8 +22,6 @@
 		78A772DC237964440068ABAE /* ViewControllerPressenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A772DB237964440068ABAE /* ViewControllerPressenter.swift */; };
 		78A772DE237964F60068ABAE /* ViewControllerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A772DD237964F60068ABAE /* ViewControllerRouter.swift */; };
 		78A772E0237965A60068ABAE /* ViewControllerConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A772DF237965A60068ABAE /* ViewControllerConfigurator.swift */; };
-		78A772E223796D9A0068ABAE /* MoreTableViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A772E123796D9A0068ABAE /* MoreTableViewPresenter.swift */; };
-		78A772E423796DF70068ABAE /* MoreTableViewConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A772E323796DF70068ABAE /* MoreTableViewConfigurator.swift */; };
 		78A772E6237974930068ABAE /* StationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A772E5237974930068ABAE /* StationInfo.swift */; };
 		78AAF61623394CF0007ECD16 /* MarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AAF61523394CF0007ECD16 /* MarkerView.swift */; };
 		78AD08032337DE640069D240 /* FromToButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD08022337DE640069D240 /* FromToButtons.swift */; };
@@ -47,6 +48,9 @@
 
 /* Begin PBXFileReference section */
 		781508AD236B2C4B00015258 /* MetroViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroViewPresenter.swift; sourceTree = "<group>"; };
+		781DBEDC237AF09B0086A095 /* MoreTableViewConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreTableViewConfigurator.swift; sourceTree = "<group>"; };
+		781DBEDD237AF09C0086A095 /* MoreTableViewPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreTableViewPresenter.swift; sourceTree = "<group>"; };
+		782D225E237ADF45002B2197 /* data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		783A63B923681D6000051AF9 /* CanFading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanFading.swift; sourceTree = "<group>"; };
 		785B5C7B233E870400BEC6AB /* TransferCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferCell.swift; sourceTree = "<group>"; };
 		785B5C7F2340AE6A00BEC6AB /* ForAboutPathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForAboutPathView.swift; sourceTree = "<group>"; };
@@ -58,8 +62,6 @@
 		78A772DB237964440068ABAE /* ViewControllerPressenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerPressenter.swift; sourceTree = "<group>"; };
 		78A772DD237964F60068ABAE /* ViewControllerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerRouter.swift; sourceTree = "<group>"; };
 		78A772DF237965A60068ABAE /* ViewControllerConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerConfigurator.swift; sourceTree = "<group>"; };
-		78A772E123796D9A0068ABAE /* MoreTableViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreTableViewPresenter.swift; sourceTree = "<group>"; };
-		78A772E323796DF70068ABAE /* MoreTableViewConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreTableViewConfigurator.swift; sourceTree = "<group>"; };
 		78A772E5237974930068ABAE /* StationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationInfo.swift; sourceTree = "<group>"; };
 		78AAF61523394CF0007ECD16 /* MarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerView.swift; sourceTree = "<group>"; };
 		78AD08022337DE640069D240 /* FromToButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromToButtons.swift; sourceTree = "<group>"; };
@@ -107,6 +109,14 @@
 			path = MetroMapModul;
 			sourceTree = "<group>";
 		};
+		782D2260237ADF5A002B2197 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				782D225E237ADF45002B2197 /* data.json */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		783A63B823681D5000051AF9 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,8 +145,8 @@
 			children = (
 				78A772E7237974E30068ABAE /* VIew */,
 				789E8913233D29F70081D705 /* MoreTableView.swift */,
-				78A772E323796DF70068ABAE /* MoreTableViewConfigurator.swift */,
-				78A772E123796D9A0068ABAE /* MoreTableViewPresenter.swift */,
+				781DBEDC237AF09B0086A095 /* MoreTableViewConfigurator.swift */,
+				781DBEDD237AF09C0086A095 /* MoreTableViewPresenter.swift */,
 			);
 			path = MoreAboutPath;
 			sourceTree = "<group>";
@@ -178,8 +188,9 @@
 				78D486FF23675B1E0078E00C /* Storyboards */,
 				783A63B823681D5000051AF9 /* Protocols */,
 				78D486FE23675B0E0078E00C /* Service */,
-				78C897C62332615D00A9DAFF /* Assets.xcassets */,
+				782D2260237ADF5A002B2197 /* Data */,
 				78C897CB2332615D00A9DAFF /* Info.plist */,
+				78C897C62332615D00A9DAFF /* Assets.xcassets */,
 			);
 			path = Metro;
 			sourceTree = "<group>";
@@ -290,6 +301,7 @@
 				78C897CA2332615D00A9DAFF /* LaunchScreen.storyboard in Resources */,
 				78C897C72332615D00A9DAFF /* Assets.xcassets in Resources */,
 				78C897C52332615900A9DAFF /* Main.storyboard in Resources */,
+				782D225F237ADF45002B2197 /* data.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,8 +314,9 @@
 			files = (
 				78AAF61623394CF0007ECD16 /* MarkerView.swift in Sources */,
 				7867175923329CA10030841D /* MetroConfig.swift in Sources */,
+				781DBEDF237AF09C0086A095 /* MoreTableViewPresenter.swift in Sources */,
 				78DD0A442370715400F2B017 /* WitchId.swift in Sources */,
-				78A772E423796DF70068ABAE /* MoreTableViewConfigurator.swift in Sources */,
+				781DBEDE237AF09C0086A095 /* MoreTableViewConfigurator.swift in Sources */,
 				78C897C22332615900A9DAFF /* ViewController.swift in Sources */,
 				78AD08052338A9050069D240 /* StationConnectionView.swift in Sources */,
 				78C897D22332642800A9DAFF /* MetroView.swift in Sources */,
@@ -320,7 +333,6 @@
 				78C897D4233266C700A9DAFF /* MetroDonatOne.swift in Sources */,
 				78A772DC237964440068ABAE /* ViewControllerPressenter.swift in Sources */,
 				7863DABC236B3401009FF31B /* MetroViewInteractor.swift in Sources */,
-				78A772E223796D9A0068ABAE /* MoreTableViewPresenter.swift in Sources */,
 				78E6BAE223618DA0004338D2 /* MetroMultiStation.swift in Sources */,
 				78E6BAE423618DBB004338D2 /* LinkWithTime.swift in Sources */,
 				78DD0A4623707CE700F2B017 /* MetroViewStyleAnim.swift in Sources */,
