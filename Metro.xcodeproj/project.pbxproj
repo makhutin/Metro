@@ -10,6 +10,14 @@
 		781508AE236B2C4B00015258 /* MetroViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781508AD236B2C4B00015258 /* MetroViewPresenter.swift */; };
 		781DBEDE237AF09C0086A095 /* MoreTableViewConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781DBEDC237AF09B0086A095 /* MoreTableViewConfigurator.swift */; };
 		781DBEDF237AF09C0086A095 /* MoreTableViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781DBEDD237AF09C0086A095 /* MoreTableViewPresenter.swift */; };
+		781DBF2C237C0B0E0086A095 /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781DBF2B237C0B0E0086A095 /* DataLoader.swift */; };
+		781DBF34237C0D0B0086A095 /* MetroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781DBF33237C0D0B0086A095 /* MetroTests.swift */; };
+		781DBF3C237C0D180086A095 /* DataLoaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781DBF3B237C0D180086A095 /* DataLoaderTest.swift */; };
+		781DBF3E237C0EBF0086A095 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781DBF3D237C0EBF0086A095 /* Station.swift */; };
+		781DBF40237C0FBD0086A095 /* MetroData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781DBF3F237C0FBD0086A095 /* MetroData.swift */; };
+		781DBF43237C108E0086A095 /* MultiPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781DBF42237C108E0086A095 /* MultiPoint.swift */; };
+		781DBF45237C11920086A095 /* LineColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781DBF44237C11920086A095 /* LineColor.swift */; };
+		781DBF49237C24CA0086A095 /* MetroDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781DBF48237C24CA0086A095 /* MetroDataTest.swift */; };
 		782D225F237ADF45002B2197 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 782D225E237ADF45002B2197 /* data.json */; };
 		783A63BA23681D6000051AF9 /* CanFading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783A63B923681D6000051AF9 /* CanFading.swift */; };
 		785B5C7C233E870400BEC6AB /* TransferCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785B5C7B233E870400BEC6AB /* TransferCell.swift */; };
@@ -46,10 +54,30 @@
 		78F07DBE233B8D6C003387B4 /* MultiStationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F07DBD233B8D6C003387B4 /* MultiStationView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		781DBF36237C0D0B0086A095 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 78C897B42332615800A9DAFF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 78C897BB2332615900A9DAFF;
+			remoteInfo = Metro;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		781508AD236B2C4B00015258 /* MetroViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroViewPresenter.swift; sourceTree = "<group>"; };
 		781DBEDC237AF09B0086A095 /* MoreTableViewConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreTableViewConfigurator.swift; sourceTree = "<group>"; };
 		781DBEDD237AF09C0086A095 /* MoreTableViewPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreTableViewPresenter.swift; sourceTree = "<group>"; };
+		781DBF2B237C0B0E0086A095 /* DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoader.swift; sourceTree = "<group>"; };
+		781DBF31237C0D0B0086A095 /* MetroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MetroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		781DBF33237C0D0B0086A095 /* MetroTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroTests.swift; sourceTree = "<group>"; };
+		781DBF35237C0D0B0086A095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		781DBF3B237C0D180086A095 /* DataLoaderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoaderTest.swift; sourceTree = "<group>"; };
+		781DBF3D237C0EBF0086A095 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
+		781DBF3F237C0FBD0086A095 /* MetroData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroData.swift; sourceTree = "<group>"; };
+		781DBF42237C108E0086A095 /* MultiPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPoint.swift; sourceTree = "<group>"; };
+		781DBF44237C11920086A095 /* LineColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineColor.swift; sourceTree = "<group>"; };
+		781DBF48237C24CA0086A095 /* MetroDataTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroDataTest.swift; sourceTree = "<group>"; };
 		782D225E237ADF45002B2197 /* data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		783A63B923681D6000051AF9 /* CanFading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanFading.swift; sourceTree = "<group>"; };
 		785B5C7B233E870400BEC6AB /* TransferCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferCell.swift; sourceTree = "<group>"; };
@@ -89,6 +117,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		781DBF2E237C0D0B0086A095 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		78C897B92332615900A9DAFF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -107,6 +142,44 @@
 				7863DABB236B3401009FF31B /* MetroViewInteractor.swift */,
 			);
 			path = MetroMapModul;
+			sourceTree = "<group>";
+		};
+		781DBF32237C0D0B0086A095 /* MetroTests */ = {
+			isa = PBXGroup;
+			children = (
+				781DBF33237C0D0B0086A095 /* MetroTests.swift */,
+				781DBF35237C0D0B0086A095 /* Info.plist */,
+				781DBF47237C24A40086A095 /* Entity */,
+				781DBF46237C249D0086A095 /* Services */,
+			);
+			path = MetroTests;
+			sourceTree = "<group>";
+		};
+		781DBF41237C0FC00086A095 /* MetroData */ = {
+			isa = PBXGroup;
+			children = (
+				78E6BAE523618DCB004338D2 /* LineBetweenStations.swift */,
+				781DBF3D237C0EBF0086A095 /* Station.swift */,
+				781DBF42237C108E0086A095 /* MultiPoint.swift */,
+				781DBF44237C11920086A095 /* LineColor.swift */,
+			);
+			path = MetroData;
+			sourceTree = "<group>";
+		};
+		781DBF46237C249D0086A095 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				781DBF3B237C0D180086A095 /* DataLoaderTest.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		781DBF47237C24A40086A095 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				781DBF48237C24CA0086A095 /* MetroDataTest.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		782D2260237ADF5A002B2197 /* Data */ = {
@@ -165,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				78C897BE2332615900A9DAFF /* Metro */,
+				781DBF32237C0D0B0086A095 /* MetroTests */,
 				78C897BD2332615900A9DAFF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -173,6 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				78C897BC2332615900A9DAFF /* Metro.app */,
+				781DBF31237C0D0B0086A095 /* MetroTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -214,6 +289,7 @@
 			children = (
 				78E6BAEB23618E8B004338D2 /* RouteBuilder.swift */,
 				7867175823329CA10030841D /* MetroConfig.swift */,
+				781DBF2B237C0B0E0086A095 /* DataLoader.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -233,9 +309,10 @@
 				78E6BADF23618D83004338D2 /* MetroStation.swift */,
 				78E6BAE123618DA0004338D2 /* MetroMultiStation.swift */,
 				78E6BAE323618DBB004338D2 /* LinkWithTime.swift */,
-				78E6BAE523618DCB004338D2 /* LineBetweenStations.swift */,
 				78E6BAE923618DF1004338D2 /* CoordsBetweenStationsWithColor.swift */,
 				78A772E5237974930068ABAE /* StationInfo.swift */,
+				781DBF3F237C0FBD0086A095 /* MetroData.swift */,
+				781DBF41237C0FC00086A095 /* MetroData */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -243,6 +320,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		781DBF30237C0D0B0086A095 /* MetroTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 781DBF38237C0D0B0086A095 /* Build configuration list for PBXNativeTarget "MetroTests" */;
+			buildPhases = (
+				781DBF2D237C0D0B0086A095 /* Sources */,
+				781DBF2E237C0D0B0086A095 /* Frameworks */,
+				781DBF2F237C0D0B0086A095 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				781DBF37237C0D0B0086A095 /* PBXTargetDependency */,
+			);
+			name = MetroTests;
+			productName = MetroTests;
+			productReference = 781DBF31237C0D0B0086A095 /* MetroTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		78C897BB2332615900A9DAFF /* Metro */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 78C897CE2332615D00A9DAFF /* Build configuration list for PBXNativeTarget "Metro" */;
@@ -266,10 +361,15 @@
 		78C897B42332615800A9DAFF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1030;
+				DefaultBuildSystemTypeForWorkspace = Original;
+				LastSwiftUpdateCheck = 1110;
 				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = "Mahutin Aleksei";
 				TargetAttributes = {
+					781DBF30237C0D0B0086A095 = {
+						CreatedOnToolsVersion = 11.1;
+						TestTargetID = 78C897BB2332615900A9DAFF;
+					};
 					78C897BB2332615900A9DAFF = {
 						CreatedOnToolsVersion = 10.3;
 					};
@@ -289,11 +389,19 @@
 			projectRoot = "";
 			targets = (
 				78C897BB2332615900A9DAFF /* Metro */,
+				781DBF30237C0D0B0086A095 /* MetroTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		781DBF2F237C0D0B0086A095 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		78C897BA2332615900A9DAFF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -308,6 +416,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		781DBF2D237C0D0B0086A095 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				781DBF49237C24CA0086A095 /* MetroDataTest.swift in Sources */,
+				781DBF3C237C0D180086A095 /* DataLoaderTest.swift in Sources */,
+				781DBF34237C0D0B0086A095 /* MetroTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		78C897B82332615900A9DAFF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -315,9 +433,11 @@
 				78AAF61623394CF0007ECD16 /* MarkerView.swift in Sources */,
 				7867175923329CA10030841D /* MetroConfig.swift in Sources */,
 				781DBEDF237AF09C0086A095 /* MoreTableViewPresenter.swift in Sources */,
+				781DBF40237C0FBD0086A095 /* MetroData.swift in Sources */,
 				78DD0A442370715400F2B017 /* WitchId.swift in Sources */,
 				781DBEDE237AF09C0086A095 /* MoreTableViewConfigurator.swift in Sources */,
 				78C897C22332615900A9DAFF /* ViewController.swift in Sources */,
+				781DBF45237C11920086A095 /* LineColor.swift in Sources */,
 				78AD08052338A9050069D240 /* StationConnectionView.swift in Sources */,
 				78C897D22332642800A9DAFF /* MetroView.swift in Sources */,
 				781508AE236B2C4B00015258 /* MetroViewPresenter.swift in Sources */,
@@ -334,9 +454,11 @@
 				78A772DC237964440068ABAE /* ViewControllerPressenter.swift in Sources */,
 				7863DABC236B3401009FF31B /* MetroViewInteractor.swift in Sources */,
 				78E6BAE223618DA0004338D2 /* MetroMultiStation.swift in Sources */,
+				781DBF2C237C0B0E0086A095 /* DataLoader.swift in Sources */,
 				78E6BAE423618DBB004338D2 /* LinkWithTime.swift in Sources */,
 				78DD0A4623707CE700F2B017 /* MetroViewStyleAnim.swift in Sources */,
 				78A772DE237964F60068ABAE /* ViewControllerRouter.swift in Sources */,
+				781DBF3E237C0EBF0086A095 /* Station.swift in Sources */,
 				789E8914233D29F70081D705 /* MoreTableView.swift in Sources */,
 				78F07DBE233B8D6C003387B4 /* MultiStationView.swift in Sources */,
 				789E8916233D44050081D705 /* StationInfoCell.swift in Sources */,
@@ -344,11 +466,20 @@
 				78D486FC236749B30078E00C /* TriangleView.swift in Sources */,
 				78C897C02332615900A9DAFF /* AppDelegate.swift in Sources */,
 				78E6BAEC23618E8B004338D2 /* RouteBuilder.swift in Sources */,
+				781DBF43237C108E0086A095 /* MultiPoint.swift in Sources */,
 				78E6BAEA23618DF1004338D2 /* CoordsBetweenStationsWithColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		781DBF37237C0D0B0086A095 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 78C897BB2332615900A9DAFF /* Metro */;
+			targetProxy = 781DBF36237C0D0B0086A095 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		78C897C32332615900A9DAFF /* Main.storyboard */ = {
@@ -370,6 +501,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		781DBF39237C0D0B0086A095 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = MetroTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mahutin.MetroTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Metro.app/Metro";
+			};
+			name = Debug;
+		};
+		781DBF3A237C0D0B0086A095 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = MetroTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mahutin.MetroTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Metro.app/Metro";
+			};
+			name = Release;
+		};
 		78C897CC2332615D00A9DAFF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -527,6 +698,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		781DBF38237C0D0B0086A095 /* Build configuration list for PBXNativeTarget "MetroTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				781DBF39237C0D0B0086A095 /* Debug */,
+				781DBF3A237C0D0B0086A095 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		78C897B72332615800A9DAFF /* Build configuration list for PBXProject "Metro" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

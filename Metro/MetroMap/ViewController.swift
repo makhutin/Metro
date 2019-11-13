@@ -32,6 +32,7 @@ class ViewController: UIViewController {
     
     
     override func viewDidLoad() {
+        DataLoader.share.laodFileToData(filename: "data", wtihExtension: "json")
         super.viewDidLoad()
         configurator.configure(with: self)
         metroView.contentScaleFactor = scrollView.zoomScale
