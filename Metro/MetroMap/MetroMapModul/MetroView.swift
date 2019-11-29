@@ -13,10 +13,18 @@ protocol MetroVieweDelagate {
     func willShowFromToButton(sender: FromToButtons)
 }
 
+protocol MetroViewProtocol {
+    func updateFromToScale()
+    func restoreMapToDefault()
+    var contentScaleFactor: CGFloat { get set }
+    var delegate: MetroVieweDelagate? { get set }
+    var frame: CGRect { get set }
+}
+
 @IBDesignable
-class MetroView: UIView {
+class MetroView: UIView, MetroViewProtocol {
     
-    var presenter: MetroViewPresenterProtocol?
+    var presenter: MetroViewPresenterProtocol!
     
     private var isSetup = false
     private var isStationSetup = false
@@ -57,7 +65,7 @@ class MetroView: UIView {
     }
     
 
-    private func pointSetup() {
+    func pointSetup() {
         aPointView.frame.size = CGSize(width: pointSize * 2, height: pointSize * 2)
         bPointView.frame.size = CGSize(width: pointSize * 2, height: pointSize * 2)
         aPointView.layer.shadowColor = UIColor.black.cgColor
@@ -68,41 +76,43 @@ class MetroView: UIView {
     }
     
     //Draw multistations border on map
-    private func multiStationsInit() {
+    func multiStationsInit() {
         presenter?.multiStations.forEach {
             let view = MultiStationView()
             let x = $0.coords.x * widthCoficent + offsetMapXY
             let y = $0.coords.y * widthCoficent + offsetMapXY
             view.frame.origin = CGPoint(x: x, y: y)
             view.frame.size = CGSize(width: pointSize * 2, height: pointSize * 2)
-            view.stationCount = $0.count
+            view.stationCount = StationCountForMulti(rawValue: $0.id.count) ?? .two
             self.addSubview(view)
         }
     }
     
     //Draw on map all stations, points and names
-    private func stationsInit() {
+    func stationsInit() {
         //stations dot and text add to subviews
-        presenter?.stations.forEach { (arg) in
-            let (_, elem) = arg
+        presenter?.stations.forEach { elem in
+            let (id,station) = elem
             let view = MetroDonatOne()
-            view.id = elem.id
-            let x = elem.coords.x * widthCoficent + offsetMapXY
-            let y = elem.coords.y * widthCoficent + offsetMapXY
+            view.id = id
+            
+            let x = station.coords.x * widthCoficent + offsetMapXY
+            let y = station.coords.y * widthCoficent + offsetMapXY
             view.frame.origin = CGPoint(x: x, y: y)
-            view.donatColor = elem.color
+            
             view.frame.size = CGSize(width: pointSize, height: pointSize)
             view.delegate = self
             
             var text = TextStationView()
-            text.text = presenter?.text[elem.id] ?? ""
-            text.id = elem.id
+            text.text = station.name["ru_RU"] ?? ""
+            text.id = id
             text.delegate = self
 
             text = fineTuningText(id: text.id, text: text, view: view)
             //set color if text is text of multi station
-            if let presenter = presenter {
-                text.color = presenter.multiStationsId.contains(text.id) ? presenter.stations[text.id]!.color : .black
+            if let color = presenter.getColorForLine(withStation: id) {
+                view.donatColor = color
+                text.color = presenter.multiStationsId.contains(id) ? color : .black
             }
             self.addSubview(text)
             self.addSubview(view)
@@ -137,13 +147,12 @@ class MetroView: UIView {
         return text
     }
     
-    private func stationConnectInit() {
+    func stationConnectInit() {
         let multiCoords = presenter!.multiCoords
         presenter?.lines.forEach {
-            let coords = coordsForLinesInit(LineBetweenStationsList: $0.value, multiCoords: multiCoords)
-            let line = $0.value
+            let coords = coordsForLinesInit(LineBetweenStationsList: $0, multiCoords: multiCoords)
+            let line = $0
             for (index,elem) in coords.enumerated() {
-                
                 let way = StationConnectionView(coords: elem)
                 way.frame.size = self.frame.size
                 way.fromId = line[index].fromId
@@ -154,15 +163,15 @@ class MetroView: UIView {
     }
     
     
-    private func coordsForLinesInit(LineBetweenStationsList: [LineBetweenStations], multiCoords: [Int:CGPoint]) -> [CoordsBetweenStationsWithColor] {
+    func coordsForLinesInit(LineBetweenStationsList: [LineBetweenStations], multiCoords: [Int:CGPoint]) -> [CoordsBetweenStationsWithColor] {
         var result:[CoordsBetweenStationsWithColor] = []
         
-        let stationsConfig = presenter!.stations
-        
         for connect in LineBetweenStationsList {
-            var fromCoords = CGPoint(x: stationsConfig[connect.fromId]!.coords.x * widthCoficent + pointSize / 2 + offsetMapXY,
-                                     y: stationsConfig[connect.fromId]!.coords.y * heightCoficent + pointSize / 2 + offsetMapXY)
-            if stationsConfig[connect.fromId]!.multi {
+            let stations = presenter.stations
+            let fromStationPoint = stations[connect.fromId]!.coords
+            var fromCoords = CGPoint(x: fromStationPoint.x * widthCoficent + pointSize / 2 + offsetMapXY,
+                                     y: fromStationPoint.y * heightCoficent + pointSize / 2 + offsetMapXY)
+            if stations[connect.fromId]!.multi {
                 let x = multiCoords[connect.fromId]!.x * widthCoficent + pointSize + 4
                 var y = multiCoords[connect.fromId]!.y * heightCoficent + pointSize / 2
                 if [28,57,63].contains(connect.fromId) {
@@ -170,10 +179,10 @@ class MetroView: UIView {
                 }
                 fromCoords = CGPoint(x: x + offsetMapXY, y: y + offsetMapXY)
             }
-            
-            var toCoords = CGPoint(x: stationsConfig[connect.toId]!.coords.x * widthCoficent + pointSize / 2 + offsetMapXY,
-                                   y: stationsConfig[connect.toId]!.coords.y * heightCoficent + pointSize / 2 + offsetMapXY)
-            if stationsConfig[connect.toId]!.multi {
+            let toStationPoint = stations[connect.toId]!.coords
+            var toCoords = CGPoint(x: toStationPoint.x * widthCoficent + pointSize / 2 + offsetMapXY,
+                                   y: toStationPoint.y * heightCoficent + pointSize / 2 + offsetMapXY)
+            if stations[connect.toId]!.multi {
                 let x = multiCoords[connect.toId]!.x * widthCoficent + pointSize + 4
                 var y = multiCoords[connect.toId]!.y * heightCoficent + pointSize / 2
                 if [28,57,63].contains(connect.toId) {
@@ -181,8 +190,8 @@ class MetroView: UIView {
                 }
                 toCoords = CGPoint(x: x + offsetMapXY, y: y + offsetMapXY)
             }
-            
-            result.append(CoordsBetweenStationsWithColor(fromCoords: fromCoords, toCoords: toCoords, color: stationsConfig[connect.toId]!.color))
+            let color = presenter.getColorForLine(withStation: connect.toId) ?? UIColor.black
+            result.append(CoordsBetweenStationsWithColor(fromCoords: fromCoords, toCoords: toCoords, color: color))
         }
         return result
     }
@@ -198,7 +207,7 @@ class MetroView: UIView {
      Unscale and make transparent point station, if it not in the way
      
      */
-    private func drawStationWayOnMap(){
+    func drawStationWayOnMap(){
             
         let stationsId = presenter!.getStationRoute
         if !stationsId.isEmpty {
@@ -239,7 +248,7 @@ class MetroView: UIView {
         }
     }
     
-    private func setMarker(wordAorB: MarkerViewWord ) {
+    func setMarker(wordAorB: MarkerViewWord ) {
         var pointView: MarkerView
         switch wordAorB {
         case .a:
@@ -255,6 +264,7 @@ class MetroView: UIView {
                     guard let elem = $0 as? MetroDonatOne, elem.id == point else { return false }
                     return true
             }
+                
                 .forEach {
                     let elem = $0 as! MetroDonatOne
                     pointView.frame.size = CGSize(width: pointView.frame.width, height: pointView.frame.height / 2)
@@ -317,7 +327,7 @@ extension MetroView {
 
 extension MetroView: FromToButtonsDelegate{
     
-    func pressToButton(sender: UIView) {
+    @objc func pressToButton(sender: UIView) {
         presenter?.pressFromToButton(button: .to)
         
         UIView.animate(withDuration: 0.6, animations: {
@@ -331,7 +341,7 @@ extension MetroView: FromToButtonsDelegate{
         setMarker(wordAorB: .b)
     }
     
-    func pressFromButton(sender: UIView) {
+    @objc func pressFromButton(sender: UIView) {
         presenter?.pressFromToButton(button: .from)
         
         UIView.animate(withDuration: 0.6, animations: {
@@ -352,7 +362,7 @@ extension MetroView: FromToButtonsDelegate{
 
 extension MetroView: MetroDonatOneDelegate{
     
-    func tapOnDonat(sender: MetroDonatOne) {
+    @objc func tapOnDonat(sender: MetroDonatOne) {
         UIView.animate(withDuration: 0.4, animations: {
             self.fromTo.layer.opacity = 0
             self.layoutIfNeeded()
@@ -373,7 +383,7 @@ extension MetroView: MetroDonatOneDelegate{
 }
 
 extension MetroView: TextStationViewDelegate {
-    func pressTextStation(sender: TextStationView) {
+    @objc func pressTextStation(sender: TextStationView) {
         let result = subviews.filter {
             guard let elem = $0 as? MetroDonatOne, elem.id == sender.id else { return false}
             return true

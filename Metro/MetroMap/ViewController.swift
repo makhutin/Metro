@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     var configurator: ViewControllerConfiguratorProtocol = ViewControllerConfigurator()
     
     let scrollView2 = UIScrollView()
-    let metroView = MetroView()
+    var metroView: MetroViewProtocol = MetroView()
     let plusButton = UIButton()
     let minusButton = UIButton()
     let tempView = UIView()
@@ -32,7 +32,6 @@ class ViewController: UIViewController {
     
     
     override func viewDidLoad() {
-        DataLoader.share.laodFileToData(filename: "data", wtihExtension: "json")
         super.viewDidLoad()
         configurator.configure(with: self)
         metroView.contentScaleFactor = scrollView.zoomScale
@@ -68,7 +67,7 @@ class ViewController: UIViewController {
             self.view.addSubview(elem)
         }
         tempView.addSubview(riverImage)
-        tempView.addSubview(metroView)
+        tempView.addSubview(metroView as! MetroView)
         scrollView.addSubview(tempView)
         self.view.addSubview(statusBarView)
 

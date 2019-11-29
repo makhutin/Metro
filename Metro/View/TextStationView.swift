@@ -51,7 +51,7 @@ class TextStationView: UIView,WitchId {
         button.addTarget(self, action: #selector(pressText), for: .touchUpInside)
     }
     
-    @objc private func pressText() {
+    @objc func pressText() {
         delegate?.pressTextStation(sender: self)
     }
 

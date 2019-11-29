@@ -10,42 +10,43 @@ import Foundation
 
 
 protocol MetroViewInteractorProtocol {
-    var getStations: [Int : MetroStation] { get }
-    var getLines: [Int : [LineBetweenStations]] { get }
-    var getMultiStations: [MetroMultiStation] { get }
-    
-    func getText(language: String) -> [Int : String]
+    var getStations: [Int :Station] { get }
+    var getLines: [[LineBetweenStations]] { get }
+    var getMultiStations: [MultiPoint] { get }
+    var getLineColor: [LineColor] { get }
 }
 
 class MetroViewInteractor: MetroViewInteractorProtocol {
     
-    private var stationsConfig = MetroConfig.share.allStations
-    private var linesConfig = MetroConfig.share.lines
-    private var textConfig = MetroConfig.share.textStation
-    private let multiConfig = MetroConfig.share.multiStation
+    private var data: MetroData!
+    private var stationsDictionary: [Int: Station] = [:]
     
-    private let route = RouteBuilder.share
+    private let router = RouteBuilder.share
     
-    var getStations: [Int : MetroStation] {
-        return stationsConfig
-    }
-    
-    var getLines: [Int : [LineBetweenStations]] {
-        return linesConfig
-    }
-    
-    var getMultiStations: [MetroMultiStation] {
-        return multiConfig
-    }
-    
-    func getText(language: String) -> [Int : String] {
-        if let text = textConfig[language] {
-            return text
+    init() {
+        data = DataFetcher.share.getMetroData()
+        data.stations.forEach{
+            stationsDictionary.updateValue($0, forKey: $0.id)
         }
-        return textConfig["ru_RU"]!
+    }
+    
+    var getStations: [Int: Station] {
+        return stationsDictionary
+    }
+    
+    var getLines: [[LineBetweenStations]] {
+        return data.lines
+    }
+    
+    var getMultiStations: [MultiPoint] {
+        return data.multiPoints
+    }
+    
+    var getLineColor: [LineColor] {
+        return data.colors
     }
     
     func findRoute(from: Int, to: Int) -> [Int] {
-        return route.buildPath(start: from, end: to)
+        return router.buildPath(start: from, end: to)
     }
 }

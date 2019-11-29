@@ -17,15 +17,16 @@ protocol MetroViewPresenterProtocol {
     func tapOnDonat(sender: WitchId)
     func pressFromToButton(button: FromToButtonsStyle)
     func getAorBPoint(point: MarkerViewWord) -> Int?
+    func getColorForLine(withStation id: Int) -> UIColor?
     
     
     var getStyleForFromToView: FromToButtonsStyle { get }
     var getStationRoute: [Int] { get }
-    var stations: [Int : MetroStation] { get }
-    var multiStations: [MetroMultiStation] { get }
-    var text: [Int : String] { get }
+    var stations: [Int: Station] { get }
+    var lineColors: [LineColor] { get }
+    var multiStations: [MultiPoint] { get }
     var multiStationsId: [Int] { get }
-    var lines: [Int : [LineBetweenStations]] { get }
+    var lines: [[LineBetweenStations]] { get }
     var multiCoords: [Int: CGPoint] { get }
     
     
@@ -33,7 +34,6 @@ protocol MetroViewPresenterProtocol {
 }
 
 class MetroViewPresenter: MetroViewPresenterProtocol {
-    
 
     let interactor = MetroViewInteractor()
     weak var view: UIView!
@@ -45,17 +45,21 @@ class MetroViewPresenter: MetroViewPresenterProtocol {
     var currentId: Int?
     
     //MARK: Interactor
-    var lines: [Int : [LineBetweenStations]] {
+    var lines: [[LineBetweenStations]] {
         return interactor.getLines
     }
     
-    var multiStations: [MetroMultiStation] {
+    var multiStations: [MultiPoint] {
         return interactor.getMultiStations
     }
     
     // all id of multistations
     var multiStationsId: [Int] {
         return multiStations.flatMap { $0.id }
+    }
+    
+    var lineColors: [LineColor] {
+        return interactor.getLineColor
     }
     
     var multiCoords: [Int: CGPoint] {
@@ -68,13 +72,8 @@ class MetroViewPresenter: MetroViewPresenterProtocol {
         return mulitCoords
     }
     
-    var stations: [Int : MetroStation] {
+    var stations: [Int: Station] {
         return interactor.getStations
-    }
-    
-    //text name of stantions
-    var text: [Int : String] {
-        return interactor.getText(language: language)
     }
     
     //MARK: Others
@@ -87,6 +86,13 @@ class MetroViewPresenter: MetroViewPresenterProtocol {
             return true
         }
         return result.first as? MetroDonatOne
+    }
+    
+    func getColorForLine(withStation id: Int) -> UIColor? {
+        if let station = stations[id] {
+            return lineColors[station.line - 1].color
+        }
+        return nil
     }
     
 

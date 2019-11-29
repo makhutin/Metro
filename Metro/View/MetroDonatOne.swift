@@ -19,10 +19,10 @@ class MetroDonatOne: UIView,WitchId {
     
     var id: Int = 0
     var scaled = false
-    var donatColor:UIColor = .red
-    private let stroke:CGFloat = 10
+    var donatColor: UIColor = .red
+    private let stroke: CGFloat = 10
     private let donat = UIView()
-    var delegate:MetroDonatOneDelegate?
+    var delegate: MetroDonatOneDelegate?
 
     
     override func layoutSubviews() {
@@ -40,7 +40,7 @@ class MetroDonatOne: UIView,WitchId {
         self.addSubview(donat)
     }
     
-    @objc private func handleTap() {
+    @objc func handleTap() {
         delegate?.tapOnDonat(sender: self)
     }
     

@@ -10,8 +10,8 @@ import UIKit
 
 
 
-enum StationCountForMulti {
-    case two, three
+enum StationCountForMulti: Int {
+    case two = 2, three = 3
 }
 @IBDesignable
 class MultiStationView: UIView {
