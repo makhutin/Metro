@@ -23,6 +23,8 @@ class MoreTableView: UITableViewController {
         self.tableView.reloadData()
         self.tableView.separatorStyle = .none
         self.tableView.allowsSelection = false
+        self.tableView.register(StationInfoCell.self, forCellReuseIdentifier: String(describing: StationInfoCell.self))
+        self.tableView.register(TransferCell.self, forHeaderFooterViewReuseIdentifier: String(describing: TransferCell.self))
         
     }
     
@@ -51,14 +53,14 @@ class MoreTableView: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = StationInfoCell()
+        guard let cell = self.tableView.dequeueReusableCell(withIdentifier: String(describing: StationInfoCell.self),for: indexPath) as? StationInfoCell else { return UITableViewCell() }
         cell.setup(data: presenter.stationPath, indexPath: indexPath)
         return cell
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let cell = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: TransferCell.self)) as? TransferCell else { return UIView() }
         if section > 0 {
-            let cell = TransferCell()
             cell.setupTransfer(data: presenter.stationPath, section: section)
             return cell
         }else{
@@ -67,8 +69,8 @@ class MoreTableView: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        guard let cell = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: TransferCell.self)) as? TransferCell else { return UIView() }
         if section == presenter.stationPath.count - 1 && !presenter.stationPath.isEmpty{
-            let cell = TransferCell()
             cell.setupFullPath(data: presenter.stationPath)
             return cell
         }else{

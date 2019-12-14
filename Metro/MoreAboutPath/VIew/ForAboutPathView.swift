@@ -48,13 +48,6 @@ class ForAboutPathView: UIView {
                                 y: 0,
                                 width: self.frame.width / 2,
                                 height: self.frame.height)
-        case .donat:
-            donat.backgroundColor = color
-            line.frame = CGRect(x: self.frame.width / 4,
-                                y: 0,
-                                width: self.frame.width / 2,
-                                height: self.frame.height)
-            line.layer.opacity = 0
         }
         
         donat.frame = CGRect(x: 0, y: (self.frame.height / 2) - (line.frame.width / 2), width: line.frame.width * 2, height: line.frame.width * 2)

@@ -17,6 +17,7 @@ protocol MoreTableViewPresenterProtocol {
 class MoreTableViewPresenter: MoreTableViewPresenterProtocol {
     
     weak var view: MoreTableView!
+    let interactor = MoreTableViewInteractor()
     
     private var data: [Int] = []
     
@@ -24,89 +25,94 @@ class MoreTableViewPresenter: MoreTableViewPresenterProtocol {
         view = viewcontroller
         self.data = data
         workWithData()
-        finalWorkWithData()
     }
     
-    let stationConfig = MetroConfig.share.allStations
-    let linkConfig = MetroConfig.share.link
-    let textConfig = MetroConfig.share.textStation
-    var compliteData: [StationInfo] = []
+    var stations: [Int: Station] {
+        return interactor.stationsDict
+    }
+    
+    var colors: [LineColor] {
+        return interactor.colors
+    }
+
+    
     var stationPath: [[StationInfo]] = []
     
-    private func finalWorkWithData() {
+    func finalWorkWithData(compliteData: [StationInfo]) {
         stationPath = []
-        var saveIndex = 1
+        var saveIndex = 0.5
         stationPath.append([])
         for i in 0..<compliteData.count {
-                if compliteData[i].type == .transfer {
-                    if stationPath.count - 1 != Int(saveIndex / 2) {
-                        stationPath.append([])
-                    }
-                    stationPath[saveIndex / 2].append(compliteData[i])
-                    saveIndex += 1
-                    continue
-            }
-            if stationPath.count - 1 != Int(saveIndex / 2) {
+            let station = compliteData[i]
+            if stationPath.count - 1 != Int(saveIndex) {
                 stationPath.append([])
             }
-            stationPath[saveIndex / 2].append(compliteData[i])
+            if station.type == .transfer {
+                stationPath[Int(saveIndex)].append(station)
+                saveIndex += 0.5
+                continue
+            }
+            stationPath[Int(saveIndex)].append(station)
         }
     }
     
+    func getType(station: Station, index: Int) -> StationInfo.StationInfoConfig {
+        //check start or end
+        var type: StationInfo.StationInfoConfig = .normal
+        switch index {
+        case 0: type = .start
+        case data.count - 1: type = .end
+        default: type = .normal
+        }
+        
+        //check transfers
+        if station.multi {
+            let nextStation = stations[data[index + 1]]
+            let prevStation = stations[data[index - 1]]
+            switch type {
+            case .start:
+                if station.line != nextStation?.line { type = .transfer }
+            case .end:
+                if station.line != prevStation?.line { type = .transfer }
+            default:
+                if station.line != nextStation?.line || station.line != prevStation?.line { type = .transfer }
+            }
+        }
+        return type
+    }
     
-    private func workWithData() {
-        compliteData = []
-        for i in 0..<data.count {
-            
-            var type: StationInfo.StationInfoConfig = .normal
-            
-            if i == 0 {
-                type = .start
-            } else if i == data.count - 1 {
-                type = .end
-            }
-            
-            if stationConfig[data[i]]?.multi ?? false {
-                if i == 0 {
-                     if stationConfig[data[i]]?.color != stationConfig[data[i+1]]?.color {
-                        type = .transfer
-                    }
-                }else if i == data.count - 1 {
-                    if stationConfig[data[i]]?.color != stationConfig[data[i-1]]?.color {
-                        type = .transfer
-                    }
-                }else {
-                    if stationConfig[data[i + 1]]?.multi ?? false || stationConfig[data[i - 1]]?.multi ?? false {
-                        if stationConfig[data[i]]?.color != stationConfig[data[i+1]]?.color || stationConfig[data[i]]?.color != stationConfig[data[i-1]]?.color {
-                            type = .transfer
-                        }
-                    }
-                }
-            }
-            
-            let text = textConfig["ru_RU"]?[data[i]] ?? "error"
-            
-            var time: Date
-            
-            if i == 0 {
-                time = Date()
-            }else{
-                time = compliteData[i - 1].time
-                let calendar = Calendar.current
-                var timeWay = 0
-                for elem in linkConfig[data[i]]! {
-                    if elem.id == data[i - 1] {
-                        timeWay = elem.time
-                    }
-                }
-                time = calendar.date(byAdding: .second, value: timeWay, to: time)!
-            }
-            
-            let color = stationConfig[data[i]]!.color
-            
-            compliteData.append(StationInfo(name: text, time: time, type: type, color: color))
+    func getTime(station: Station, index: Int, compliteData: [StationInfo]) -> Date {
+        if index == 0 {
+            return Date()
+        }else{
+            let prevStations = compliteData[index - 1]
+            let time = prevStations.time
+            let calendar = Calendar.current
+            var timeWay = 0
+            let oldStation = stations[prevStations.id]
+            let edge = oldStation?.edges.filter{ $0.id == station.id }.first!
+            timeWay = edge?.time ?? 0
+            return calendar.date(byAdding: .second, value: timeWay, to: time)!
         }
     }
     
+    func getCompliteData() -> [StationInfo] {
+        var compliteData = [StationInfo]()
+        data.enumerated().forEach {
+            let currentStation = stations[$0.element]!
+            let type = getType(station: currentStation, index: $0.offset)
+            let time = getTime(station: currentStation, index: $0.offset, compliteData: compliteData)
+            let text = currentStation.name["ru_RU"]!
+            let color = colors[currentStation.line - 1].color
+            
+            compliteData.append(StationInfo(name: text, time: time, type: type, color: color, id: currentStation.id))
+        }
+        return compliteData
+    }
+    
+    func workWithData() {
+        let compliteData = getCompliteData()
+        finalWorkWithData(compliteData: compliteData)
+    }
     
 }

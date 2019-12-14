@@ -24,7 +24,9 @@ class DataFetcherTest: XCTestCase {
     func testGetFetchData() {
         let fecther = DataFetcher.share
         let json = fecther.getMetroData()
-        XCTAssertNotNil(json)
+        XCTAssertNotNil(json,"failed to load data ")
+        XCTAssertNotNil(fecther.data, "failed to cache data")
+        
     }
 
 

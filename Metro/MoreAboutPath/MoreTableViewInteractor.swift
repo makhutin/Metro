@@ -10,15 +10,21 @@ import Foundation
 
 protocol MoreTableViewInteractorProtocol {
     var stations: [Int: Station] { get }
+    var colors: [LineColor] { get }
+    
+    
 }
 
 class MoreTableViewInteractor {
     
-    let data = DataFetcher.share.getMetroData()
+    var data = DataFetcher.share.getMetroData()
     
     var stationsDict: [Int: Station] = [:]
     
     init() {
+        data?.stations.forEach{
+            stationsDict.updateValue($0, forKey: $0.id)
+        }
         updateStationsDict()
     }
     
@@ -31,4 +37,9 @@ class MoreTableViewInteractor {
     var stations: [Int: Station] {
         return stationsDict
     }
+    
+    var colors: [LineColor] {
+        return data?.colors ?? []
+    }
+    
 }

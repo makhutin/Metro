@@ -30,6 +30,13 @@ class MoreTableViewInteractorTest: XCTestCase {
         XCTAssertFalse(interactor.stations.isEmpty, "Failed, stations data is empty")
     }
 
+    func testStationsDictIsNotEmpty() {
+        XCTAssertFalse(interactor.stationsDict.isEmpty, "Failed, stations dict is empty")
+    }
+    
+    func testColorsIsNotEmpthy() {
+        XCTAssertFalse(interactor.colors.isEmpty, "Failed, not color in list")
+    }
 }
 
 extension MoreTableViewInteractorTest {

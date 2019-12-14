@@ -12,21 +12,20 @@ class StationInfoCell: UITableViewCell {
     
     let name = UILabel()
     let time = UILabel()
-    let line = ForAboutPathView()
+    var line = ForAboutPathView()
     var isSetup = false
     var type: StationInfo.StationInfoConfig = .normal
     
     override func didMoveToSuperview() {
-        
         switch type {
         case .end,.start,.transfer:
             name.font = UIFont(name: "HelveticaNeue-Bold", size: 10)
         default:
             name.font = UIFont(name: "Helvetica", size: 10)
         }
-        
-        line.frame = CGRect(x: 90 , y: 0, width: 10, height: self.frame.height)
-        
+    }
+    
+    override func layoutSubviews() {
         time.font = UIFont(name: "Helvetica", size: 10)
         time.sizeToFit()
         time.textAlignment = .right
@@ -37,15 +36,25 @@ class StationInfoCell: UITableViewCell {
         name.frame.origin = CGPoint(x: line.frame.width + line.frame.origin.x + 10,
                                     y: self.frame.height / 2 - name.frame.height / 2)
         
-        for elem in [time,name,line] {
+        guard !isSetup else { return }
+        for elem in [time,name] {
             self.addSubview(elem)
         }
         isSetup = true
     }
     
+    func replaceLine() {
+        line.removeFromSuperview()
+        line = ForAboutPathView()
+        line.frame = CGRect(x: 90 , y: 0, width: 10, height: self.frame.height)
+        self.addSubview(line)
+        
+    }
+    
     func setup(data:[[StationInfo]], indexPath: IndexPath) {
         let newdata = data[indexPath.section]
-        var type = newdata[indexPath.row].type
+        let current = newdata[indexPath.row]
+        type = current.type
         if type == .transfer {
             if indexPath.row == 0 {
                 type = .start
@@ -54,21 +63,14 @@ class StationInfoCell: UITableViewCell {
                 type = .end
             }
         }
-        let calendar = Calendar.current
-        let hour = calendar.component(.hour, from: newdata[indexPath.row].time)
-        let minute = calendar.component(.minute, from: newdata[indexPath.row].time)
+        let dateFormater = DateFormatter()
+        dateFormater.dateFormat = "HH : mm"
         
-        setName(name: newdata[indexPath.row].name)
-        setTime(time: "\(hour < 10 ? "0" + String(hour) : String(hour)):\(minute < 10 ? "0" + String(minute) : String(minute))")
+        setName(name: current.name)
+        setTime(time: dateFormater.string(from: current.time))
         
-        self.type = type
-        
-        if indexPath.section == 0 && indexPath.row == 0 && newdata.count == 1 {
-            type = .donat
-        }else if indexPath.section == data.count - 1 && indexPath.row == newdata.count - 1 && newdata.count == 1 {
-            type = .donat
-        }
-        line.setLine(color: newdata[indexPath.row].color, type: type)
+        replaceLine()
+        line.setLine(color: current.color, type: type)
     }
 
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TransferCell: UITableViewCell {
+class TransferCell: UITableViewHeaderFooterView {
     
     let name = UILabel()
     let time = UILabel()
@@ -21,11 +21,7 @@ class TransferCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+        // Configure the view for the selected st
     
     func setupTransfer(data: [[StationInfo]], section: Int) {
         setName(name: "Сделайте пересадку")
@@ -49,7 +45,7 @@ class TransferCell: UITableViewCell {
     
     
     override func didMoveToSuperview() {
-
+        contentView.backgroundColor = (traitCollection.userInterfaceStyle == .dark) ? .black : .white
         time.font = UIFont(name: "Helvetica", size: 12)
         time.sizeToFit()
         time.frame.origin = CGPoint(x:self.frame.width / 2 - name.frame.width / 2 + name.frame.height + 3,

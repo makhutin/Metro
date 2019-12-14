@@ -47,6 +47,6 @@ class MetroViewInteractor: MetroViewInteractorProtocol {
     }
     
     func findRoute(from: Int, to: Int) -> [Int] {
-        return router.buildPath(start: from, end: to)
+        return router.buildPath(start: from, end: to, data: stationsDictionary)
     }
 }

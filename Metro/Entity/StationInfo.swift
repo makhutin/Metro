@@ -10,10 +10,11 @@ import UIKit
 
 struct StationInfo {
     enum StationInfoConfig {
-        case start, end, normal, transfer, donat
+        case start, end, normal, transfer
     }
     let name: String
     let time: Date
     let type: StationInfoConfig
     let color: UIColor
+    let id: Int
 }

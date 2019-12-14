@@ -10,10 +10,10 @@ import UIKit
 
 struct MetroData: Decodable {
     
-    let stations: [Station]
+    var stations: [Station]
     let multiPoints: [MultiPoint]
     let lines: [[LineBetweenStations]]
-    let colors: [LineColor]
+    var colors: [LineColor]
     
     
 }
