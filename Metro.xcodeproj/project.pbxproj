@@ -23,6 +23,18 @@
 		785B5C7C233E870400BEC6AB /* TransferCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785B5C7B233E870400BEC6AB /* TransferCell.swift */; };
 		785B5C802340AE6A00BEC6AB /* ForAboutPathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785B5C7F2340AE6A00BEC6AB /* ForAboutPathView.swift */; };
 		7863DABC236B3401009FF31B /* MetroViewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7863DABB236B3401009FF31B /* MetroViewInteractor.swift */; };
+		7869B8FD24D088B00031C46C /* FromToViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7869B8FC24D088B00031C46C /* FromToViewController.swift */; };
+		7869B90124D08A470031C46C /* FromToConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7869B90024D08A470031C46C /* FromToConfigurator.swift */; };
+		7869B90324D08AC60031C46C /* FromToPressenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7869B90224D08AC60031C46C /* FromToPressenter.swift */; };
+		7869B90524D08DA10031C46C /* FromToTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7869B90424D08DA10031C46C /* FromToTransition.swift */; };
+		7869B90724D08E1B0031C46C /* FromToPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7869B90624D08E1B0031C46C /* FromToPresentationController.swift */; };
+		7869B90A24D098940031C46C /* String+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7869B90924D098940031C46C /* String+extension.swift */; };
+		7869B90E24D099510031C46C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7869B91024D099510031C46C /* Localizable.strings */; };
+		7869B91524D099FF0031C46C /* LocalizedKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7869B91424D099FF0031C46C /* LocalizedKeys.swift */; };
+		7869B91724D0CE660031C46C /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7869B91624D0CE660031C46C /* Colors.swift */; };
+		7869B91C24D345ED0031C46C /* FromToPresentAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7869B91B24D345ED0031C46C /* FromToPresentAnimation.swift */; };
+		7869B91E24D34B570031C46C /* FromToDismissAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7869B91D24D34B570031C46C /* FromToDismissAnimation.swift */; };
+		7869B92024D46FE40031C46C /* FromToDriven.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7869B91F24D46FE40031C46C /* FromToDriven.swift */; };
 		786A04F123A506A4004A3D07 /* RouteBuilderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786A04F023A506A4004A3D07 /* RouteBuilderTest.swift */; };
 		789E8912233CFC940081D705 /* ScalledObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E8911233CFC940081D705 /* ScalledObjectView.swift */; };
 		789E8914233D29F70081D705 /* MoreTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E8913233D29F70081D705 /* MoreTableView.swift */; };
@@ -32,7 +44,6 @@
 		78A772E0237965A60068ABAE /* ViewControllerConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A772DF237965A60068ABAE /* ViewControllerConfigurator.swift */; };
 		78A772E6237974930068ABAE /* StationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A772E5237974930068ABAE /* StationInfo.swift */; };
 		78AAF61623394CF0007ECD16 /* MarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AAF61523394CF0007ECD16 /* MarkerView.swift */; };
-		78AD08032337DE640069D240 /* FromToButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD08022337DE640069D240 /* FromToButtons.swift */; };
 		78AD08052338A9050069D240 /* StationConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD08042338A9050069D240 /* StationConnectionView.swift */; };
 		78C897C02332615900A9DAFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C897BF2332615900A9DAFF /* AppDelegate.swift */; };
 		78C897C22332615900A9DAFF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C897C12332615900A9DAFF /* ViewController.swift */; };
@@ -88,6 +99,20 @@
 		785B5C7B233E870400BEC6AB /* TransferCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferCell.swift; sourceTree = "<group>"; };
 		785B5C7F2340AE6A00BEC6AB /* ForAboutPathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForAboutPathView.swift; sourceTree = "<group>"; };
 		7863DABB236B3401009FF31B /* MetroViewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroViewInteractor.swift; sourceTree = "<group>"; };
+		7869B8FC24D088B00031C46C /* FromToViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromToViewController.swift; sourceTree = "<group>"; };
+		7869B90024D08A470031C46C /* FromToConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromToConfigurator.swift; sourceTree = "<group>"; };
+		7869B90224D08AC60031C46C /* FromToPressenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromToPressenter.swift; sourceTree = "<group>"; };
+		7869B90424D08DA10031C46C /* FromToTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromToTransition.swift; sourceTree = "<group>"; };
+		7869B90624D08E1B0031C46C /* FromToPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromToPresentationController.swift; sourceTree = "<group>"; };
+		7869B90924D098940031C46C /* String+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extension.swift"; sourceTree = "<group>"; };
+		7869B90F24D099510031C46C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7869B91124D099700031C46C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		7869B91224D099700031C46C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7869B91424D099FF0031C46C /* LocalizedKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedKeys.swift; sourceTree = "<group>"; };
+		7869B91624D0CE660031C46C /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		7869B91B24D345ED0031C46C /* FromToPresentAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromToPresentAnimation.swift; sourceTree = "<group>"; };
+		7869B91D24D34B570031C46C /* FromToDismissAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromToDismissAnimation.swift; sourceTree = "<group>"; };
+		7869B91F24D46FE40031C46C /* FromToDriven.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromToDriven.swift; sourceTree = "<group>"; };
 		786A04F023A506A4004A3D07 /* RouteBuilderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteBuilderTest.swift; sourceTree = "<group>"; };
 		789E8911233CFC940081D705 /* ScalledObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalledObjectView.swift; sourceTree = "<group>"; };
 		789E8913233D29F70081D705 /* MoreTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreTableView.swift; sourceTree = "<group>"; };
@@ -97,7 +122,6 @@
 		78A772DF237965A60068ABAE /* ViewControllerConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerConfigurator.swift; sourceTree = "<group>"; };
 		78A772E5237974930068ABAE /* StationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationInfo.swift; sourceTree = "<group>"; };
 		78AAF61523394CF0007ECD16 /* MarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerView.swift; sourceTree = "<group>"; };
-		78AD08022337DE640069D240 /* FromToButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromToButtons.swift; sourceTree = "<group>"; };
 		78AD08042338A9050069D240 /* StationConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationConnectionView.swift; sourceTree = "<group>"; };
 		78C897BC2332615900A9DAFF /* Metro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78C897BF2332615900A9DAFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -218,6 +242,7 @@
 		785B5C7D2340ADD300BEC6AB /* MetroMap */ = {
 			isa = PBXGroup;
 			children = (
+				7869B8FB24D0889E0031C46C /* FromTo */,
 				78C897C12332615900A9DAFF /* ViewController.swift */,
 				78A772DD237964F60068ABAE /* ViewControllerRouter.swift */,
 				78A772DF237965A60068ABAE /* ViewControllerConfigurator.swift */,
@@ -237,6 +262,57 @@
 				78FBF9C72386874D0085F705 /* MoreTableViewInteractor.swift */,
 			);
 			path = MoreAboutPath;
+			sourceTree = "<group>";
+		};
+		7869B8FA24D087F30031C46C /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				78C897BF2332615900A9DAFF /* AppDelegate.swift */,
+				78D486FD23675ADF0078E00C /* View */,
+				785B5C7D2340ADD300BEC6AB /* MetroMap */,
+				785B5C7E2340AE0F00BEC6AB /* MoreAboutPath */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		7869B8FB24D0889E0031C46C /* FromTo */ = {
+			isa = PBXGroup;
+			children = (
+				7869B8FC24D088B00031C46C /* FromToViewController.swift */,
+				7869B90024D08A470031C46C /* FromToConfigurator.swift */,
+				7869B90224D08AC60031C46C /* FromToPressenter.swift */,
+				7869B90424D08DA10031C46C /* FromToTransition.swift */,
+				7869B90624D08E1B0031C46C /* FromToPresentationController.swift */,
+				7869B91A24D345BD0031C46C /* Animation */,
+			);
+			path = FromTo;
+			sourceTree = "<group>";
+		};
+		7869B90824D0987F0031C46C /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				7869B90924D098940031C46C /* String+extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		7869B91324D099C90031C46C /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				7869B91424D099FF0031C46C /* LocalizedKeys.swift */,
+				7869B91624D0CE660031C46C /* Colors.swift */,
+			);
+			path = Style;
+			sourceTree = "<group>";
+		};
+		7869B91A24D345BD0031C46C /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				7869B91F24D46FE40031C46C /* FromToDriven.swift */,
+				7869B91D24D34B570031C46C /* FromToDismissAnimation.swift */,
+				7869B91B24D345ED0031C46C /* FromToPresentAnimation.swift */,
+			);
+			path = Animation;
 			sourceTree = "<group>";
 		};
 		78A772E7237974E30068ABAE /* VIew */ = {
@@ -270,16 +346,16 @@
 		78C897BE2332615900A9DAFF /* Metro */ = {
 			isa = PBXGroup;
 			children = (
-				785B5C7E2340AE0F00BEC6AB /* MoreAboutPath */,
-				785B5C7D2340ADD300BEC6AB /* MetroMap */,
-				78C897BF2332615900A9DAFF /* AppDelegate.swift */,
-				78D486FD23675ADF0078E00C /* View */,
+				7869B91324D099C90031C46C /* Style */,
+				7869B90824D0987F0031C46C /* Extension */,
+				7869B8FA24D087F30031C46C /* UI */,
 				78E6BADE23618D69004338D2 /* Entity */,
 				78D486FF23675B1E0078E00C /* Storyboards */,
 				783A63B823681D5000051AF9 /* Protocols */,
 				78D486FE23675B0E0078E00C /* Service */,
 				782D2260237ADF5A002B2197 /* Data */,
 				78C897CB2332615D00A9DAFF /* Info.plist */,
+				7869B91024D099510031C46C /* Localizable.strings */,
 				78C897C62332615D00A9DAFF /* Assets.xcassets */,
 			);
 			path = Metro;
@@ -290,7 +366,6 @@
 			children = (
 				78C897D3233266C700A9DAFF /* MetroDonatOne.swift */,
 				78F07DBB233B7EAA003387B4 /* TextStationView.swift */,
-				78AD08022337DE640069D240 /* FromToButtons.swift */,
 				78AAF61523394CF0007ECD16 /* MarkerView.swift */,
 				78D486FB236749B30078E00C /* TriangleView.swift */,
 				78AD08042338A9050069D240 /* StationConnectionView.swift */,
@@ -421,6 +496,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 78C897B32332615800A9DAFF;
 			productRefGroup = 78C897BD2332615900A9DAFF /* Products */;
@@ -445,6 +521,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7869B90E24D099510031C46C /* Localizable.strings in Resources */,
 				78C897CA2332615D00A9DAFF /* LaunchScreen.storyboard in Resources */,
 				78C897C72332615D00A9DAFF /* Assets.xcassets in Resources */,
 				78C897C52332615900A9DAFF /* Main.storyboard in Resources */,
@@ -483,30 +560,40 @@
 				78DD0A442370715400F2B017 /* WitchId.swift in Sources */,
 				781DBEDE237AF09C0086A095 /* MoreTableViewConfigurator.swift in Sources */,
 				78C897C22332615900A9DAFF /* ViewController.swift in Sources */,
+				7869B8FD24D088B00031C46C /* FromToViewController.swift in Sources */,
+				7869B90724D08E1B0031C46C /* FromToPresentationController.swift in Sources */,
 				781DBF45237C11920086A095 /* LineColor.swift in Sources */,
 				78AD08052338A9050069D240 /* StationConnectionView.swift in Sources */,
 				78C897D22332642800A9DAFF /* MetroView.swift in Sources */,
 				781508AE236B2C4B00015258 /* MetroViewPresenter.swift in Sources */,
+				7869B90124D08A470031C46C /* FromToConfigurator.swift in Sources */,
 				785B5C802340AE6A00BEC6AB /* ForAboutPathView.swift in Sources */,
 				78A772E0237965A60068ABAE /* ViewControllerConfigurator.swift in Sources */,
 				789E8912233CFC940081D705 /* ScalledObjectView.swift in Sources */,
 				78E6BAE623618DCB004338D2 /* LineBetweenStations.swift in Sources */,
 				785B5C7C233E870400BEC6AB /* TransferCell.swift in Sources */,
+				7869B92024D46FE40031C46C /* FromToDriven.swift in Sources */,
 				78A772E6237974930068ABAE /* StationInfo.swift in Sources */,
+				7869B91E24D34B570031C46C /* FromToDismissAnimation.swift in Sources */,
 				78F07DBC233B7EAA003387B4 /* TextStationView.swift in Sources */,
+				7869B90324D08AC60031C46C /* FromToPressenter.swift in Sources */,
 				783A63BA23681D6000051AF9 /* CanFading.swift in Sources */,
+				7869B91C24D345ED0031C46C /* FromToPresentAnimation.swift in Sources */,
 				78C897D4233266C700A9DAFF /* MetroDonatOne.swift in Sources */,
 				78A772DC237964440068ABAE /* ViewControllerPressenter.swift in Sources */,
 				7863DABC236B3401009FF31B /* MetroViewInteractor.swift in Sources */,
+				7869B90A24D098940031C46C /* String+extension.swift in Sources */,
+				7869B91524D099FF0031C46C /* LocalizedKeys.swift in Sources */,
 				781DBF2C237C0B0E0086A095 /* DataLoader.swift in Sources */,
 				78FBF9C82386874D0085F705 /* MoreTableViewInteractor.swift in Sources */,
+				7869B90524D08DA10031C46C /* FromToTransition.swift in Sources */,
+				7869B91724D0CE660031C46C /* Colors.swift in Sources */,
 				78DD0A4623707CE700F2B017 /* MetroViewStyleAnim.swift in Sources */,
 				78A772DE237964F60068ABAE /* ViewControllerRouter.swift in Sources */,
 				781DBF3E237C0EBF0086A095 /* Station.swift in Sources */,
 				789E8914233D29F70081D705 /* MoreTableView.swift in Sources */,
 				78F07DBE233B8D6C003387B4 /* MultiStationView.swift in Sources */,
 				789E8916233D44050081D705 /* StationInfoCell.swift in Sources */,
-				78AD08032337DE640069D240 /* FromToButtons.swift in Sources */,
 				78D486FC236749B30078E00C /* TriangleView.swift in Sources */,
 				78C897C02332615900A9DAFF /* AppDelegate.swift in Sources */,
 				78E6BAEC23618E8B004338D2 /* RouteBuilder.swift in Sources */,
@@ -526,6 +613,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		7869B91024D099510031C46C /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7869B90F24D099510031C46C /* en */,
+				7869B91224D099700031C46C /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		78C897C32332615900A9DAFF /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -538,6 +634,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				78C897C92332615D00A9DAFF /* Base */,
+				7869B91124D099700031C46C /* ru */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -589,6 +686,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -650,6 +748,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

@@ -35,7 +35,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         configurator.configure(with: self)
         metroView.contentScaleFactor = scrollView.zoomScale
-        metroView.updateFromToScale()
         self.navigationController?.isNavigationBarHidden = true
         
         self.view.backgroundColor = .white
@@ -143,10 +142,7 @@ class ViewController: UIViewController {
         presenter.router.prepare(for: segue, sender: sender)
         
     }
-    
-
 }
-
 
 extension ViewController: UIScrollViewDelegate {
     
@@ -165,7 +161,6 @@ extension ViewController: UIScrollViewDelegate {
     
     func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
         metroView.contentScaleFactor = scrollView.zoomScale
-        metroView.updateFromToScale()
     }
     
     
@@ -178,7 +173,6 @@ extension ViewController {
             scrollView.zoomScale += 0.2
         }
         metroView.contentScaleFactor = scrollView.zoomScale
-        metroView.updateFromToScale()
     }
     
     @objc func pressMinus() {
@@ -186,7 +180,6 @@ extension ViewController {
             scrollView.zoomScale -= 0.2
         }
         metroView.contentScaleFactor = scrollView.zoomScale
-        metroView.updateFromToScale()
     }
     
     @objc func pressBack() {
@@ -201,40 +194,13 @@ extension ViewController {
     @objc func pressMoreButton() {
         self.navigationController?.isNavigationBarHidden = false
         performSegue(withIdentifier: "MoreTableView", sender: (Any).self)
-        
     }
 }
 
 extension ViewController: MetroVieweDelagate {
-    func willShowFromToButton(sender: FromToButtons) {
-        
-        let x = sender.frame.origin.x  * scrollView.zoomScale
-        let x2 = sender.frame.maxX * scrollView.zoomScale
-        let y = sender.frame.origin.y * scrollView.zoomScale
-        let y2 = sender.frame.maxY * scrollView.zoomScale
-        if !inScrollViewOffsetX(x: x) {
-            UIView.animate(withDuration: 0.3, animations: {
-                self.scrollView.contentOffset.x = x - 10
-            })
-            
-        }else if !inScrollViewOffsetX(x: x2) {
-            UIView.animate(withDuration: 0.3, animations: {
-                self.scrollView.contentOffset.x = x2 - self.scrollView.frame.width + 10
-            })
-            
-        }
-        if !inScrollViewOffsetY(y: y) {
-            UIView.animate(withDuration: 0.3, animations: {
-                self.scrollView.contentOffset.y = y - 10
-            })
-        }
-        else if !inScrollViewOffsetY(y: y2) {
-            UIView.animate(withDuration: 0.3, animations: {
-                self.scrollView.contentOffset.y = y2 - self.scrollView.frame.height + 10
-            })
-        }
+    func didTapOnPoint(_ view: UIView, info: MetroStationInfo) {
+        self.presenter.router.presentFromToVC(info: info)
     }
-    
     
     func drawStationPath(sender: MetroView,data: [Int]) {
         pathIsDraw = true
@@ -244,8 +210,6 @@ extension ViewController: MetroVieweDelagate {
         showMoreButton(show: true)
         presenter.data = data
     }
-    
-    
 }
 
 extension ViewController {
@@ -263,7 +227,6 @@ extension ViewController {
             
         })
         metroView.contentScaleFactor = scrollView.zoomScale
-        metroView.updateFromToScale()
     }
     
     func showNavigationBar(show: Bool) {

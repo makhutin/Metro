@@ -10,11 +10,10 @@ import UIKit
 
 protocol MetroVieweDelagate {
     func drawStationPath(sender: MetroView, data: [Int])
-    func willShowFromToButton(sender: FromToButtons)
+    func didTapOnPoint(_ view: UIView, info: MetroStationInfo)
 }
 
-protocol MetroViewProtocol {
-    func updateFromToScale()
+protocol MetroViewProtocol: FromToViewControllerDelegate {
     func restoreMapToDefault()
     var contentScaleFactor: CGFloat { get set }
     var delegate: MetroVieweDelagate? { get set }
@@ -23,24 +22,20 @@ protocol MetroViewProtocol {
 
 @IBDesignable
 class MetroView: UIView, MetroViewProtocol {
-    
-    var presenter: MetroViewPresenterProtocol!
-    
+
     private var isSetup = false
     private var isStationSetup = false
-    
     private var widthCoficent: CGFloat = 0.0
     private var heightCoficent: CGFloat = 0.0
     private let offsetMapXY: CGFloat = 450
     private let fromToWidth:CGFloat = 260
     private let pointSize: CGFloat = 20
-    
-    private let fromTo = FromToButtons()
     private let aPointView = MarkerView()
     private let bPointView = MarkerView()
+    private var lastPoint: MetroDonatOne?
 
+    var presenter: MetroViewPresenterProtocol!
     var delegate: MetroVieweDelagate?
-    
 
 // MARK: Initialization
     override func layoutSubviews() {
@@ -56,11 +51,10 @@ class MetroView: UIView, MetroViewProtocol {
         stationConnectInit()
         multiStationsInit()
         stationsInit()
-        for elem in [aPointView,bPointView,fromTo] {
+        for elem in [self.aPointView, self.bPointView] {
             self.addSubview(elem)
             elem.isHidden = true
         }
-        fromTo.delegate = self
         isSetup = true
     }
     
@@ -72,7 +66,6 @@ class MetroView: UIView, MetroViewProtocol {
         aPointView.layer.shadowOffset = CGSize(width: 2, height: 2)
         bPointView.word = .b
         bPointView.layoutIfNeeded()
-        fromTo.frame.size = CGSize(width: fromToWidth / contentScaleFactor, height: 40)
     }
     
     //Draw multistations border on map
@@ -232,22 +225,6 @@ class MetroView: UIView, MetroViewProtocol {
         }
     }
     
-    func updateFromToScale() {
-        if let donat = presenter?.findCurrentPoint(){
-            fromTo.chageStyle(style: .old)
-            fromTo.frame.size.width = fromToWidth / contentScaleFactor
-            let x = donat.frame.midX - fromTo.frame.width / 2
-            let y = donat.frame.origin.y + 5
-            fromTo.frame.origin = CGPoint(x: x, y: y )
-            
-            UIView.animate(withDuration: 0.4, animations: {
-                self.fromTo.layer.opacity = 1
-                self.fromTo.isHidden = false
-                self.layoutSubviews()
-            })
-        }
-    }
-    
     func setMarker(wordAorB: MarkerViewWord ) {
         var pointView: MarkerView
         switch wordAorB {
@@ -299,85 +276,34 @@ class MetroView: UIView, MetroViewProtocol {
         bPointView.layer.opacity = 0
         presenter?.restoreMapToDefault()
     }
-    
-    
 }
 
+extension MetroView: FromToViewControllerDelegate {
+    func fromToViewController(_ fromToViewController: FromToViewController, didTapButton buttonType: FromToButtonType, stationID id: Int) {
+        //I hope, i will have time to refactor MetroView and all app :)
+        let type = buttonType == .to ? MarkerViewWord.b : .a
+        self.presenter?.setFromToPoint(buttonType: buttonType, stationID: id)
 
+        self.drawStationWayOnMap()
+        self.setMarker(wordAorB: type)
+    }
 
-//MARK: taps
-extension MetroView {
-    /**
-     start if tap on the map view
-     
-     When press on map view, current point unfocus and fromto window hide
-     
-     */
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        presenter?.touchesEnded()
-        UIView.animate(withDuration: 0.4, animations: {
-            self.fromTo.layer.opacity = 0
-            self.layoutIfNeeded()
-        }, completion: { complite in
-            self.fromTo.isHidden = true
-        })
+    func fromToViewControllerWillCancel(_ fromToViewController: FromToViewController) {
+        self.lastPoint?.setStyle(style: .normal)
     }
 }
-
-
-extension MetroView: FromToButtonsDelegate{
-    
-    @objc func pressToButton(sender: UIView) {
-        presenter?.pressFromToButton(button: .to)
-        
-        UIView.animate(withDuration: 0.6, animations: {
-            self.fromTo.layer.opacity = 0
-            self.layoutIfNeeded()
-        }, completion: { complite in
-            self.fromTo.isHidden = true
-        })
-        
-        drawStationWayOnMap()
-        setMarker(wordAorB: .b)
-    }
-    
-    @objc func pressFromButton(sender: UIView) {
-        presenter?.pressFromToButton(button: .from)
-        
-        UIView.animate(withDuration: 0.6, animations: {
-            self.fromTo.layer.opacity = 0
-            self.layoutIfNeeded()
-        }, completion: { complite in
-            self.fromTo.isHidden = true
-        })
-        
-        drawStationWayOnMap()
-        setMarker(wordAorB: .a)
-    }
-    
-    
-}
-
-
 
 extension MetroView: MetroDonatOneDelegate{
     
     @objc func tapOnDonat(sender: MetroDonatOne) {
-        UIView.animate(withDuration: 0.4, animations: {
-            self.fromTo.layer.opacity = 0
-            self.layoutIfNeeded()
-        })
         if let donat = presenter?.findCurrentPoint() {
             donat.setStyle(style: .untap)
         }
+        self.lastPoint = sender
         presenter?.tapOnDonat(sender: sender)
         sender.setStyle(style: .tap)
-
-        let style = presenter?.getStyleForFromToView
-        fromTo.chageStyle(style: style!)
-        updateFromToScale()
-        delegate?.willShowFromToButton(sender: fromTo)
-        
+        let info = self.presenter.getInfoForID(id: sender.id)
+        self.delegate?.didTapOnPoint(self, info: info)
     }
     
 }

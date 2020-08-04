@@ -10,17 +10,16 @@ import UIKit
 
 protocol MetroViewPresenterProtocol {
     
-
     func findCurrentPoint() -> MetroDonatOne?
     func touchesEnded()
     func restoreMapToDefault()
     func tapOnDonat(sender: WitchId)
-    func pressFromToButton(button: FromToButtonsStyle)
+    func setFromToPoint(buttonType: FromToButtonType, stationID: Int)
     func getAorBPoint(point: MarkerViewWord) -> Int?
     func getColorForLine(withStation id: Int) -> UIColor?
+    func getInfoForID(id: Int) -> MetroStationInfo
     
-    
-    var getStyleForFromToView: FromToButtonsStyle { get }
+    var getStyleForFromToView: FromToButtonType { get }
     var getStationRoute: [Int] { get }
     var stations: [Int: Station] { get }
     var lineColors: [LineColor] { get }
@@ -28,9 +27,6 @@ protocol MetroViewPresenterProtocol {
     var multiStationsId: [Int] { get }
     var lines: [[LineBetweenStations]] { get }
     var multiCoords: [Int: CGPoint] { get }
-    
-    
-    
 }
 
 class MetroViewPresenter: MetroViewPresenterProtocol {
@@ -113,14 +109,11 @@ class MetroViewPresenter: MetroViewPresenterProtocol {
     func tapOnDonat(sender: WitchId) {
         currentId = sender.id
     }
-    
-    //MARK: FromTo view
-    func pressFromToButton(button: FromToButtonsStyle) {
-        if button == .to { bPoint = currentId }
-        if button == .from { aPoint = currentId }
-        
-    }
 
+    func setFromToPoint(buttonType: FromToButtonType, stationID: Int) {
+        self.aPoint = buttonType == .from ? stationID : self.aPoint
+        self.bPoint = buttonType == .to ? stationID : self.bPoint
+    }
     
     func restoreMapToDefault() {
         bPoint = nil
@@ -144,8 +137,8 @@ class MetroViewPresenter: MetroViewPresenterProtocol {
         }
     }
     
-    var getStyleForFromToView: FromToButtonsStyle {
-        var result: FromToButtonsStyle = .to
+    var getStyleForFromToView: FromToButtonType {
+        var result: FromToButtonType = .to
         switch(aPoint,bPoint){
         case (nil,nil):
             result = .from
@@ -154,7 +147,13 @@ class MetroViewPresenter: MetroViewPresenterProtocol {
         }
         return result
     }
-    
-    
-    
+
+    func getInfoForID(id: Int) -> MetroStationInfo {
+        guard let station = self.stations[id] else {
+                return MetroStationInfo(name: "", color: .black, lineNumber: 0, id: 0)
+        }
+
+        let color = self.lineColors[station.line - 1]
+        return MetroStationInfo(name: station.name[self.language] ?? "", color: color.color, lineNumber: station.line, id: id)
+    }
 }

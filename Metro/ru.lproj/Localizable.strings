@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  Metro
+
+  Created by Алексей Махутин on 28.07.2020.
+  Copyright © 2020 Mahutin Aleksei. All rights reserved.
+*/
+
+//FromToViewController
+"fromToViewController_to" = "сюда";
+"fromToViewController_from" = "отсюда";
+"fromToViewController_line" = "линия";
